@@ -11,8 +11,15 @@
     
     <meta name="description" content="Ubuntu服务器下默认是不支持.htaccess的，我们要让ubuntu支持.htaccess需要简单的开户一下，下面我们来看看具体步骤
 步骤:
-终端运行sudo a2enmod
-程序提示可供激活的模块名称，输入：rewrite　　或者　　[code]sudo a2enmod rewrite[/c">
+1. 终端运行
+1sudo a2enmod
+
+程序提示可供激活的模块名称，输入：
+1rewrite
+
+或者
+1sudo a2enmod rewrite
+">
     
     
     
@@ -76,8 +83,8 @@
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-09T12:50:52.000Z" itemprop="datePublished">11月 9 2014</time>
-    更新日期:<time datetime="2014-11-09T12:50:52.000Z" itemprop="dateModified">11月 9 2014</time>
+    <time datetime="2014-11-09T13:02:27.000Z" itemprop="datePublished">11月 9 2014</time>
+    更新日期:<time datetime="2014-11-09T13:02:27.000Z" itemprop="dateModified">11月 9 2014</time>
     
   </p>
 </header>
@@ -86,19 +93,27 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-_终端运行"><span class="toc-number">1.</span> <span class="toc-text">1. 终端运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-_修改/etc/apache2/sites-enabled/000-default_(该链接指向的是站点配置文件)"><span class="toc-number">2.</span> <span class="toc-text">2. 修改/etc/apache2/sites-enabled/000-default (该链接指向的是站点配置文件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-_重新加载apache"><span class="toc-number">3.</span> <span class="toc-text">3. 重新加载apache</span></a></li></ol>
 		</div>
 		
 		<p>Ubuntu服务器下默认是不支持.htaccess的，我们要让ubuntu支持.htaccess需要简单的开户一下，下面我们来看看具体步骤</p>
 <p>步骤:</p>
-<p>终端运行<br>sudo a2enmod</p>
-<p>程序提示可供激活的模块名称，输入：<br>rewrite<br>　　或者<br>　　[code]sudo a2enmod rewrite[/code]</p>
-<p>　　另外，也可以通过将 /etc/apache2/mods-available/rewrite.load 连接到 /etc/apache2/mods-enabled/rewrite.load 来打开 Mod_rewrite 模块。用指令操作就是</p>
-<p>　　[code]sudo ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load[/code]</p>
-<p>　　2. 修改/etc/apache2/sites-enabled/000-default (该链接指向的是站点配置文件)</p>
-<p>　　把（默认的www目录、或者需要应用.htaccess的目录）下的AllowOverride 属性改为All，保存。</p>
-<p>　　3. 重新加载apache</p>
-<p>　　[code]sudo /etc/init.d/apache2 restart[/code]</p>
+<h3 id="1-_终端运行">1. 终端运行</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">sudo</span> a2enmod</div></pre></td></tr></table></figure>
+
+<p>程序提示可供激活的模块名称，输入：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rewrite</div></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">sudo</span> a2enmod rewrite</div></pre></td></tr></table></figure>
+
+<p>另外，也可以通过将 <code>/etc/apache2/mods-available/rewrite.load</code> 连接到 <code>/etc/apache2/mods-enabled/rewrite.load</code>来打开 <code>Mod_rewrite</code> 模块。<br>用指令操作就是</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ln -s <span class="regexp">/etc/</span>apache2<span class="regexp">/mods-available/</span>rewrite.load <span class="regexp">/etc/</span>apache2<span class="regexp">/mods-enabled/</span>rewrite.load</div></pre></td></tr></table></figure>
+
+<h3 id="2-_修改/etc/apache2/sites-enabled/000-default_(该链接指向的是站点配置文件)">2. 修改/etc/apache2/sites-enabled/000-default (该链接指向的是站点配置文件)</h3>
+<p>把（默认的www目录、或者需要应用.htaccess的目录）下的AllowOverride 属性改为All，保存。</p>
+<h3 id="3-_重新加载apache">3. 重新加载apache</h3>
+<p>sudo /etc/init.d/apache2 restart</p>
 <p>　　</p>
   
 	</div>
@@ -144,7 +159,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-_终端运行"><span class="toc-number">1.</span> <span class="toc-text">1. 终端运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-_修改/etc/apache2/sites-enabled/000-default_(该链接指向的是站点配置文件)"><span class="toc-number">2.</span> <span class="toc-text">2. 修改/etc/apache2/sites-enabled/000-default (该链接指向的是站点配置文件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-_重新加载apache"><span class="toc-number">3.</span> <span class="toc-text">3. 重新加载apache</span></a></li></ol>
   </div>
 
 <div id="asidepart">
