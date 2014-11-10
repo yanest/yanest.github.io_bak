@@ -4,13 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>这就是hexo | zhangyan&#39;s blog</title>
+    <title>修改Mac的MAC地址 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="这是一个使用hexo工具构建的blog，这就是我一直所需要的blog，感谢hexo如此性感的完成了以往造成困扰的麻烦事。同时感谢pacman提供如此漂亮的皮肤。
-12hello worldhello hexo">
+    <meta name="description" content="听说苹果在最新将要发布的 iOS 8 上增加了 MAC 地址随机化功能，也就是说在扫描 Wi-Fi 的时候会随机生成 MAC 地址，扫描完成后才会给出真实 MAC 地址，这个功能可以更好的保护用户的隐私和安全，据说一些营销和数据分析公司会通过免费的 Wi-Fi 收集信息，这点信息也不放过实在可恶，所">
     
     
     
@@ -62,20 +61,20 @@
 
     </header>
     <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
+      <div id="main" class="修改mac的mac地址" itemscope itemprop="blogPost">
 	<article itemprop="articleBody"> 
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/10/hexo/" title="这就是hexo" itemprop="url">这就是hexo</a>
+      <a href="/2014/11/10/修改Mac的MAC地址/" title="修改Mac的MAC地址" itemprop="url">修改Mac的MAC地址</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-10T00:59:53.000Z" itemprop="datePublished">11月 10 2014</time>
-    更新日期:<time datetime="2014-11-10T00:59:53.000Z" itemprop="dateModified">11月 10 2014</time>
+    <time datetime="2014-11-10T01:12:29.000Z" itemprop="datePublished">11月 10 2014</time>
+    更新日期:<time datetime="2014-11-10T01:14:18.000Z" itemprop="dateModified">11月 10 2014</time>
     
   </p>
 </header>
@@ -87,19 +86,26 @@
 		
 		</div>
 		
-		<p>这是一个使用<code>hexo</code>工具构建的blog，这就是我一直所需要的blog，感谢hexo如此性感的完成了以往造成困扰的麻烦事。同时感谢<code>pacman</code>提供如此漂亮的皮肤。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">hello</span> world</div><div class="line">hello hexo</div></pre></td></tr></table></figure>
+		<p>听说苹果在最新将要发布的 iOS 8 上增加了 MAC 地址随机化功能，也就是说在扫描 Wi-Fi 的时候会随机生成 MAC 地址，扫描完成后才会给出真实 MAC 地址，这个功能可以更好的保护用户的隐私和安全，据说一些营销和数据分析公司会通过免费的 Wi-Fi 收集信息，这点信息也不放过实在可恶，所以在外面用公共的 Wi-Fi 最好加一层 VPN 后再用。</p>
+<p>假设在 Mac 上通过 ifconfig 查到 Wi-Fi 网卡接口是 en0，更换一个随机的 MAC 地址一句话就可以搞定：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ifconfig en0 ether <span class="smartquote">`openssl rand -hex 6 | sed '</span>s/\(..\)/\1:/g; s/.$//<span class="emphasis">'`</span></div></pre></td></tr></table></figure>
 
+<p>上面的命令没有加到系统启动文件里，所以每次系统启动后会还原真实 MAC 地址。除非系统出问题，一般不会重启 Mac，平时用 Mac 也没必要关机，一般屏幕一合上就走人～</p>
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/mac/">mac</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/10/hexo/" data-title="这就是hexo | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2014/11/10/修改Mac的MAC地址/" data-title="修改Mac的MAC地址 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -108,19 +114,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/11/10/ubuntu开启-htaccess/" title="ubuntu开启.htaccess的方法">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  ubuntu开启.htaccess的方法</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/11/09/hello-world/"  title="Hello World">
+<a href="/2014/11/10/ubuntu开启-htaccess/"  title="ubuntu开启.htaccess的方法">
  <strong>NEXT:</strong><br/> 
- <span>Hello World
+ <span>ubuntu开启.htaccess的方法
 </span>
 </a>
 </div>
@@ -134,11 +132,6 @@
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
-  
-  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -269,50 +262,10 @@ $(document).ready(function(){
 </script>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
-</script>
-
-
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"yanest"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
 
 
 
 
 
   </body>
-</html>
+ </html>
