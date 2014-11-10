@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>修改Mac的MAC地址 | zhangyan&#39;s blog</title>
+    <title>ubuntu:precese的sohu源 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="听说苹果在最新将要发布的 iOS 8 上增加了 MAC 地址随机化功能，也就是说在扫描 Wi-Fi 的时候会随机生成 MAC 地址，扫描完成后才会给出真实 MAC 地址，这个功能可以更好的保护用户的隐私和安全，据说一些营销和数据分析公司会通过免费的 Wi-Fi 收集信息，这点信息也不放过实在可恶，所">
+    <meta name="description" content="有时候觉得官方源真是慢的够可以的了，觉得sohu的源还算稳定，这是12.04的源。
+12345deb http://mirrors.sohu.com/ubuntu/ precise main restricted universe multiverse2deb http://mirrors.sohu">
     
     
     
@@ -66,15 +67,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/10/修改Mac的MAC地址/" title="修改Mac的MAC地址" itemprop="url">修改Mac的MAC地址</a>
+      <a href="/2014/11/10/ubuntu-precese的sohu源/" title="ubuntu:precese的sohu源" itemprop="url">ubuntu:precese的sohu源</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-10T01:18:04.000Z" itemprop="datePublished">11月 10 2014</time>
-    更新日期:<time datetime="2014-11-10T01:18:04.000Z" itemprop="dateModified">11月 10 2014</time>
+    <time datetime="2014-11-10T01:34:35.000Z" itemprop="datePublished">11月 10 2014</time>
+    更新日期:<time datetime="2014-11-10T01:34:35.000Z" itemprop="dateModified">11月 10 2014</time>
     
   </p>
 </header>
@@ -86,18 +87,16 @@
 		
 		</div>
 		
-		<p>听说苹果在最新将要发布的 iOS 8 上增加了 MAC 地址随机化功能，也就是说在扫描 Wi-Fi 的时候会随机生成 MAC 地址，扫描完成后才会给出真实 MAC 地址，这个功能可以更好的保护用户的隐私和安全，据说一些营销和数据分析公司会通过免费的 Wi-Fi 收集信息，这点信息也不放过实在可恶，所以在外面用公共的 Wi-Fi 最好加一层 VPN 后再用。</p>
-<p>假设在 Mac 上通过 ifconfig 查到 Wi-Fi 网卡接口是 en0，更换一个随机的 MAC 地址一句话就可以搞定：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ifconfig en0 ether <span class="smartquote">`openssl rand -hex 6 | sed '</span>s/\(..\)/\1:/g; s/.$//<span class="emphasis">'`</span></div></pre></td></tr></table></figure>
+		<p>有时候觉得官方源真是慢的够可以的了，觉得sohu的源还算稳定，这是12.04的源。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">deb</span> <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise main restricted universe multiverse</div><div class="line"><span class="number">2</span></div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-updates main restricted universe multiverse</div><div class="line"><span class="number">3</span></div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-security main restricted universe multiverse</div></pre></td></tr></table></figure>
 
-<p>上面的命令没有加到系统启动文件里，所以每次系统启动后会还原真实 MAC 地址。除非系统出问题，一般不会重启 Mac，平时用 Mac 也没必要关机，一般屏幕一合上就走人～</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/mac/">mac</a>
+  <span></span> <a href="/tags/debian-ubuntu/">debian&ubuntu</a>
   </div>
 
 
@@ -105,7 +104,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/10/修改Mac的MAC地址/" data-title="修改Mac的MAC地址 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2014/11/10/ubuntu-precese的sohu源/" data-title="ubuntu:precese的sohu源 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -114,19 +113,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/11/10/我的极客生活/" title="我的极客生活">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  我的极客生活</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/11/10/ubuntu开启-htaccess/"  title="ubuntu开启.htaccess的方法">
+<a href="/2014/11/10/我的极客生活/"  title="我的极客生活">
  <strong>NEXT:</strong><br/> 
- <span>ubuntu开启.htaccess的方法
+ <span>我的极客生活
 </span>
 </a>
 </div>
