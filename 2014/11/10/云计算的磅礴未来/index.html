@@ -4,16 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Mac下制作linux启动U盘 | zhangyan&#39;s blog</title>
+    <title>云计算的磅礴未来 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="下载ubuntu iso镜像
-将iso转换为img文件
-1$ hdiutil convert -format UDRW -o /path/to/generate/img/file /path/to/your/iso/file
-
-该命令会生成一个.img的磁盘镜像文件，但是mac osx会默认追加一个">
+    <meta name="description" content="云计算的使命是要把整个IT硬件产业颠覆。它将彻底改变传统硬件的设计、制造、交付、使用整个流程，在云端，将建立新逻辑和新秩序，也将诞生新的思科、新的IBM、新的英特尔。这个过程就如同诺基亚被苹果iPhone颠覆一样。当我第一次看到iPhone1发布时，最让人惊呆的是：手机键盘没了。千万别小看这个颠覆性">
     
     
     
@@ -72,15 +68,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/10/mac制作ubuntu启动盘/" title="Mac下制作linux启动U盘" itemprop="url">Mac下制作linux启动U盘</a>
+      <a href="/2014/11/10/云计算的磅礴未来/" title="云计算的磅礴未来" itemprop="url">云计算的磅礴未来</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-10T02:05:01.000Z" itemprop="datePublished">11月 10 2014</time>
-    更新日期:<time datetime="2014-11-10T02:05:00.000Z" itemprop="dateModified">11月 10 2014</time>
+    <time datetime="2014-11-10T06:14:31.000Z" itemprop="datePublished">11月 10 2014</time>
+    更新日期:<time datetime="2014-11-10T06:14:30.000Z" itemprop="dateModified">11月 10 2014</time>
     
   </p>
 </header>
@@ -89,36 +85,24 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载ubuntu_iso镜像"><span class="toc-number">1.</span> <span class="toc-text">下载ubuntu iso镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将iso转换为img文件"><span class="toc-number">2.</span> <span class="toc-text">将iso转换为img文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看USB的盘符"><span class="toc-number">3.</span> <span class="toc-text">查看USB的盘符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卸载USB磁盘"><span class="toc-number">4.</span> <span class="toc-text">卸载USB磁盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将镜像写入USB"><span class="toc-number">5.</span> <span class="toc-text">将镜像写入USB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹出USB"><span class="toc-number">6.</span> <span class="toc-text">弹出USB</span></a></li></ol>
+		
 		</div>
 		
-		<h2 id="下载ubuntu_iso镜像">下载ubuntu iso镜像</h2>
-<h2 id="将iso转换为img文件">将iso转换为img文件</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hdiutil convert -format UDRW -o <span class="regexp">/path/</span>to<span class="regexp">/generate/img</span><span class="regexp">/file /</span>path<span class="regexp">/to/</span>your<span class="regexp">/iso/</span><span class="keyword">file</span></div></pre></td></tr></table></figure>
-
-<p>该命令会生成一个.img的磁盘镜像文件，但是mac osx会默认追加一个.dmg，即生成的文件后缀是.img.dmg，这个后缀没关系，可以忽略</p>
-<h2 id="查看USB的盘符">查看USB的盘符</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ diskutil list</div><div class="line">/dev/disk0</div><div class="line">   <span class="comment">#:                       TYPE NAME                    SIZE       IDENTIFIER</span></div><div class="line">   0:      GUID_partition_scheme                        <span class="keyword">*</span>250.1 GB   disk0</div><div class="line">   1:                        EFI                         209.7 MB   disk0s1</div><div class="line">   2:                  Apple_HFS Macintosh HD            249.2 GB   disk0s2</div><div class="line">   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3</div><div class="line">/dev/disk1</div><div class="line">   <span class="comment">#:                       TYPE NAME                    SIZE       IDENTIFIER</span></div><div class="line">   0:     FDisk_partition_scheme                        <span class="keyword">*</span>4.0 GB     disk1</div><div class="line">   1:                 DOS_FAT_32 UNTITLED                4.0 GB     disk1s1</div></pre></td></tr></table></figure>
-
-<p>该命令查看当前系统上挂载的磁盘，其中/dev/disk1是我的USB磁盘。不同的系统disk后的数字可能不一样，但一般都是diskN的模式</p>
-<h2 id="卸载USB磁盘">卸载USB磁盘</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ diskutil unmountDisk /dev/disk1</div><div class="line">Unmount <span class="operator">of</span> all volumes <span class="command"><span class="keyword">on</span> <span class="title">disk1</span> <span class="title">was</span> <span class="title">successful</span></span></div></pre></td></tr></table></figure>
-
-<p>使用diskutil unmountDisk卸载USB磁盘，注意卸载（umount）与弹出(eject)的区别:)</p>
-<h2 id="将镜像写入USB">将镜像写入USB</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$ </span>sudo dd <span class="keyword">if</span>=ubuntu.img.dmg of=<span class="regexp">/dev/rdisk</span>1 bs=<span class="number">1</span>m</div></pre></td></tr></table></figure>
-
-<p>将第二步生成的img文件写入到USB磁盘/dev/rdisk1。</p>
-<h2 id="弹出USB">弹出USB</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$ </span>diskutil eject /dev/disk1</div></pre></td></tr></table></figure>
-
+		<p>　　云计算的使命是要把整个IT硬件产业颠覆。它将彻底改变传统硬件的设计、制造、交付、使用整个流程，在云端，将建立新逻辑和新秩序，也将诞生新的思科、新的IBM、新的英特尔。这个过程就如同诺基亚被苹果iPhone颠覆一样。当我第一次看到iPhone1发布时，最让人惊呆的是：手机键盘没了。千万别小看这个颠覆性，键盘变成虚拟，从而腾出空间，为各种应用软件打开无限可能性。</p>
+<p>　　传统硬件产业为什么不会成为下一个“消失的键盘”呢?我们真需要硬件吗?我们需要的不是硬件，我们只是需要一个能让应用程序跑在上面的一个环境，这个环境可以是实物的硬件，也可以是虚拟的环境。</p>
+<p>　　当实物的硬件被虚拟的云所替代，设计、制造、交付、使用一切流程都将被改变。我们再也不需要工厂车间里产出一个“铁疙瘩”，通过快递物流把这个“铁疙瘩”从南方运到哈尔滨的机房，然后连接交换机、路由器、防火墙…</p>
+<p>　　云计算让硬件彻底摆脱了物理和空间的限制，一切都在云端，进入零雲，所有设备都可以自己创造…你只要在线，可以随时随地查看你的虚拟设备运行情况，服务器、交换机、路由器、防火墙，一切的运行参数都呈现在你面前，任由你修改配置。</p>
+<p>　　众多创业者和传统行业里的中小企业，再也不用头疼要用昂贵的价格去购买联想的服务器、华为的交换机，还要再花昂贵的金额将服务器托管在别人的机房。然后再花大量的人力和时间成本去维护，还要天天为宕机、断电、不响应而提心吊胆。</p>
+<p>　　如果你现在要上线一个大型应用，需要1000台物理服务器，没有几个月，你上线一下试试!如果在云端，虚拟服务器、交换机、路由器….完全创建，分分钟搞定。流量你想要多大有多大，速度你想要多快就多快。这种感觉像什么，就像世界完全掌握在你的手掌心，这种感觉你知道有多酷、有多爽吗？云计算就像“精神鸦片”，只要你吃了，就一定会上瘾。</p>
+<p>　　你去问中石油，中石化，你去问任何传统企业的CTO或CIO，云计算在你们企业IT系统年度预算里占多少份额，我估计连个零头都没有。钢铁、物流、纺织、农业、零售、医疗……相比互联网企业用户，各个行业的传统企业才是云计算巨大的需求端，但这个市场还有漫长的教育期。现在大家都在谈云计算，炒概念，其实全都是忽悠，很多人连什么是云计算都没弄明白。这个产业的真实市场需求根本没到级别，我们都只是在吃市场的边边角角，什么时候云计算能在传统企业IT系统年度预算站到10%-20%的份额，什么时候cloud真正成为IT系统的一份子，那时候再去谈竞争吧。目前的云计算厂商，需要做的是共同推动云计算技术逐渐走向成熟稳定，而不是搞价格战、恶性竞争、明着喊云计算暗地里卖虚机。<br>赢得企业用户的心，是最关键的。大家一定要清醒‘一荣俱荣，一损俱损’的道理。一家云计算服务商做不好，企业花钱尝试了你的云服务，最后觉得很伤心，这种结果非常可怕，企业质疑的不是你一家服务商，而是整个云计算行业，伤害的是整个行业的未来。</p>
+<p>　　云计算一定是消费者市场驱动的。消费者渴望更灵活、更弹性、更经济的方式，因此云计算不是一门简单的生意，它是传统IT行业的自我革命，随着IT行业逐渐平民化普及化，整个行业被消费者推动着，往更公平的享受IT存储技术巨大便利的方向上走。行业所有人都要意识到这一点。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/linux/">linux</a>
+  <span></span> <a href="/tags/心情随笔/">心情随笔</a>
   </div>
 
 
@@ -126,7 +110,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/10/mac制作ubuntu启动盘/" data-title="Mac下制作linux启动U盘 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2014/11/10/云计算的磅礴未来/" data-title="云计算的磅礴未来 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -136,18 +120,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2014/11/10/云计算的磅礴未来/" title="云计算的磅礴未来">
+ <a href="/2014/11/10/ntp服务器笔记/" title="NTP服务器">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  云计算的磅礴未来</span>
+  NTP服务器</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2014/11/10/ubuntu-precese的sohu源/"  title="ubuntu:precese的sohu源">
+<a href="/2014/11/10/mac制作ubuntu启动盘/"  title="Mac下制作linux启动U盘">
  <strong>NEXT:</strong><br/> 
- <span>ubuntu:precese的sohu源
+ <span>Mac下制作linux启动U盘
 </span>
 </a>
 </div>
@@ -164,7 +148,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载ubuntu_iso镜像"><span class="toc-number">1.</span> <span class="toc-text">下载ubuntu iso镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将iso转换为img文件"><span class="toc-number">2.</span> <span class="toc-text">将iso转换为img文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看USB的盘符"><span class="toc-number">3.</span> <span class="toc-text">查看USB的盘符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卸载USB磁盘"><span class="toc-number">4.</span> <span class="toc-text">卸载USB磁盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将镜像写入USB"><span class="toc-number">5.</span> <span class="toc-text">将镜像写入USB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹出USB"><span class="toc-number">6.</span> <span class="toc-text">弹出USB</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">

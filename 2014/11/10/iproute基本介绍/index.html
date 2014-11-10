@@ -1,0 +1,384 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>iproute | zhangyan&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="张岩">
+    
+    <meta name="description" content="iproute基本介绍
+
+-
+iproute是用于linux下网络配置工具，该工具包包含以下组件
+123456789101112# rpm -ql  iproute | grep bin/sbin/cbq         #流量控制/sbin/ifcfg           #网络地址配置管理/sb">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="zhangyan&#39;s blog" title="zhangyan&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="zhangyan&#39;s blog">zhangyan&#39;s blog</a></h1>
+				<h2 class="blog-motto">张岩个人站点</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/aboutme">关于我</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yan.lingyun.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/11/10/iproute基本介绍/" title="iproute" itemprop="url">iproute</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yan.lingyun.io" title="张岩">张岩</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-11-10T06:33:44.000Z" itemprop="datePublished">11月 10 2014</time>
+    更新日期:<time datetime="2014-11-10T06:33:44.000Z" itemprop="dateModified">11月 10 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#iproute基本介绍"><span class="toc-number">1.</span> <span class="toc-text">iproute基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ip基本使用方法"><span class="toc-number">2.</span> <span class="toc-text">ip基本使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#OBJECT"><span class="toc-number">2.0.1.</span> <span class="toc-text">OBJECT</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由策略数据库"><span class="toc-number">3.</span> <span class="toc-text">路由策略数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#默认规则"><span class="toc-number">3.0.1.</span> <span class="toc-text">默认规则</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例_简单策略路由添加_[引用自Linux高级路由中文HOWTO]"><span class="toc-number">4.</span> <span class="toc-text">例 简单策略路由添加 [引用自Linux高级路由中文HOWTO]</span></a></li></ol>
+		</div>
+		
+		<h2 id="iproute基本介绍"><em>iproute基本介绍</em></h2>
+<hr>
+<p>-</p>
+<p>iproute是用于linux下网络配置工具，该工具包包含以下组件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -ql  iproute | grep bin</span></div><div class="line">/sbin/cbq         <span class="comment">#流量控制</span></div><div class="line">/sbin/ifcfg           <span class="comment">#网络地址配置管理</span></div><div class="line">/sbin/ip          <span class="comment">#网络配置命令</span></div><div class="line">/sbin/rtmon           <span class="comment">#rtmon listens on netlink socket and monitors routing table changes.</span></div><div class="line">/sbin/tc          <span class="comment">#进行流量控制的命令</span></div><div class="line">/usr/sbin/arpd        <span class="comment">#收集arp信息保存到本地cache daemon</span></div><div class="line">/usr/sbin/lnstat  <span class="comment">#网络统计信息</span></div><div class="line">/usr/sbin/nstat       <span class="comment">#显示网络统计信息</span></div><div class="line">/usr/sbin/rtacct  <span class="comment">#查看数据包流量状态</span></div><div class="line">【nstat and rtacct are simple tools to monitor kernel snmp counters and network interface statistics.】</div><div class="line">/usr/sbin/ss      <span class="comment">#类似netstat命令，显示活动连接</span></div></pre></td></tr></table></figure>
+
+<p>iproute的中心是<code>ip</code>这个命令，类似<code>arp</code>、<code>ifconfig</code>、<code>route</code>命令虽然这些工具能够工作，但是在Linux2.2和更高版本的内核上就有点out了。</p>
+<h2 id="ip基本使用方法"><em>ip基本使用方法</em></h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ip --help</span></div><div class="line">Usage: ip [ OPTIONS ] OBJECT { COMMAND | <span class="built_in">help</span> }</div><div class="line">       ip [ -force ] -batch filename</div><div class="line">where  OBJECT := { link | addr | addrlabel | route | rule | neigh | ntable |</div><div class="line">                   tunnel | maddr | mroute | mrule | monitor | xfrm }</div><div class="line">       OPTIONS := { -V[ersion] | <span class="operator">-s</span>[tatistics] | <span class="operator">-d</span>[etails] | -r[esolve] |</div><div class="line">                    <span class="operator">-f</span>[amily] { inet | inet6 | ipx | dnet | link } |</div><div class="line">                    -o[neline] | -t[imestamp] | -b[atch] [filename] |</div><div class="line">                    -rc[vbuf] [size]}</div></pre></td></tr></table></figure>
+
+<h4 id="OBJECT">OBJECT</h4>
+<ul>
+<li>link 指网络设备，通过此对象命令，我们可以查看及更改网络设备的属性。</li>
+<li>addr 地址管理</li>
+<li>neigh arp表管理</li>
+<li>route 路由管理</li>
+<li>rule 路由策略</li>
+<li>maddr 多址广播地址</li>
+<li>mroute 多播路由缓存管理</li>
+<li>tunnel 通道管理</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># <span class="literal">ip</span> -V      #打印iproute信息</div><div class="line"><span class="literal">ip</span> utility, iproute2-ss091226</div></pre></td></tr></table></figure>
+
+<p><strong>显示链路信息</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ip link</span></div><div class="line"><span class="number">1</span>: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span class="number">16436</span> qdisc noqueue state UNKNOWN</div><div class="line">    link/loopback <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> brd <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></div><div class="line"><span class="number">2</span>: eth0: &lt;BROADCAST,MULTICAST&gt; mtu <span class="number">1500</span> qdisc pfifo_fast state DOWN qlen <span class="number">1000</span></div><div class="line">    link/ether <span class="number">00</span>:<span class="number">0</span>c:<span class="number">29</span>:<span class="number">3</span>b:<span class="number">9</span>c:<span class="number">6</span>f brd ff:ff:ff:ff:ff:ff</div><div class="line"><span class="comment"># ip link show dev eth0</span></div><div class="line"><span class="number">2</span>: eth0: &lt;BROADCAST,MULTICAST&gt; mtu <span class="number">1500</span> qdisc pfifo_fast state DOWN qlen <span class="number">1000</span></div><div class="line">    link/ether <span class="number">00</span>:<span class="number">0</span>c:<span class="number">29</span>:<span class="number">3</span>b:<span class="number">9</span>c:<span class="number">6</span>f brd ff:ff:ff:ff:ff:ff</div></pre></td></tr></table></figure>
+
+<p><strong>显示IP地址</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt"># ip addr</span></span></div><div class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span class="number">16436</span> qdisc noqueue state <span class="constant">UNKNOWN</span></div><div class="line">    link/loopback <span class="number">00</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">00</span> brd <span class="number">00</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">00</span></div><div class="line">    inet <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>/<span class="number">8</span> scope host lo</div><div class="line">    inet6 <span class="symbol">:</span><span class="symbol">:</span><span class="number">1</span>/<span class="number">128</span> scope host</div><div class="line">       valid_lft forever preferred_lft forever</div><div class="line"><span class="input"><span class="prompt">2: eth0: &lt;BROADCAST,MULTICAST&gt;</span> mtu <span class="number">1500</span> qdisc pfifo_fast state <span class="constant">DOWN</span> qlen <span class="number">1000</span></span></div><div class="line">    link/ether <span class="number">00</span><span class="symbol">:</span>0<span class="symbol">c:</span><span class="number">29</span><span class="symbol">:</span><span class="number">3</span><span class="symbol">b:</span><span class="number">9</span><span class="symbol">c:</span><span class="number">6</span>f brd <span class="symbol">ff:</span><span class="symbol">ff:</span><span class="symbol">ff:</span><span class="symbol">ff:</span><span class="symbol">ff:</span>ff</div><div class="line">    inet <span class="number">192.168</span>.<span class="number">0</span>.<span class="number">10</span>/<span class="number">24</span> brd <span class="number">192.168</span>.<span class="number">0</span>.<span class="number">255</span> scope global eth<span class="number">0</span></div></pre></td></tr></table></figure>
+
+<p><strong>显示路由<code>ip route</code> [类似route -n]</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor"># ip route | column -t</span></div><div class="line"><span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span>  dev  eth1          scope  link</div><div class="line"><span class="number">10.2</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">16</span>     dev  eth2          proto  kernel  scope  link  src  <span class="number">10.2</span><span class="number">.0</span><span class="number">.111</span></div><div class="line"><span class="keyword">default</span>         via  <span class="number">10.2</span><span class="number">.255</span><span class="number">.254</span>  dev    eth2</div><div class="line"><span class="preprocessor"># ip route del 192.168.0.0/24 dev eth1</span></div><div class="line"><span class="preprocessor"># ip route add 192.168.0.0/24 dev eth1</span></div><div class="line"><span class="preprocessor"># ip route del via 10.2.255.254  //删除默认路由</span></div><div class="line"><span class="preprocessor"># ip route add via 10.2.255.254  //增加默认路由</span></div><div class="line"><span class="preprocessor"># ip route add 192.168.1.0/24 via 192.168.0.1  //增加静态路由，192.168.0.1为下一跳地址</span></div><div class="line"><span class="preprocessor"># ip route del 192.168.1.0/24 via 192.168.0.1  //删除静态路由</span></div></pre></td></tr></table></figure>
+
+<p>显示arp信息<code>ip neigh</code> [可以取代arp -n],删除则是<code>ip neigh del IP地址 dev 设备名</code></p>
+<h2 id="路由策略数据库"><em>路由策略数据库</em></h2>
+<p>如果你有一个大规模的路由器，需要同时满足不同用户对于路由的不通需求，路由策略数据库可以帮你通过多路由表技术来实现。当内核需要做出路由选择时，它会找出应该参考哪一张路由表。除了<code>ip</code>外,<code>route</code>也可以修改main和local表。</p>
+<h4 id="默认规则">默认规则</h4>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor"># ip rule</span></div><div class="line"><span class="number">0</span>:    <span class="keyword">from</span> all lookup local </div><div class="line"><span class="number">32766</span>:    <span class="keyword">from</span> all lookup main</div><div class="line"><span class="number">32767</span>:    <span class="keyword">from</span> all lookup <span class="keyword">default</span></div></pre></td></tr></table></figure>
+
+<p>上面列出了规则的优先顺序。<code>ip route</code>命令默认显示的就是main表。<code>ip route show table all</code>显示所有规则中的表</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ip route list table local</span></div><div class="line">broadcast <span class="number">192.168</span><span class="number">.0</span><span class="number">.255</span> dev eth0  proto kernel  scope link  src <span class="number">192.168</span><span class="number">.0</span><span class="number">.10</span></div><div class="line">broadcast <span class="number">10.2</span><span class="number">.0</span><span class="number">.0</span> dev eth1  proto kernel  scope link  src <span class="number">10.2</span><span class="number">.0</span><span class="number">.217</span></div><div class="line">broadcast <span class="number">127.255</span><span class="number">.255</span><span class="number">.255</span> dev lo  proto kernel  scope link  src <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></div><div class="line"><span class="keyword">...</span> <span class="keyword">...</span></div></pre></td></tr></table></figure>
+
+<p>default表为空</p>
+<h2 id="例_简单策略路由添加_[引用自Linux高级路由中文HOWTO]"><em>例 简单策略路由添加 [引用自Linux高级路由中文HOWTO]</em></h2>
+<p>让我们再来一个真实的例子。我有两个Cable Modem，连接到了一个 Linux的NAT (“伪装”) 路由器上。这里的室友们向我付费使用Internet。假如我其中的一个室友因为只想访问 hotmail 而希望少付一些钱。对我来说这没有问题,他们肯定只能使用那个比较次的Cable Modem。</p>
+<p>那个比较快的cable modem 的IP地址是 212.64.94.251，PPP 链路，对端IP是212.64.94.1。而那个比较慢的cable modem的IP地址是212.64.78.148，对端是195.96.98.253。</p>
+<p>local 表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[ahu@home ahu]$ ip route list table local</div><div class="line">broadcast <span class="number">127.255</span>.<span class="number">255.255</span> dev lo proto kernel scope link src <span class="number">127.0</span>.<span class="number">0.1</span></div><div class="line">local <span class="number">10.0</span>.<span class="number">0.1</span> dev eth0 proto kernel scope host src <span class="number">10.0</span>.<span class="number">0.1</span></div><div class="line">broadcast <span class="number">10.0</span>.<span class="number">0.0</span> dev eth0 proto kernel scope link src <span class="number">10.0</span>.<span class="number">0.1</span></div><div class="line">local <span class="number">212.64</span>.<span class="number">94.251</span> dev ppp0 proto kernel scope host src <span class="number">212.64</span>.<span class="number">94.251</span></div><div class="line">broadcast <span class="number">10.255</span>.<span class="number">255.255</span> dev eth0 proto kernel scope link src <span class="number">10.0</span>.<span class="number">0.1</span></div><div class="line">broadcast <span class="number">127.0</span>.<span class="number">0.0</span> dev lo proto kernel scope link src <span class="number">127.0</span>.<span class="number">0.1</span></div><div class="line">local <span class="number">212.64</span>.<span class="number">78.148</span> dev ppp2 proto kernel scope host src <span class="number">212.64</span>.<span class="number">78.148</span></div><div class="line">local <span class="number">127.0</span>.<span class="number">0.1</span> dev lo proto kernel scope host src <span class="number">127.0</span>.<span class="number">0.1</span></div><div class="line">local <span class="number">127.0</span>.<span class="number">0.0</span>/<span class="number">8</span> dev lo proto kernel scope host src <span class="number">127.0</span>.<span class="number">0.1</span></div></pre></td></tr></table></figure>
+
+<p>让我们看看“main”路由表：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[ahu<span class="keyword">@home</span> ahu]$ ip route list table main</div><div class="line"><span class="number">195.96</span>.98.253 dev ppp2 proto kernel <span class="keyword">scope</span> link src <span class="number">212.64</span>.78.148</div><div class="line"><span class="number">212.64</span>.94.1 dev ppp0 proto kernel <span class="keyword">scope</span> link src <span class="number">212.64</span>.94.251</div><div class="line"><span class="number">10.0</span>.0.0/<span class="number">8</span> dev eth0 proto kernel <span class="keyword">scope</span> link src <span class="number">10.0</span>.0.1</div><div class="line"><span class="number">127.0</span>.0.0/<span class="number">8</span> dev lo <span class="keyword">scope</span> link</div><div class="line"><span class="keyword">default</span> via <span class="number">212.64</span>.94.1 dev ppp0</div></pre></td></tr></table></figure>
+
+<p>我们现在为我们的朋友创建了一个叫做“John”的规则。其实我们完全可以使用纯数字表示规则，但是不方便。我们可以向/etc/iproute2/rt_tables文件中添加数字与名字的关联：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor"># echo 200 John &gt;&gt; /etc/iproute2/rt_tables</span></div><div class="line"><span class="preprocessor"># ip rule add from 10.0.0.10 table John</span></div><div class="line"><span class="preprocessor"># ip rule</span></div><div class="line"><span class="number">0</span>:    <span class="keyword">from</span> all lookup local </div><div class="line"><span class="number">32765</span>:  <span class="keyword">from</span> <span class="number">10.0</span><span class="number">.0</span><span class="number">.10</span> lookup John</div><div class="line"><span class="number">32766</span>:    <span class="keyword">from</span> all lookup main</div><div class="line"><span class="number">32767</span>:    <span class="keyword">from</span> all lookup <span class="keyword">default</span></div></pre></td></tr></table></figure>
+
+<p>现在，剩下的事情就是为 John 的路由表创建路由项了。别忘了刷新路由缓存：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># <span class="literal">ip</span> route <span class="keyword">add</span> <span class="built_in">default</span> via <span class="number">195.96</span><span class="string">.98</span><span class="string">.253</span> dev ppp2 table John</div><div class="line"># <span class="literal">ip</span> route flush cache</div></pre></td></tr></table></figure>
+
+<p>总结主要是以下几步：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">echo 200 John &gt;&gt;</span> /etc/iproute2/rt_tables <span class="comment">#方便表示，把规则名字和数字对应加入到/etc/iproute2/rt_tables文件</span></span></div><div class="line">ip rule add from <span class="number">10.0</span>.<span class="number">0</span>.<span class="number">10</span> table <span class="constant">John</span> <span class="comment">#新增规则</span></div><div class="line">ip route add default via <span class="number">195.96</span>.<span class="number">98.253</span> dev ppp2 table <span class="constant">John</span> <span class="comment">#规则中添加路由表</span></div><div class="line">ip route flush cache <span class="comment">#刷新路由表</span></div></pre></td></tr></table></figure>
+
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yan.lingyun.io/2014/11/10/iproute基本介绍/" data-title="iproute | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/11/10/服务器双网卡配置不同运营商IP的方案/" title="服务器双网卡配置不同运营商IP的方案">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  服务器双网卡配置不同运营商IP的方案</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/11/10/openvpn基本搭建实例/"  title="openvpn服务器基本搭建实例">
+ <strong>NEXT:</strong><br/> 
+ <span>openvpn服务器基本搭建实例
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#iproute基本介绍"><span class="toc-number">1.</span> <span class="toc-text">iproute基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ip基本使用方法"><span class="toc-number">2.</span> <span class="toc-text">ip基本使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#OBJECT"><span class="toc-number">2.0.1.</span> <span class="toc-text">OBJECT</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由策略数据库"><span class="toc-number">3.</span> <span class="toc-text">路由策略数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#默认规则"><span class="toc-number">3.0.1.</span> <span class="toc-text">默认规则</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例_简单策略路由添加_[引用自Linux高级路由中文HOWTO]"><span class="toc-number">4.</span> <span class="toc-text">例 简单策略路由添加 [引用自Linux高级路由中文HOWTO]</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/debian-ubuntu/" title="debian&amp;ubuntu">debian&amp;ubuntu<sup>1</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>4</sup></a></li>
+		
+			<li><a href="/tags/linux-debian-ubuntu/" title="linux debian&amp;ubuntu">linux debian&amp;ubuntu<sup>0</sup></a></li>
+		
+			<li><a href="/tags/linux-debian-ubuntu/" title="linux,debian&amp;ubuntu">linux,debian&amp;ubuntu<sup>0</sup></a></li>
+		
+			<li><a href="/tags/mac/" title="mac">mac<sup>1</sup></a></li>
+		
+			<li><a href="/tags/心情随笔/" title="心情随笔">心情随笔<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://yan.lingyun.io" target="_blank" title="张岩">张岩</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yanest"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

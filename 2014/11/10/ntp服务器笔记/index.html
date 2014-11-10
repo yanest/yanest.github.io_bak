@@ -1,0 +1,383 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>NTP服务器 | zhangyan&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="张岩">
+    
+    <meta name="description" content="NTP服务器笔记
+NTP
+
+Network Time Protocol（NTP）是用来使计算机时间同步化的一种协议，它可以使计算机对其服务器或时钟源（如石英钟，GPS等等)做同步化，它可以提供高精准度的时间校正（LAN上与标准间差小于1毫秒，WAN上几十毫秒），且可使用加密确认的方式来防止恶毒的协议">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="zhangyan&#39;s blog" title="zhangyan&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="zhangyan&#39;s blog">zhangyan&#39;s blog</a></h1>
+				<h2 class="blog-motto">张岩个人站点</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/aboutme">关于我</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yan.lingyun.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/11/10/ntp服务器笔记/" title="NTP服务器" itemprop="url">NTP服务器</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yan.lingyun.io" title="张岩">张岩</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-11-10T06:26:28.000Z" itemprop="datePublished">11月 10 2014</time>
+    更新日期:<time datetime="2014-11-10T06:26:28.000Z" itemprop="dateModified">11月 10 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NTP服务器笔记"><span class="toc-number">1.</span> <span class="toc-text">NTP服务器笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NTP"><span class="toc-number">1.1.</span> <span class="toc-text">NTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTP_Server安装配置"><span class="toc-number">1.2.</span> <span class="toc-text">NTP Server安装配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置选项说明"><span class="toc-number">1.3.</span> <span class="toc-text">配置选项说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关命令"><span class="toc-number">1.4.</span> <span class="toc-text">相关命令</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="NTP服务器笔记">NTP服务器笔记</h1>
+<h2 id="NTP">NTP</h2>
+<blockquote>
+<p>Network Time Protocol（NTP）是用来使计算机时间同步化的一种协议，它可以使计算机对其服务器或时钟源（如石英钟，GPS等等)做同步化，它可以提供高精准度的时间校正（LAN上与标准间差小于1毫秒，WAN上几十毫秒），且可使用加密确认的方式来防止恶毒的协议攻击。默认使用<code>UDP 123端口</code></p>
+</blockquote>
+<p>NTP提供准确时间，首先需要一个准确的UTC时间来源，NTP获得UTC的时间来源可以从原子钟、天文台、卫星，也可从Internet上获取。时间服务器按照NTP服务器的等级传播，根据离外部UTC源的远近将所有服务器归入不用的层(Stratum)中。Stratum-1在顶层由外部UTC接入，stratum-1的时间服务器为整个系统的基础，Stratum的总数限制在15以内。下图为NTP层次图：</p>
+<center><img src="http://yanest.qiniudn.com/image/Network_Time_Protocol_servers_and_clients.png" alt="ntp"></center>
+
+<hr>
+<h2 id="NTP_Server安装配置">NTP Server安装配置</h2>
+<p>关于NTP服务器的安装，根据不同版本安装方法也不同。REDHAT系统则可以使用yum安装，Ubuntu系列可以使用apt-get安装，这里不做具体的介绍，主要详细介绍配置文件的信息。</p>
+<p>对于Centos过滤注释和空行后，ntp配置文件内容如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#grep -vE '^#|^$' /etc/ntp.conf</span></div><div class="line">driftfile /var/lib/ntp/drift</div><div class="line">restrict default kod nomodify notrap nopeer noquery</div><div class="line">restrict -<span class="number">6</span> default kod nomodify notrap nopeer noquery</div><div class="line">restrict <span class="number">127.0</span>.<span class="number">0.1</span></div><div class="line">restrict -<span class="number">6</span> ::<span class="number">1</span></div><div class="line">server <span class="number">0</span>.centos.pool.ntp.org</div><div class="line">server <span class="number">1</span>.centos.pool.ntp.org</div><div class="line">server <span class="number">2</span>.centos.pool.ntp.org</div><div class="line">includefile /etc/ntp/crypto/pw</div><div class="line">keys /etc/ntp/keys</div></pre></td></tr></table></figure>
+
+<h2 id="配置选项说明"><em>配置选项说明</em></h2>
+<ul>
+<li><code>driftfile</code>选项， 则指定了用来保存系统时钟频率偏差的文件。 ntpd程序使用它来自动地补偿时钟的自然漂移， 从而使时钟即使在切断了外来时源的情况下， 仍能保持相当的准确度。另外，driftfile 选项也保存上一次响应所使用的 NTP 服务器的信息。 这个文件包含了 NTP 的内部信息， 它不应被任何其他进程修改。<code>无需更改</code></li>
+<li><code>restrict default kod nomodify notrap nopeer noquery</code> 默认拒绝所有NTP客户端的操作。【restrict &lt;子网掩码&gt;|&lt;网段&gt; [ignore|nomodiy|notrap|notrust|nknod]】 指定可以通信的IP地址和网段。如果没有指定选项，表示客户端访问NTP服务器没有任何限制<ul>
+<li>ignore 关闭所有NTP服务</li>
+<li>nomodiy 表示客户端不能更改NTP服务器的时间参数，但可以通过NTP服务器进行时间同步</li>
+<li>notrust 拒绝没有通过认证的客户端</li>
+<li>knod kod技术科阻止”Kiss of Death”包（一种DOS攻击）对服务器的破坏，使用knod开启功能</li>
+<li>nopeer 不与其它同一层的NTP服务器进行同步</li>
+</ul>
+</li>
+<li><code>server 【IP|FQDN|prefer】</code>指该服务器上层NTP Server，使用prefer的优先级最高，没有使用prefer则按照配置文件顺序由高到低，默认情况下至少15min和上层NTP服务器进行时间校对</li>
+<li><code>fudge</code>可以指定本地NTP Server层，如<code>fudge 127.0.0.1 stratum 9</code></li>
+<li><code>broadcast 网段 子网掩码</code>指定NTP进行时间广播的网段，如<code>broadcast 192.168.1.255</code></li>
+<li><code>logfile</code> 可以指定NTP Server日志文件</li>
+</ul>
+<p>几个与NTP相关的配置文件:<code>/usr/share/zoneinfo/</code>、<code>/etc/sysconfig/clock</code>、<code>/etc/localtime</code> </p>
+<ul>
+<li>/usr/share/zoneinfo/ 存放时区文件目录 </li>
+<li>/etc/sysconfig/clock 指定当前系统时区信息 </li>
+<li>/etc/localtime 相应的时区文件</li>
+</ul>
+<p>如果需要修改当前时区，则可以从/usr/share/zoneinfo/目录拷贝相应时区文件覆盖/etc/localtime并修改/etc/sysconfig/clock 即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</div><div class="line">sed -i <span class="string">'s:ZONE=.*:ZONE="Asia/Shanghai":g'</span> /etc/sysconfig/clock</div></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="相关命令">相关命令</h2>
+<p>ntpstat查看同步状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ntpstat </span></div><div class="line">synchronised to NTP server (<span class="number">192.168</span>.<span class="number">0.18</span>) at stratum <span class="number">4</span></div><div class="line">   time correct to within <span class="number">88</span> ms   *<span class="comment">#表面时间校正88ms*</span></div><div class="line">   polling server every <span class="number">1024</span> s        *<span class="comment">#每隔1024s更新一次*</span></div></pre></td></tr></table></figure>
+
+<p>ntpq列出上层状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ntpq -np</span></div><div class="line">     remote           refid         st t when poll reach   delay   offset  jitter</div><div class="line">==============================================================================</div><div class="line">*<span class="number">192.168</span>.<span class="number">0.18</span>       <span class="number">202.112</span>.<span class="number">31.197</span>   <span class="number">3</span> u  <span class="number">101</span> <span class="number">1024</span>  <span class="number">377</span>   <span class="number">14.268</span>    <span class="number">0.998</span>   <span class="number">0.143</span></div></pre></td></tr></table></figure>
+
+<p>输出说明：</p>
+<ul>
+<li><code>remote</code> NTP Server</li>
+<li><code>refid</code> 参考的上层ntp地址</li>
+<li><code>st</code> 层次</li>
+<li><code>when</code> 上次更新时间距离现在时常</li>
+<li><code>poll</code> 下次更新时间</li>
+<li><code>reach</code> 更新次数</li>
+<li><code>delay</code> 延迟</li>
+<li><code>offset</code> 时间补偿结果</li>
+<li><code>jitter</code> 与BIOS硬件时间差异</li>
+</ul>
+<p>ntpdate 同步当前时间<br><code>ntpdate NTP服务器地址</code></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yan.lingyun.io/2014/11/10/ntp服务器笔记/" data-title="NTP服务器 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/11/10/openvpn基本搭建实例/" title="openvpn服务器基本搭建实例">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  openvpn服务器基本搭建实例</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/11/10/云计算的磅礴未来/"  title="云计算的磅礴未来">
+ <strong>NEXT:</strong><br/> 
+ <span>云计算的磅礴未来
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NTP服务器笔记"><span class="toc-number">1.</span> <span class="toc-text">NTP服务器笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NTP"><span class="toc-number">1.1.</span> <span class="toc-text">NTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTP_Server安装配置"><span class="toc-number">1.2.</span> <span class="toc-text">NTP Server安装配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置选项说明"><span class="toc-number">1.3.</span> <span class="toc-text">配置选项说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关命令"><span class="toc-number">1.4.</span> <span class="toc-text">相关命令</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/debian-ubuntu/" title="debian&amp;ubuntu">debian&amp;ubuntu<sup>1</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>4</sup></a></li>
+		
+			<li><a href="/tags/linux-debian-ubuntu/" title="linux debian&amp;ubuntu">linux debian&amp;ubuntu<sup>0</sup></a></li>
+		
+			<li><a href="/tags/linux-debian-ubuntu/" title="linux,debian&amp;ubuntu">linux,debian&amp;ubuntu<sup>0</sup></a></li>
+		
+			<li><a href="/tags/mac/" title="mac">mac<sup>1</sup></a></li>
+		
+			<li><a href="/tags/心情随笔/" title="心情随笔">心情随笔<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://yan.lingyun.io" target="_blank" title="张岩">张岩</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yanest"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>
