@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>ubuntu:precese的sohu源 | zhangyan&#39;s blog</title>
+    <title>ubuntu国内源 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="有时候觉得官方源真是慢的够可以的了，觉得sohu的源还算稳定，这是12.04的源。
-12345deb http://mirrors.sohu.com/ubuntu/ precise main restricted universe multiverse2deb http://mirrors.sohu">
+    <meta name="description" content="这几天犯了个愚蠢的错误。我一直奇怪，服务器怎么会无缘无故的升级到14.10版本，原来发现是我搞错了源，没注意看，把trusty的源误以为是trusty的源。我还傻傻的以为是误操作。现在把源都整理出来。
+12345678910deb http://mirrors.sohu.com/ubuntu/ tr">
     
     
     
@@ -69,15 +69,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/10/ubuntu-precese的sohu源/" title="ubuntu:precese的sohu源" itemprop="url">ubuntu:precese的sohu源</a>
+      <a href="/2014/11/27/ubuntu-precese的sohu源/" title="ubuntu国内源" itemprop="url">ubuntu国内源</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-10T01:34:35.000Z" itemprop="datePublished">11月 10 2014</time>
-    更新日期:<time datetime="2014-11-10T01:34:35.000Z" itemprop="dateModified">11月 10 2014</time>
+    <time datetime="2014-11-27T04:42:17.000Z" itemprop="datePublished">11月 27 2014</time>
+    更新日期:<time datetime="2014-11-27T04:42:17.000Z" itemprop="dateModified">11月 27 2014</time>
     
   </p>
 </header>
@@ -89,8 +89,12 @@
 		
 		</div>
 		
-		<p>有时候觉得官方源真是慢的够可以的了，觉得sohu的源还算稳定，这是12.04的源。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="title">deb</span> <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise main restricted universe multiverse</div><div class="line"><span class="number">2</span></div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-updates main restricted universe multiverse</div><div class="line"><span class="number">3</span></div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-security main restricted universe multiverse</div></pre></td></tr></table></figure>
+		<p>这几天犯了个愚蠢的错误。我一直奇怪，服务器怎么会无缘无故的升级到14.10版本，原来发现是我搞错了源，没注意看，把trusty的源误以为是trusty的源。我还傻傻的以为是误操作。<br>现在把源都整理出来。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">deb</span> <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-security main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-updates main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-proposed main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-backports main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-security main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-updates main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-proposed main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-backports main restricted universe multiverse</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">deb</span> <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-security main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-updates main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-proposed main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-backports main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-security main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-updates main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-proposed main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-backports main restricted universe multiverse</div></pre></td></tr></table></figure>
 
   
 	</div>
@@ -106,7 +110,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/10/ubuntu-precese的sohu源/" data-title="ubuntu:precese的sohu源 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2014/11/27/ubuntu-precese的sohu源/" data-title="ubuntu国内源 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -115,19 +119,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/11/10/mac制作ubuntu启动盘/" title="Mac下制作linux启动U盘">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  Mac下制作linux启动U盘</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/11/10/我的极客生活/"  title="我的极客生活">
+<a href="/2014/11/21/docker/"  title="">
  <strong>NEXT:</strong><br/> 
- <span>我的极客生活
+ <span>(no title)
 </span>
 </a>
 </div>

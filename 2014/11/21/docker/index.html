@@ -4,16 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Mac下制作linux启动U盘 | zhangyan&#39;s blog</title>
+    <title>zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="下载ubuntu iso镜像
-将iso转换为img文件
-1$ hdiutil convert -format UDRW -o /path/to/generate/img/file /path/to/your/iso/file
-
-该命令会生成一个.img的磁盘镜像文件，但是mac osx会默认追加一个">
+    <meta name="description" content="1234567891011121314#docker 快照状态的导出docker export &amp;lt;Container ID&amp;gt; &amp;gt; abc.tar#docker 快照的导入cat abc.tar | docker import - &amp;lt;镜像名字&amp;gt;#或者从url导入docke">
     
     
     
@@ -72,15 +68,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/10/mac制作ubuntu启动盘/" title="Mac下制作linux启动U盘" itemprop="url">Mac下制作linux启动U盘</a>
+      <a href="/2014/11/21/docker/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-10T02:05:01.000Z" itemprop="datePublished">11月 10 2014</time>
-    更新日期:<time datetime="2014-11-10T02:05:00.000Z" itemprop="dateModified">11月 10 2014</time>
+    <time datetime="2014-11-21T12:06:48.000Z" itemprop="datePublished">11月 21 2014</time>
+    更新日期:<time datetime="2014-11-21T12:06:48.000Z" itemprop="dateModified">11月 21 2014</time>
     
   </p>
 </header>
@@ -89,44 +85,24 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载ubuntu_iso镜像"><span class="toc-number">1.</span> <span class="toc-text">下载ubuntu iso镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将iso转换为img文件"><span class="toc-number">2.</span> <span class="toc-text">将iso转换为img文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看USB的盘符"><span class="toc-number">3.</span> <span class="toc-text">查看USB的盘符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卸载USB磁盘"><span class="toc-number">4.</span> <span class="toc-text">卸载USB磁盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将镜像写入USB"><span class="toc-number">5.</span> <span class="toc-text">将镜像写入USB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹出USB"><span class="toc-number">6.</span> <span class="toc-text">弹出USB</span></a></li></ol>
+		
 		</div>
 		
-		<h2 id="下载ubuntu_iso镜像">下载ubuntu iso镜像</h2>
-<h2 id="将iso转换为img文件">将iso转换为img文件</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hdiutil convert -format UDRW -o <span class="regexp">/path/</span>to<span class="regexp">/generate/img</span><span class="regexp">/file /</span>path<span class="regexp">/to/</span>your<span class="regexp">/iso/</span><span class="keyword">file</span></div></pre></td></tr></table></figure>
+		<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt"></span></span></div><div class="line">#docker 快照状态的导出</div><div class="line">docker export &lt;Container ID&gt; &gt; abc.tar</div><div class="line"><span class="comment">#docker 快照的导入</span></div><div class="line">cat abc.tar | docker import - &lt;镜像名字&gt;</div><div class="line"><span class="comment">#或者从url导入</span></div><div class="line"><span class="input"><span class="prompt">docker import &lt;url&gt;</span> &lt;镜像名字&gt;</span></div><div class="line"></div><div class="line"><span class="comment">#docker 快照的提交保存</span></div><div class="line"><span class="input"><span class="prompt">docker commint &lt;Container ID&gt;</span> &lt;name/<span class="symbol">name:</span>tag&gt;</span></div><div class="line"><span class="comment">#docker 镜像的导出</span></div><div class="line"><span class="input"><span class="prompt">docker save &gt;</span> <span class="constant">Container</span>.tar</span></div><div class="line"><span class="comment">#docker 镜像的导入</span></div><div class="line">docker load &lt; <span class="constant">Container</span>.tar</div></pre></td></tr></table></figure>
 
-<p>该命令会生成一个.img的磁盘镜像文件，但是mac osx会默认追加一个.dmg，即生成的文件后缀是.img.dmg，这个后缀没关系，可以忽略</p>
-<h2 id="查看USB的盘符">查看USB的盘符</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ diskutil list</div><div class="line">/dev/disk0</div><div class="line">   <span class="comment">#:                       TYPE NAME                    SIZE       IDENTIFIER</span></div><div class="line">   0:      GUID_partition_scheme                        <span class="keyword">*</span>250.1 GB   disk0</div><div class="line">   1:                        EFI                         209.7 MB   disk0s1</div><div class="line">   2:                  Apple_HFS Macintosh HD            249.2 GB   disk0s2</div><div class="line">   3:                 Apple_Boot Recovery HD             650.0 MB   disk0s3</div><div class="line">/dev/disk1</div><div class="line">   <span class="comment">#:                       TYPE NAME                    SIZE       IDENTIFIER</span></div><div class="line">   0:     FDisk_partition_scheme                        <span class="keyword">*</span>4.0 GB     disk1</div><div class="line">   1:                 DOS_FAT_32 UNTITLED                4.0 GB     disk1s1</div></pre></td></tr></table></figure>
-
-<p>该命令查看当前系统上挂载的磁盘，其中/dev/disk1是我的USB磁盘。不同的系统disk后的数字可能不一样，但一般都是diskN的模式</p>
-<h2 id="卸载USB磁盘">卸载USB磁盘</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ diskutil unmountDisk /dev/disk1</div><div class="line">Unmount <span class="operator">of</span> all volumes <span class="command"><span class="keyword">on</span> <span class="title">disk1</span> <span class="title">was</span> <span class="title">successful</span></span></div></pre></td></tr></table></figure>
-
-<p>使用diskutil unmountDisk卸载USB磁盘，注意卸载（umount）与弹出(eject)的区别:)</p>
-<h2 id="将镜像写入USB">将镜像写入USB</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$ </span>sudo dd <span class="keyword">if</span>=ubuntu.img.dmg of=<span class="regexp">/dev/rdisk</span>1 bs=<span class="number">1</span>m</div></pre></td></tr></table></figure>
-
-<p>将第二步生成的img文件写入到USB磁盘/dev/rdisk1。</p>
-<h2 id="弹出USB">弹出USB</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$ </span>diskutil eject /dev/disk1</div></pre></td></tr></table></figure>
+<p>这两种导入导出方式的区别就是，快照状态的导出会丢弃之前的历史纪录，而镜像的导出会保留版本记录，提交比较大。从这点来看，docker有点像git。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker <span class="command">run</span> -t -i container bin/bash</div><div class="line">docker <span class="command">run</span> -d <span class="comment">--name test container /etc/init.d/monit start -D</span></div></pre></td></tr></table></figure>
 
   
 	</div>
 		<footer class="article-footer clearfix">
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a>
-  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/10/mac制作ubuntu启动盘/" data-title="Mac下制作linux启动U盘 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2014/11/21/docker/" data-title="zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -136,18 +112,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2014/11/10/云计算的磅礴未来/" title="云计算的磅礴未来">
+ <a href="/2014/11/27/ubuntu-precese的sohu源/" title="ubuntu国内源">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  云计算的磅礴未来</span>
+  ubuntu国内源</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2014/11/10/我的极客生活/"  title="我的极客生活">
+<a href="/2014/11/14/lvm管理分区/"  title="LVM管理分区">
  <strong>NEXT:</strong><br/> 
- <span>我的极客生活
+ <span>LVM管理分区
 </span>
 </a>
 </div>
@@ -164,7 +140,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载ubuntu_iso镜像"><span class="toc-number">1.</span> <span class="toc-text">下载ubuntu iso镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将iso转换为img文件"><span class="toc-number">2.</span> <span class="toc-text">将iso转换为img文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看USB的盘符"><span class="toc-number">3.</span> <span class="toc-text">查看USB的盘符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卸载USB磁盘"><span class="toc-number">4.</span> <span class="toc-text">卸载USB磁盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将镜像写入USB"><span class="toc-number">5.</span> <span class="toc-text">将镜像写入USB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹出USB"><span class="toc-number">6.</span> <span class="toc-text">弹出USB</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
