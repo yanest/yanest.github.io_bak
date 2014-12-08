@@ -4,13 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>ubuntu国内源 | zhangyan&#39;s blog</title>
+    <title>zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="这几天犯了个愚蠢的错误。我一直奇怪，服务器怎么会无缘无故的升级到14.10版本，原来发现是我搞错了源，没注意看，把trusty的源误以为是trusty的源。我还傻傻的以为是误操作。现在把源都整理出来。
-12345678910deb http://mirrors.sohu.com/ubuntu/ tr">
+    <meta name="description" content="title:oracle rac 安装笔记
+安装桌面环境
+公司的一个Oracle项目，软件方墨迹了一个月连基础环境都没配置上，不行你就直说还各种找借口，就好像这样才能显示出来他们的牛B。一怒之下决定自己亲自装一个试试。经过实际实验证明，centos6安装桌面环境是非常简单容易的，只需要下面的几条命令">
     
     
     
@@ -69,15 +70,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/27/ubuntu-precese的sohu源/" title="ubuntu国内源" itemprop="url">ubuntu国内源</a>
+      <a href="/2014/12/08/oracle_rac_安装笔记/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-27T04:42:17.000Z" itemprop="datePublished">11月 27 2014</time>
-    更新日期:<time datetime="2014-11-27T04:42:17.000Z" itemprop="dateModified">11月 27 2014</time>
+    <time datetime="2014-12-08T01:28:11.000Z" itemprop="datePublished">12月 8 2014</time>
+    更新日期:<time datetime="2014-12-08T01:28:11.000Z" itemprop="dateModified">12月 8 2014</time>
     
   </p>
 </header>
@@ -86,31 +87,29 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#title:oracle_rac_安装笔记"><span class="toc-number">1.</span> <span class="toc-text">title:oracle rac 安装笔记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装桌面环境"><span class="toc-number">2.</span> <span class="toc-text">安装桌面环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#桌面环境的安装"><span class="toc-number">2.1.</span> <span class="toc-text">桌面环境的安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装VNC"><span class="toc-number">2.2.</span> <span class="toc-text">安装VNC</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>这几天犯了个愚蠢的错误。我一直奇怪，服务器怎么会无缘无故的升级到14.10版本，原来发现是我搞错了源，没注意看，把trusty的源误以为是trusty的源。我还傻傻的以为是误操作。<br>现在把源都整理出来。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">deb</span> <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-security main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-updates main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-proposed main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-backports main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-security main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-updates main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-proposed main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> trusty-backports main restricted universe multiverse</div></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="title">deb</span> <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-security main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-updates main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-proposed main restricted universe multiverse</div><div class="line">deb <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-backports main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-security main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-updates main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-proposed main restricted universe multiverse</div><div class="line">deb-src <span class="url">http://mirrors.sohu.com/ubuntu/</span> precise-backports main restricted universe multiverse</div></pre></td></tr></table></figure>
-
+		<h2 id="title:oracle_rac_安装笔记">title:oracle rac 安装笔记</h2>
+<h2 id="安装桌面环境">安装桌面环境</h2>
+<p><strong>公司的一个Oracle项目，软件方墨迹了一个月连基础环境都没配置上，不行你就直说还各种找借口，就好像这样才能显示出来他们的牛B。一怒之下决定自己亲自装一个试试。经过实际实验证明，centos6安装桌面环境是非常简单容易的，只需要下面的几条命令即可，同时配置vncserver也是相当的容易，真搞不懂他们为什么弄得这么费劲</strong></p>
+<h3 id="桌面环境的安装">桌面环境的安装</h3>
+<p><code>yum install bash-completion vim -y</code></p>
+<p><code>yum groupinstall &quot;X window System&quot; &quot;Desktop&quot; &quot;Font&quot; -y</code></p>
+<h3 id="安装VNC">安装VNC</h3>
+<p><code>yum install tigervnc-server -y</code></p>
+<p><code>vncserver</code></p>
+<p>如何要调整分辨率，编辑<code>/etc/sysconfig/vncserver</code></p>
   
 	</div>
 		<footer class="article-footer clearfix">
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/debian-ubuntu/">debian&ubuntu</a>
-  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/27/ubuntu-precese的sohu源/" data-title="ubuntu国内源 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2014/12/08/oracle_rac_安装笔记/" data-title="zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -119,19 +118,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/12/08/oracle_rac_安装笔记/" title="">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  (no title)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/11/21/docker/"  title="">
+<a href="/2014/11/27/ubuntu-precese的sohu源/"  title="ubuntu国内源">
  <strong>NEXT:</strong><br/> 
- <span>(no title)
+ <span>ubuntu国内源
 </span>
 </a>
 </div>
@@ -148,7 +139,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#title:oracle_rac_安装笔记"><span class="toc-number">1.</span> <span class="toc-text">title:oracle rac 安装笔记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装桌面环境"><span class="toc-number">2.</span> <span class="toc-text">安装桌面环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#桌面环境的安装"><span class="toc-number">2.1.</span> <span class="toc-text">桌面环境的安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装VNC"><span class="toc-number">2.2.</span> <span class="toc-text">安装VNC</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
