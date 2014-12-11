@@ -76,8 +76,8 @@
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-12-11T07:13:06.000Z" itemprop="datePublished">12月 11 2014</time>
-    更新日期:<time datetime="2014-12-11T07:13:06.000Z" itemprop="dateModified">12月 11 2014</time>
+    <time datetime="2014-12-11T07:19:13.000Z" itemprop="datePublished">12月 11 2014</time>
+    更新日期:<time datetime="2014-12-11T07:19:13.000Z" itemprop="dateModified">12月 11 2014</time>
     
   </p>
 </header>
@@ -92,27 +92,25 @@
 		<h2 id="安装桌面环境">安装桌面环境</h2>
 <p><strong>公司的一个Oracle项目，软件方墨迹了一个月连基础环境都没配置上，不行你就直说还各种找借口，就好像这样才能显示出来他们的牛B。一怒之下决定自己亲自装一个试试。经过实际实验证明，centos6安装桌面环境是非常简单容易的，只需要下面的几条命令即可，同时配置vncserver也是相当的容易，真搞不懂他们为什么弄得这么费劲</strong></p>
 <h3 id="桌面环境的安装">桌面环境的安装</h3>
-<p><code>yum install bash-completion vim -y</code></p>
-<p><code>yum groupinstall &quot;X window System&quot; &quot;Desktop&quot; &quot;Font&quot; -y</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install bash-completion <span class="keyword">vim</span> -<span class="keyword">y</span></div><div class="line">yum groupinstall <span class="string">"X window System"</span> <span class="string">"Desktop"</span> <span class="string">"Font"</span> -<span class="keyword">y</span></div></pre></td></tr></table></figure>
+
 <h3 id="安装VNC">安装VNC</h3>
-<p><code>yum install tigervnc-server -y</code></p>
-<p><code>vncserver</code><br>每次重启系统在需要开放的vnc账户下运行一次vncserver即可<br>如果要调整分辨率，编辑<code>/etc/sysconfig/vncserver</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum <span class="operator"><span class="keyword">install</span> tigervnc-<span class="keyword">server</span> -y</span></div><div class="line">vncserver #每次重启系统在需要开放的vnc账户下运行一次vncserver即可</div></pre></td></tr></table></figure>
+
+<p>如果要调整分辨率，编辑<code>/etc/sysconfig/vncserver</code></p>
 <h3 id="下载最新的oracle安装介质">下载最新的oracle安装介质</h3>
 <p>oracle最新版本的安装介质好像是11.2.0.4，解压到同一文件夹。</p>
 <h3 id="更新系统到最新">更新系统到最新</h3>
-<p><code>yum upgrade -y</code><br><code>reboot</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">yum</span> upgrade -y</div><div class="line">reboot</div></pre></td></tr></table></figure>
+
 <h3 id="添加源，安装oracleRDBMS-preinstall">添加源，安装oracleRDBMS-preinstall</h3>
-<p><code>cd /etc/yum.repos.d</code><br><code>wget https://public-yum.oracle.com/public-yum-ol6.repo</code><br><code>wget https://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle</code><br><code>yum install oracle-rdbms-server-11gR2-preinstall</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> /etc/yum.repos.<span class="keyword">d</span></div><div class="line">wget http<span class="variable">s:</span>//public-yum.oracle.<span class="keyword">com</span>/public-yum-ol6.repo</div><div class="line">wget http<span class="variable">s:</span>//public-yum.oracle.<span class="keyword">com</span>/RPM-GPG-KEY-oracle-ol6 -O /etc/pki/rpm-gpg/RPM-GPG-KEY-oracle</div><div class="line">yum install oracle-rdbms-server-<span class="number">11</span>gR2-preinstall</div></pre></td></tr></table></figure>
+
 <h3 id="setting_hostname">setting hostname</h3>
 <p><code>vi /etc/sysconfig/network</code><br><code>HOSTNAME=oracle.lingyun.io</code><br><code>vi /etc/hosts</code><br><code>192.168.1.x oracle.lingyun.io oracle</code><br><code>/etc/init.d/network restart</code></p>
 <h3 id="oracle_User_seting">oracle User seting</h3>
-<p><code>passwd oracle</code><br><code>vim /etc/security/limits.d/90-nproc.conf</code><br>`*          soft    nofile    150000</p>
-<ul>
-<li>hard    nofile    150000</li>
-<li>soft    nproc     16384</li>
-<li>hard    nproc     16384<br>root       soft    nproc     unlimited<code>`vim /etc/selinux/config/</code><br><code>SELINUX=permissive</code><br><code>reboot</code></li>
-</ul>
-<p><code>mkdir -p /oracle</code><br><code>chown -R /oracle</code><br><code>chmod -R 775 /oracle</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">passwd oracle</div><div class="line"><span class="keyword">vim</span> /etc/security/limits.<span class="keyword">d</span>/<span class="number">90</span>-nproc.<span class="keyword">conf</span></div><div class="line">*          soft    nofile    <span class="number">150000</span></div><div class="line">*          hard    nofile    <span class="number">150000</span></div><div class="line">*          soft    nproc     <span class="number">16384</span></div><div class="line">*          hard    nproc     <span class="number">16384</span></div><div class="line">root       soft    nproc     unlimited</div><div class="line"><span class="keyword">vim</span> /etc/selinux/config/</div><div class="line">SELINUX=permissive</div><div class="line">reboot</div><div class="line"></div><div class="line"><span class="built_in">mkdir</span> -<span class="keyword">p</span> /oracle</div><div class="line">chown -R /oracle</div><div class="line">chmod -R <span class="number">775</span> /oracle</div></pre></td></tr></table></figure>
+
 <h3 id="oracle_Installation">oracle Installation</h3>
 <p><code>su oracle</code><br><code>vncserver</code><br>使用vnc远程连接上。打开终端进入oracle目录运行<code>./runInstaller</code><br>剩下的都是图形安装向导了。</p>
 <h3 id="关于pdksh包">关于pdksh包</h3>
