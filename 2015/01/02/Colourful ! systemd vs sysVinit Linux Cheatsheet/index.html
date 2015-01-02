@@ -4,15 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>oracle rac 基本维护操作 | zhangyan&#39;s blog</title>
+    <title>Colourful ! systemd vs sysVinit Linux Cheatsheet | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="数据库的启动与关闭
-查看数据库状态: crs_stat -t
-关闭数据库：
-1、 关闭oem服务：emctl stop dbconsole2、 关闭oracle实例： srvctl stop instance -d devdb -i devdb13、 关闭asm实例：srvctl stop asm ">
+    <meta name="description" content="systemd is the new init system, starting with Fedora and now adopted in many distributions like RedHat, Suse and Centos. Historically, most of us have">
     
     
     
@@ -71,15 +68,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/02/oracle rac 基本维护操作/" title="oracle rac 基本维护操作" itemprop="url">oracle rac 基本维护操作</a>
+      <a href="/2015/01/02/Colourful ! systemd vs sysVinit Linux Cheatsheet/" title="Colourful ! systemd vs sysVinit Linux Cheatsheet" itemprop="url">Colourful ! systemd vs sysVinit Linux Cheatsheet</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-02T04:28:27.000Z" itemprop="datePublished">1月 2 2015</time>
-    更新日期:<time datetime="2015-01-02T04:28:27.000Z" itemprop="dateModified">1月 2 2015</time>
+    <time datetime="2015-01-02T04:40:39.000Z" itemprop="datePublished">1月 2 2015</time>
+    更新日期:<time datetime="2015-01-02T04:40:39.000Z" itemprop="dateModified">1月 2 2015</time>
     
   </p>
 </header>
@@ -91,12 +88,12 @@
 		
 		</div>
 		
-		<p>数据库的启动与关闭</p>
-<p>查看数据库状态: crs_stat -t</p>
-<p>关闭数据库：</p>
-<p>1、 关闭oem服务：emctl stop dbconsole<br>2、 关闭oracle实例： srvctl stop instance -d devdb -i devdb1<br>3、 关闭asm实例：srvctl stop asm -n node1<br>4、 关闭节点服务（此操作将关闭指定节点的所有监听及GSD,ONS,VIP）srvctl stop nodeapps -n node1<br>    如果是关闭整个数据库则使用：srvctl stop database -d devdb<br>    关闭监听器也可以使用srvctl来完成：srvctl stop listener -n node1</p>
-<p>启动数据库：</p>
-<p>1、 启动节点服务：srvctl start nodeapps -n node1<br>2、 启动asm实例：srvctl start asm -n node1<br>3、 启动oracle实例：srvctl start instance -d devdb -i devdb1<br>4、 启动oem：emctl start dbconsole<br>    如果是启动整个数据库，则使用：srvctl start database -d devdb<br>RAC数据库启动关闭参考图<br><img src="/images/rac.gif" alt="image"></p>
+		<p>systemd is the new init system, starting with Fedora and now adopted in many distributions like RedHat, Suse and Centos. Historically, most of us have been using traditional SysV init scripts normally residing in /etc/rc.d/init.d/. These scripts invoke a daemon binary which will then fork a background process. Even though shell scripts are very flexible, tasks like supervising processes and parallelized execution ordering are difficult to implement. With the introduction of systemd’s new-style daemons it is easier to supervise and control them at runtime and it simplifies their implementation.</p>
+<p>The systemctl command is a very good initiative by the systemd team. It shows more detailed error messages and also runtime errors of services including start-up errors. systemd have introduced a new term called cgroups (control groups) which is basically groups of process that can be arranged in a hierarchy. With the original init system, determining which process does what and who it belongs to becomes increasingly difficult. With systemd, when processes spawn other processes these children are automatically made members of the parents cgroup thus avoiding confusions about inheritance.</p>
+<ul>
+<li>See more at: <a href="http://linoxide.com/linux-command/systemd-vs-sysvinit-cheatsheet/#sthash.hteX4CEm.dpuf" target="_blank" rel="external">http://linoxide.com/linux-command/systemd-vs-sysvinit-cheatsheet/#sthash.hteX4CEm.dpuf</a></li>
+</ul>
+<p><img src="/images/systemd-vs-sysVinit-cheatsheet.jpg" alt="image"></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -106,7 +103,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2015/01/02/oracle rac 基本维护操作/" data-title="oracle rac 基本维护操作 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/01/02/Colourful ! systemd vs sysVinit Linux Cheatsheet/" data-title="Colourful ! systemd vs sysVinit Linux Cheatsheet | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -115,19 +112,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/02/Colourful ! systemd vs sysVinit Linux Cheatsheet/" title="Colourful ! systemd vs sysVinit Linux Cheatsheet">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  Colourful ! systemd vs sysVinit Linux Cheatsheet</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/02/archlinux折腾笔记/"  title="archlinux安装笔记">
+<a href="/2015/01/02/oracle rac 基本维护操作/"  title="oracle rac 基本维护操作">
  <strong>NEXT:</strong><br/> 
- <span>archlinux安装笔记
+ <span>oracle rac 基本维护操作
 </span>
 </a>
 </div>
