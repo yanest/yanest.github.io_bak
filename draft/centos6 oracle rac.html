@@ -5,12 +5,30 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>zhangyan&#39;s blog</title>
+    <title>centos6 oracle安装笔记 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="暂时没啥可写的">
+    <meta name="description" content="Hostname
+short hostname
+type
+ip address
+interface
+
+
+
+
+node1.localdomain
+node1
+Public IP
+192.168.1.101
+eth1
+
+
+node1-vip.localdomain
+node1-vip
+virtual I">
     
     
     
@@ -69,22 +87,87 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/aboutme/index.html" title="" itemprop="url"></a>
+      <a href="/draft/centos6 oracle rac.html" title="centos6 oracle安装笔记" itemprop="url">centos6 oracle安装笔记</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-10T01:54:30.000Z" itemprop="datePublished">11月 10 2014</time>
-    更新日期:<time datetime="2014-11-10T01:54:29.000Z" itemprop="dateModified">11月 10 2014</time>
+    <time datetime="2014-12-21T09:20:56.000Z" itemprop="datePublished">12月 21 2014</time>
+    更新日期:<time datetime="2014-12-21T09:20:56.000Z" itemprop="dateModified">12月 21 2014</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<h1 id="暂时没啥可写的">暂时没啥可写的</h1>
+		<table>
+<thead>
+<tr>
+<th>Hostname</th>
+<th>short hostname</th>
+<th>type</th>
+<th>ip address</th>
+<th>interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>node1.localdomain</td>
+<td>node1</td>
+<td>Public IP</td>
+<td>192.168.1.101</td>
+<td>eth1</td>
+</tr>
+<tr>
+<td>node1-vip.localdomain</td>
+<td>node1-vip</td>
+<td>virtual IP</td>
+<td>192.168.1.111</td>
+<td>eth1:1</td>
+</tr>
+<tr>
+<td>node1-priv.localdomain</td>
+<td>node1-priv</td>
+<td>private ip</td>
+<td>172.16.1.101</td>
+<td>eth0</td>
+</tr>
+<tr>
+<td>node2.localdomain</td>
+<td>node2</td>
+<td>public ip</td>
+<td>192.168.1.102</td>
+<td>eth1</td>
+</tr>
+<tr>
+<td>node2-vip.localdomain</td>
+<td>node2-vip</td>
+<td>virtual ip</td>
+<td>192.168.1.112</td>
+<td>eth1:1</td>
+</tr>
+<tr>
+<td>node2-priv.localdomain</td>
+<td>node2-priv</td>
+<td>private ip</td>
+<td>172.16.1.102</td>
+<td>eth0</td>
+</tr>
+<tr>
+<td>scan-cluster.localdomain</td>
+<td>scan-cluster</td>
+<td>scan ip</td>
+<td>192.168.1.203</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa</div><div class="line">ssh-keygen -t dsa</div><div class="line">cat ~<span class="regexp">/.ssh/id</span>_rsa.pub &gt;&gt;~<span class="regexp">/.ssh/authorized</span>_keys</div><div class="line">cat ~<span class="regexp">/.ssh/id</span>_dsa.pub &gt;&gt;~<span class="regexp">/.ssh/authorized</span>_keys</div><div class="line">ssh node2 cat ~<span class="regexp">/.ssh/id</span>_rsa.pub &gt;&gt;~<span class="regexp">/.ssh/authorized</span>_keys</div><div class="line">ssh node2 cat ~<span class="regexp">/.ssh/id</span>_dsa.pub &gt;&gt;~<span class="regexp">/.ssh/authorized</span>_keys</div><div class="line">scp ~<span class="regexp">/.ssh/authorized</span>_keys <span class="symbol">node2:</span>~<span class="regexp">/.ssh/</span></div></pre></td></tr></table></figure>
+
+<p>asmlib<br><a href="http://www.oracle.com/technetwork/topics/linux/asmlib/index-101839.html" target="_blank" rel="external">http://www.oracle.com/technetwork/topics/linux/asmlib/index-101839.html</a></p>
+<p>yum install -y pdksh sysstat libstdc++-devel libaio-devel gcc-c++ compat-libstdc++-33 elfutils-libelf-devel smartmontools compat-libcap1</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -94,7 +177,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/aboutme/index.html" data-title="zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/draft/centos6 oracle rac.html" data-title="centos6 oracle安装笔记 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>

