@@ -75,15 +75,15 @@ cfd">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/02/archlinux折腾笔记/" title="archlinux安装笔记" itemprop="url">archlinux安装笔记</a>
+      <a href="/2015/01/07/archlinux折腾笔记/" title="archlinux安装笔记" itemprop="url">archlinux安装笔记</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-02T04:25:55.000Z" itemprop="datePublished">1月 2 2015</time>
-    更新日期:<time datetime="2015-01-02T04:25:55.000Z" itemprop="dateModified">1月 2 2015</time>
+    <time datetime="2015-01-07T04:27:52.000Z" itemprop="datePublished">1月 7 2015</time>
+    更新日期:<time datetime="2015-01-07T04:27:52.000Z" itemprop="dateModified">1月 7 2015</time>
     
   </p>
 </header>
@@ -92,7 +92,7 @@ cfd">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装介质"><span class="toc-number">1.1.</span> <span class="toc-text">安装介质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进入安装环境"><span class="toc-number">1.2.</span> <span class="toc-text">进入安装环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分区"><span class="toc-number">1.2.1.</span> <span class="toc-text">分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置安装源"><span class="toc-number">1.2.2.</span> <span class="toc-text">配置安装源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始安装"><span class="toc-number">1.2.3.</span> <span class="toc-text">开始安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置系统"><span class="toc-number">1.2.4.</span> <span class="toc-text">配置系统</span></a></li></ol></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装介质"><span class="toc-number">1.1.</span> <span class="toc-text">安装介质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进入安装环境"><span class="toc-number">1.2.</span> <span class="toc-text">进入安装环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分区"><span class="toc-number">1.2.1.</span> <span class="toc-text">分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置安装源"><span class="toc-number">1.2.2.</span> <span class="toc-text">配置安装源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始安装"><span class="toc-number">1.2.3.</span> <span class="toc-text">开始安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置系统"><span class="toc-number">1.2.4.</span> <span class="toc-text">配置系统</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li></ol>
 		</div>
 		
 		<p>一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch linux。</p>
@@ -127,6 +127,8 @@ pacman -<span class="constant">S</span> grub <span class="comment">#安装grub</
 grub-install --target=i386-pc --recheck /dev/sda
 systemctl enable dhcpcd<span class="variable">@interface_name</span>.service
 grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre><h2 id="使用">使用</h2>
+<pre><code><span class="title">pacman</span> -S zsh grml-zsh-config  <span class="comment">#安装zsh和插件</span>
 </code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
@@ -136,7 +138,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2015/01/02/archlinux折腾笔记/" data-title="archlinux安装笔记 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/01/07/archlinux折腾笔记/" data-title="archlinux安装笔记 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -145,19 +147,11 @@ grub-mkconfig -o /boot/grub/grub.cfg
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/02/oracle rac 基本维护操作/" title="oracle rac 基本维护操作">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  oracle rac 基本维护操作</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/12/27/dropbox被墙的解决办法/"  title="dropbox被墙的解决办法">
+<a href="/2015/01/02/Colourful ! systemd vs sysVinit Linux Cheatsheet/"  title="Colourful ! systemd vs sysVinit Linux Cheatsheet">
  <strong>NEXT:</strong><br/> 
- <span>dropbox被墙的解决办法
+ <span>Colourful ! systemd vs sysVinit Linux Cheatsheet
 </span>
 </a>
 </div>
@@ -174,7 +168,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装介质"><span class="toc-number">1.1.</span> <span class="toc-text">安装介质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进入安装环境"><span class="toc-number">1.2.</span> <span class="toc-text">进入安装环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分区"><span class="toc-number">1.2.1.</span> <span class="toc-text">分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置安装源"><span class="toc-number">1.2.2.</span> <span class="toc-text">配置安装源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始安装"><span class="toc-number">1.2.3.</span> <span class="toc-text">开始安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置系统"><span class="toc-number">1.2.4.</span> <span class="toc-text">配置系统</span></a></li></ol></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装介质"><span class="toc-number">1.1.</span> <span class="toc-text">安装介质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进入安装环境"><span class="toc-number">1.2.</span> <span class="toc-text">进入安装环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分区"><span class="toc-number">1.2.1.</span> <span class="toc-text">分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置安装源"><span class="toc-number">1.2.2.</span> <span class="toc-text">配置安装源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始安装"><span class="toc-number">1.2.3.</span> <span class="toc-text">开始安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置系统"><span class="toc-number">1.2.4.</span> <span class="toc-text">配置系统</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li></ol>
   </div>
 
 <div id="asidepart">
