@@ -4,19 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>archlinux安装笔记 | zhangyan&#39;s blog</title>
+    <title>vagrant打造跨平台开发环境 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch linux。
-安装
-安装介质
-直接去官网下了一个最新的iso，也可以使用usb安装
-进入安装环境
-使用下载回来的ISO引导系统，配置好网络。超简单，不多说。
-分区
-cfd">
+    <meta name="description" content="Vagrant 是一款用来构建虚拟开发环境的工具，非常适合 php/python/ruby/java 这类语言开发 web 应用，“代码在我机子上运行没有问题”这种说辞将成为历史。
+我们可以通过 Vagrant 封装一个 Linux 的开发环境，分发给团队成员。成员可以在自己喜欢的桌面系统（Mac/">
     
     
     
@@ -75,15 +69,15 @@ cfd">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/07/archlinux折腾笔记/" title="archlinux安装笔记" itemprop="url">archlinux安装笔记</a>
+      <a href="/2015/01/07/vagrant打造跨平台开发环境/" title="vagrant打造跨平台开发环境" itemprop="url">vagrant打造跨平台开发环境</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-07T04:27:52.000Z" itemprop="datePublished">1月 7 2015</time>
-    更新日期:<time datetime="2015-01-07T04:27:52.000Z" itemprop="dateModified">1月 7 2015</time>
+    <time datetime="2015-01-07T05:20:47.000Z" itemprop="datePublished">1月 7 2015</time>
+    更新日期:<time datetime="2015-01-07T05:20:47.000Z" itemprop="dateModified">1月 7 2015</time>
     
   </p>
 </header>
@@ -92,43 +86,71 @@ cfd">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装介质"><span class="toc-number">1.1.</span> <span class="toc-text">安装介质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进入安装环境"><span class="toc-number">1.2.</span> <span class="toc-text">进入安装环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分区"><span class="toc-number">1.2.1.</span> <span class="toc-text">分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置安装源"><span class="toc-number">1.2.2.</span> <span class="toc-text">配置安装源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始安装"><span class="toc-number">1.2.3.</span> <span class="toc-text">开始安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置系统"><span class="toc-number">1.2.4.</span> <span class="toc-text">配置系统</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li></ol>
+		
 		</div>
 		
-		<p>一直听说archlinux挺折腾，一直没敢尝试。但是心里面总是很痒痒，正好赶上元旦放假，媳妇串休，在家呆着没事，折腾一下arch linux。</p>
-<h2 id="安装">安装</h2>
-<h3 id="安装介质">安装介质</h3>
-<p>直接去官网下了一个最新的iso，也可以使用usb安装</p>
-<h3 id="进入安装环境">进入安装环境</h3>
-<p>使用下载回来的ISO引导系统，配置好网络。超简单，不多说。</p>
-<h4 id="分区">分区</h4>
-<pre><code>cfdisk <span class="comment">#分区工具，也可以使用fdisk</span>
-lsblk <span class="operator">-f</span> <span class="comment">#查看分区信息</span>
-mkfs.ext4 /dev/sda1 <span class="comment">#格式化分区</span>
-mount /dev/sda1 /mnt <span class="comment">#挂载系统</span>
-</code></pre><h4 id="配置安装源">配置安装源</h4>
-<pre><code>rm /etc/pacman.d/mirrorlist
-nano <span class="regexp">/etc/pacman.d/mirrorlist #添加网易源 Server = http:/</span><span class="regexp">/mirrors.163.com/archlinux/</span>$repo<span class="regexp">/os/</span>$arch
-</code></pre><h4 id="开始安装">开始安装</h4>
-<pre><code>pacstrap -i /mnt <span class="keyword">base</span> <span class="keyword">base</span>-devel
-pacman-key --init &amp;&amp; pacman-key --populate archlinux <span class="preprocessor">#若 pacman 报告 <span class="keyword">error</span>: failed to commit transaction (invalid or corrupted package), 执行此命令</span>
-</code></pre><h4 id="配置系统">配置系统</h4>
-<pre><code><span class="input"><span class="prompt">genfstab -U -p /mnt &gt;&gt;</span> /mnt/etc/fstab <span class="comment">#生成fstab</span></span>
-arch-chroot /mnt /bin/bash <span class="comment">#chroot到系统</span>
-<span class="comment"># nano /etc/locale.gen</span>
-en_US.<span class="constant">UTF</span>-<span class="number">8</span> <span class="constant">UTF</span>-<span class="number">8</span>
-zh_CN.<span class="constant">UTF</span>-<span class="number">8</span> <span class="constant">UTF</span>-<span class="number">8</span>
-zh_TW.<span class="constant">UTF</span>-<span class="number">8</span> <span class="constant">UTF</span>-<span class="number">8</span>
-locale-gen <span class="comment">#生成指定的本地化文件</span>
-echo <span class="constant">LANG</span>=en_US.<span class="constant">UTF</span>-<span class="number">8</span> &gt; <span class="regexp">/etc/locale</span>.conf <span class="comment">#将系统 locale 设置为en_US.UTF-8</span>
-ln -s /usr/share/zoneinfo/<span class="constant">Asia</span>/<span class="constant">Shanghai</span> /etc/localtime <span class="comment">#配置时区</span>
-hwclock --systohc --utc
-pacman -<span class="constant">S</span> grub <span class="comment">#安装grub</span>
-grub-install --target=i386-pc --recheck /dev/sda
-systemctl enable dhcpcd<span class="variable">@interface_name</span>.service
-grub-mkconfig -o /boot/grub/grub.cfg
-</code></pre><h2 id="使用">使用</h2>
-<pre><code><span class="title">pacman</span> -S zsh grml-zsh-config  <span class="comment">#安装zsh和插件</span>
+		<p>Vagrant 是一款用来构建虚拟开发环境的工具，非常适合 php/python/ruby/java 这类语言开发 web 应用，“代码在我机子上运行没有问题”这种说辞将成为历史。</p>
+<p>我们可以通过 Vagrant 封装一个 Linux 的开发环境，分发给团队成员。成员可以在自己喜欢的桌面系统（Mac/Windows/Linux）上开发程序，代码却能统一在封装好的环境里运行，非常霸气。</p>
+<p>安装步骤</p>
+<ol>
+<li>安装 VirtualBox</li>
+</ol>
+<p>虚拟机还是得依靠 VirtualBox 来搭建，免费小巧。<br>下载地址：<a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">https://www.virtualbox.org/wiki/Downloads</a></p>
+<ul>
+<li>虽然 Vagrant 也支持 VMware，不过 VMware 是收费的，对应的 Vagrant 版本也是收费的</li>
+</ul>
+<ol>
+<li>安装 Vagrant</li>
+</ol>
+<p>下载地址：<a href="http://downloads.vagrantup.com/" target="_blank" rel="external">http://downloads.vagrantup.com/</a> 根据提示一步步安装。</p>
+<p>此外，还得下载官方封装好的基础镜像：<br>Ubuntu precise 32 VirtualBox <a href="http://files.vagrantup.com/precise32.box" target="_blank" rel="external">http://files.vagrantup.com/precise32.box</a><br>Ubuntu precise 64 VirtualBox <a href="http://files.vagrantup.com/precise64.box" target="_blank" rel="external">http://files.vagrantup.com/precise64.box</a></p>
+<p>如果你要其他系统的镜像，可以来这里下载：<a href="http://www.vagrantbox.es/" target="_blank" rel="external">http://www.vagrantbox.es/</a></p>
+<ul>
+<li>鉴于国内网速，我们将下载镜像的步骤单独剥离出来了</li>
+</ul>
+<ol>
+<li>添加镜像到 Vagrant</li>
+</ol>
+<p>假设我们下载的镜像存放路径是 ~/box/precise64.box，在终端里输入：</p>
+<pre><code>$ vagrant <span class="keyword">box</span> add hahaha ~/<span class="keyword">box</span>/precise64.<span class="keyword">box</span>
+</code></pre><p>hahaha 是我们给这个 box 命的名字，~/box/precise64.box 是 box 所在路径</p>
+<ol>
+<li>初始化开发环境</li>
+</ol>
+<p>创建一个开发目录（比如：~/dev），你也可以使用已有的目录，切换到开发目录里，用 hahaha 镜像初始化当前目录的环境：</p>
+<pre><code>$ <span class="built_in">cd</span> ~/dev  <span class="comment"># 切换目录</span>
+$ vagrant init hahaha  <span class="comment"># 初始化</span>
+$ vagrant up  <span class="comment"># 启动环境</span>
+</code></pre><p>你会看到终端显示了启动过程，启动完成后，我们就可以用 SSH 登录虚拟机了，剩下的步骤就是在虚拟机里配置你要运行的各种环境和参数了。</p>
+<pre><code><span class="variable">$ </span>vagrant ssh  <span class="comment"># SSH 登录</span>
+<span class="variable">$ </span>cd /vagrant  <span class="comment"># 切换到开发目录，也就是宿主机上的 `~/dev`</span>
+</code></pre><p>~/dev 目录对应虚拟机中的目录是 /vagrant</p>
+<p>Windows 用户注意：Windows 终端并不支持 ssh，所以需要安装第三方 SSH 客户端，比如：Putty、Cygwin 等。</p>
+<ol>
+<li>其他设置</li>
+</ol>
+<p>Vagrant 初始化成功后，会在初始化的目录里生成一个 Vagrantfile 的配置文件，可以修改配置文件进行个性化的定制。</p>
+<p>Vagrant 默认是使用端口映射方式将虚拟机的端口映射本地从而实现类似 <a href="http://localhost:80" target="_blank" rel="external">http://localhost:80</a> 这种访问方式，这种方式比较麻烦，新开和修改端口的时候都得编辑。相比较而言，host-only 模式显得方便多了。打开 Vagrantfile，将下面这行的注释去掉（移除 #）并保存：</p>
+<p>config.vm.network :private_network, ip: “192.168.33.10”<br>重启虚拟机，这样我们就能用 192.168.33.10 访问这台机器了，你可以把 IP 改成其他地址，只要不产生冲突就行。</p>
+<ol>
+<li>打包分发</li>
+</ol>
+<p>当你配置好开发环境后，退出并关闭虚拟机。在终端里对开发环境进行打包：</p>
+<pre><code>$ vagrant <span class="keyword">package</span>
+</code></pre><p>打包完成后会在当前目录生成一个 package.box 的文件，将这个文件传给其他用户，其他用户只要添加这个 box 并用其初始化自己的开发目录就能得到一个一模一样的开发环境了。</p>
+<ol>
+<li><p>常用命令</p>
+<p> $ vagrant init  # 初始化<br> $ vagrant up  # 启动虚拟机<br> $ vagrant halt  # 关闭虚拟机<br> $ vagrant reload  # 重启虚拟机<br> $ vagrant ssh  # SSH 至虚拟机<br> $ vagrant status  # 查看虚拟机运行状态<br> $ vagrant destroy  # 销毁当前虚拟机<br>更多内容请查阅官方文档 <a href="http://docs.vagrantup.com/v2/cli/index.html" target="_blank" rel="external">http://docs.vagrantup.com/v2/cli/index.html</a></p>
+</li>
+<li><p>注意事项</p>
+</li>
+</ol>
+<p>使用 Apache/Nginx 时会出现诸如图片修改后但页面刷新仍然是旧文件的情况，是由于静态文件缓存造成的。需要对虚拟机里的 Apache/Nginx 配置文件进行修改：</p>
+<pre><code><span class="comment"># Apache 配置添加:</span>
+<span class="title">EnableSendfile</span> <span class="built_in">off</span>
+
+<span class="comment"># Nginx 配置添加:</span>
+sendfile <span class="built_in">off</span>;
 </code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
@@ -138,7 +160,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2015/01/07/archlinux折腾笔记/" data-title="archlinux安装笔记 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/01/07/vagrant打造跨平台开发环境/" data-title="vagrant打造跨平台开发环境 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -147,19 +169,11 @@ grub-mkconfig -o /boot/grub/grub.cfg
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/07/vagrant打造跨平台开发环境/" title="vagrant打造跨平台开发环境">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  vagrant打造跨平台开发环境</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/02/Colourful ! systemd vs sysVinit Linux Cheatsheet/"  title="Colourful ! systemd vs sysVinit Linux Cheatsheet">
+<a href="/2015/01/07/archlinux折腾笔记/"  title="archlinux安装笔记">
  <strong>NEXT:</strong><br/> 
- <span>Colourful ! systemd vs sysVinit Linux Cheatsheet
+ <span>archlinux安装笔记
 </span>
 </a>
 </div>
@@ -176,7 +190,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装介质"><span class="toc-number">1.1.</span> <span class="toc-text">安装介质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进入安装环境"><span class="toc-number">1.2.</span> <span class="toc-text">进入安装环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分区"><span class="toc-number">1.2.1.</span> <span class="toc-text">分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置安装源"><span class="toc-number">1.2.2.</span> <span class="toc-text">配置安装源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始安装"><span class="toc-number">1.2.3.</span> <span class="toc-text">开始安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置系统"><span class="toc-number">1.2.4.</span> <span class="toc-text">配置系统</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
