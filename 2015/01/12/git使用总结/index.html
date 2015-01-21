@@ -9,7 +9,7 @@
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="12345678910111213141516171819git init		#创建一个新的仓库git add &amp;lt;filename&amp;gt; 		#添加到暂存区git commit -m &quot;提交信息&quot;		#提交到HEADgit checkout -b feature_x		#创建一个新的分支gi">
+    <meta name="description" content="12345678910111213141516171819202122232425git init		#创建一个新的仓库git add &amp;lt;filename&amp;gt; 		#添加到暂存区git commit -m &quot;提交信息&quot;		#提交到HEADgit checkout -b feature_x	">
     
     
     
@@ -68,15 +68,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/11/git使用总结/" title="git 使用总结" itemprop="url">git 使用总结</a>
+      <a href="/2015/01/12/git使用总结/" title="git 使用总结" itemprop="url">git 使用总结</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-11T08:20:48.000Z" itemprop="datePublished">1月 11 2015</time>
-    更新日期:<time datetime="2015-01-11T08:20:48.000Z" itemprop="dateModified">1月 11 2015</time>
+    <time datetime="2015-01-12T00:57:31.000Z" itemprop="datePublished">1月 12 2015</time>
+    更新日期:<time datetime="2015-01-12T00:57:31.000Z" itemprop="dateModified">1月 12 2015</time>
     
   </p>
 </header>
@@ -88,7 +88,7 @@
 		
 		</div>
 		
-		<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">git init		<span class="comment">#创建一个新的仓库</span></div><div class="line">git add <span class="variable">&lt;filename&gt;</span> 		<span class="comment">#添加到暂存区</span></div><div class="line">git commit -m <span class="string">"提交信息"</span>		<span class="comment">#提交到HEAD</span></div><div class="line">git checkout -b feature_x		<span class="comment">#创建一个新的分支</span></div><div class="line">git checkout master		<span class="comment">#切换回主干</span></div><div class="line">git branch -D			<span class="comment">#删除分支</span></div><div class="line">git branch -a		<span class="comment">#查看所有分支</span></div><div class="line">git branch -r		<span class="comment">#查看远端分支</span></div><div class="line"></div><div class="line">git clone -o gopha <span class="variable">&lt;server&gt;</span>		<span class="comment">#克隆时指定远端主机名</span></div><div class="line">git remove add origin <span class="variable">&lt;server&gt;</span>		<span class="comment">#添加远端仓库</span></div><div class="line">git remote show <span class="variable">&lt;server&gt;</span>		<span class="comment">#查看主机信息</span></div><div class="line">git push origin master		<span class="comment">#推送master到远端仓库</span></div><div class="line">git push origin feature_x		<span class="comment">#推送分支到远端</span></div><div class="line">git push origin <span class="variable">&lt;本地分支&gt;</span>:<span class="variable">&lt;远端分支&gt;</span>		</div><div class="line">git push origin --delete <span class="variable">&lt;分支名&gt;</span>		<span class="comment">#删除远端分支</span></div><div class="line">git fetch origin master		<span class="comment">#取回master分支，如不加分支名为取回所有</span></div><div class="line"></div><div class="line">git push</div></pre></td></tr></table></figure>
+		<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">git init		<span class="comment">#创建一个新的仓库</span></div><div class="line">git add <span class="variable">&lt;filename&gt;</span> 		<span class="comment">#添加到暂存区</span></div><div class="line">git commit -m <span class="string">"提交信息"</span>		<span class="comment">#提交到HEAD</span></div><div class="line">git checkout -b feature_x		<span class="comment">#创建一个新的分支</span></div><div class="line">git checkout master		<span class="comment">#切换回主干</span></div><div class="line">git branch -D			<span class="comment">#删除分支</span></div><div class="line">git branch -av		<span class="comment">#查看所有分支,v代表显示log</span></div><div class="line">git branch -r		<span class="comment">#查看远端分支</span></div><div class="line">git branch -m <span class="variable">&lt;本地分支&gt;</span> <span class="variable">&lt;新的名字&gt;</span></div><div class="line"></div><div class="line">git clone -o gopha <span class="variable">&lt;server&gt;</span>		<span class="comment">#克隆时指定远端主机名</span></div><div class="line">git remove add origin <span class="variable">&lt;server&gt;</span>		<span class="comment">#添加远端仓库</span></div><div class="line">git remote show <span class="variable">&lt;server&gt;</span>		<span class="comment">#查看主机信息</span></div><div class="line">git push origin master		<span class="comment">#推送master到远端仓库</span></div><div class="line">git push origin feature_x		<span class="comment">#推送分支到远端</span></div><div class="line">git push origin <span class="variable">&lt;本地分支&gt;</span>:<span class="variable">&lt;远端分支&gt;</span>		</div><div class="line">git push origin --delete <span class="variable">&lt;分支名&gt;</span>		<span class="comment">#删除远端分支</span></div><div class="line">git push -u origin master		<span class="comment">#u的参数是指定默认的主机，以后直接git push就行了</span></div><div class="line"></div><div class="line">git fetch origin master		<span class="comment">#取回master分支，如不加分支名为取回所有</span></div><div class="line">git fetch origin -p		<span class="comment">#从本地仓库删除远端已删除的分支</span></div><div class="line"></div><div class="line">git diff <span class="variable">&lt;source_branch&gt;</span> <span class="variable">&lt;target_branch&gt;</span></div><div class="line"></div><div class="line">git push</div></pre></td></tr></table></figure>
 
   
 	</div>
@@ -99,7 +99,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2015/01/11/git使用总结/" data-title="git 使用总结 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/01/12/git使用总结/" data-title="git 使用总结 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
