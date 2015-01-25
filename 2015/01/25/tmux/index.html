@@ -79,8 +79,8 @@ spl">
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-25T01:05:18.000Z" itemprop="datePublished">1月 25 2015</time>
-    更新日期:<time datetime="2015-01-25T01:05:18.000Z" itemprop="dateModified">1月 25 2015</time>
+    <time datetime="2015-01-25T01:08:52.000Z" itemprop="datePublished">1月 25 2015</time>
+    更新日期:<time datetime="2015-01-25T01:08:52.000Z" itemprop="dateModified">1月 25 2015</time>
     
   </p>
 </header>
@@ -89,20 +89,20 @@ spl">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#会话，窗口，面板"><span class="toc-number">3.</span> <span class="toc-text">会话，窗口，面板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用按键"><span class="toc-number">4.</span> <span class="toc-text">常用按键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">5.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#会话"><span class="toc-number">6.</span> <span class="toc-text">会话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命名会话"><span class="toc-number">7.</span> <span class="toc-text">命名会话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使当前pane_最大化"><span class="toc-number">8.</span> <span class="toc-text">使当前pane 最大化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#滚屏"><span class="toc-number">9.</span> <span class="toc-text">滚屏</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#会话，窗口，面板"><span class="toc-number">3.</span> <span class="toc-text">会话，窗口，面板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用按键"><span class="toc-number">4.</span> <span class="toc-text">常用按键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">5.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#会话"><span class="toc-number">6.</span> <span class="toc-text">会话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命名会话"><span class="toc-number">7.</span> <span class="toc-text">命名会话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使当前pane_最大化"><span class="toc-number">8.</span> <span class="toc-text">使当前pane 最大化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#滚屏"><span class="toc-number">9.</span> <span class="toc-text">滚屏</span></a></li></ol>
 		</div>
 		
-		<h3 id="介绍">介绍</h3>
+		<h2 id="介绍">介绍</h2>
 <p>tmux是一个优秀的终端复用软件，即使非正常掉线，也能保证当前的任务运行，这一点对于 远程SSH访问特别有用，网络不好的情况下仍然能保证工作现场不丢失!此外，tmux完全使用键盘 控制窗口，实现窗口的切换功能。</p>
 <p>简单地说，tmux对于我主要有两个功能（这应该也是tmux的主要功能）:</p>
 <ol>
 <li>split窗口。可以在一个terminal下打开多个终端，也可以对当前屏幕进行各种split，即可以 同时打开多个显示范围更小的终端。</li>
 <li>在使用SSH的环境下，避免网络不稳定，导致工作现场的丢失。想象以下场景， 你在执行一条命令的过程中，由于网络不稳定，SSH连接断开了。这个时候，你就不知道之前 的那条命令是否执行成功。如果此时你打开了很多文件，进入了较深层次的目录，由于网络 不稳定，SSH连接断开。重新连接以后，你又不得不重新打开那些文件，进入那个深层次的 目录。如果使用了tmux，重新连接以后，就可以直接回到原来的工作环境，不但提高了工作 效率，还降低了风险，增加了安全性。</li>
 </ol>
-<h3 id="安装">安装</h3>
-<p>sudo apt-get install tmux</p>
+<h2 id="安装">安装</h2>
+<p><code>sudo apt-get install tmux</code></p>
 <p>安装完成后输入命令tmux即可打开软件，界面十分简单，类似一个下方带有状态栏的终端控制台； 不出意外，这时候你会跟我第一次一样，觉得tmux没什么牛逼的。</p>
-<h3 id="会话，窗口，面板">会话，窗口，面板</h3>
+<h2 id="会话，窗口，面板">会话，窗口，面板</h2>
 <p>根据tmux的定义，在开启了tmux服务器后，会首先创建一个会话，而这个会话则会首先创建一个 窗口，其中仅包含一个面板；也就是说，这里看到的所谓终端控制台应该称作tmux的一个面板， 虽然其使用方法与终端控制台完全相同。</p>
 <p>tmux使用C/S模型构建，主要包括以下单元模块：</p>
 <ul>
@@ -111,7 +111,7 @@ spl">
 <li>window窗口。一个会话可以包含多个窗口。</li>
 <li>pane面板。一个窗口可以包含多个面板。</li>
 </ul>
-<h3 id="常用按键">常用按键</h3>
+<h2 id="常用按键">常用按键</h2>
 <p>这里需要说明一点的是，tmux的任何指令，都包含一个前缀，也就是说，你按了前缀(一组按键， 默认是Ctrl+b)以后，系统才知道你接下来的指令是发送给tmux的。</p>
 <ul>
 <li>C-b ? 显示快捷键帮助</li>
@@ -138,29 +138,29 @@ spl">
 <li>C-b s 以菜单方式显示和选择会话</li>
 <li>C-b d 退出tumx，并保存当前会话，这时，tmux仍在后台运行，可以通过tmux attach进入 到指定的会话</li>
 </ul>
-<h3 id="配置">配置</h3>
+<h2 id="配置">配置</h2>
 <p>我们先来看一下几个配置，这些配置才是我离不开tmux的原因:-)。tmux的配置文件是 <code>~/.tmux.conf</code>，这个文件可能不存在，你可以自己新建。下面开始配置，首先，有没有 觉得tmux的前缀按起来太不方便了，ctrl与b键隔得太远，很多人把它映射成C+a，也就 是在配置文件<code>(~/.tmux.conf)</code>中加入下面这条语句：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#设置前缀为Ctrl + a</span></div><div class="line"><span class="keyword">set</span> -g prefix C<span class="operator">-a</span></div><div class="line"><span class="comment">#解除Ctrl+b 与前缀的对应关系</span></div><div class="line">unbind C-b</div></pre></td></tr></table></figure>
 
 <p>配置完以后，重启tmux起效，或者先按C+b，然后输入：，进入命令行模式， 在命令行模式下输入：</p>
 <p><code>source-file ~/.tmux.conf</code></p>
-<h3 id="会话">会话</h3>
+<h2 id="会话">会话</h2>
 <ul>
 <li>C-x s 以菜单的方式查看并选择会话</li>
 <li>C-x :new-session 新建一个会话</li>
 <li>C-x d 退出并保存会话</li>
 <li>终端运行 tmux attach 返回会话</li>
 </ul>
-<h3 id="命名会话">命名会话</h3>
+<h2 id="命名会话">命名会话</h2>
 <ul>
 <li>tmux new -s session</li>
 <li>tmux new -s session -d #在后台建立会话</li>
-<li>tmux ls #列出会话<br>tmux attach -t session #进入某个会话<h3 id="使当前pane_最大化">使当前pane 最大化</h3>
+<li>tmux ls #列出会话<br>tmux attach -t session #进入某个会话<h2 id="使当前pane_最大化">使当前pane 最大化</h2>
 从我用vim开始，就相信这世界上有些人比你自己还了解你自己想要什么，所以乔老爷子才能做 出让世人尖叫的产品，所以我经常浏览高手的.vimrc文件，我用了tmux不到3天就发现，它怎么 不能最大化当前pane?就像vim里的ZommWinPlugin.vim插件一样，你按下某键，当前窗口就最大化了，获得最大可视界面。当目前为止，就还没有发现我有需求而别人没有的，同样，已有前人找到的解决办法，方法如下：</li>
 </ul>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor"># zoom pane &lt;-&gt; window</span></div><div class="line"><span class="preprocessor">#http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux-zoom.sh</span></div><div class="line">bind ^z run <span class="string">"tmux-zoom"</span></div><div class="line"><span class="preprocessor">##</span></div></pre></td></tr></table></figure>
 
-<h3 id="滚屏">滚屏</h3>
+<h2 id="滚屏">滚屏</h2>
 <p>滚屏要进入copy-mode，即前缀+[，然后就可以用上下键来滚动屏幕，配置了vi快捷键模式，就 可以像操作vi一样来滚动屏幕，非常的方便。退出直接按‘q’键即可。</p>
   
 	</div>
@@ -201,7 +201,7 @@ spl">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#会话，窗口，面板"><span class="toc-number">3.</span> <span class="toc-text">会话，窗口，面板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用按键"><span class="toc-number">4.</span> <span class="toc-text">常用按键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">5.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#会话"><span class="toc-number">6.</span> <span class="toc-text">会话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命名会话"><span class="toc-number">7.</span> <span class="toc-text">命名会话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使当前pane_最大化"><span class="toc-number">8.</span> <span class="toc-text">使当前pane 最大化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#滚屏"><span class="toc-number">9.</span> <span class="toc-text">滚屏</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#会话，窗口，面板"><span class="toc-number">3.</span> <span class="toc-text">会话，窗口，面板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用按键"><span class="toc-number">4.</span> <span class="toc-text">常用按键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">5.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#会话"><span class="toc-number">6.</span> <span class="toc-text">会话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命名会话"><span class="toc-number">7.</span> <span class="toc-text">命名会话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使当前pane_最大化"><span class="toc-number">8.</span> <span class="toc-text">使当前pane 最大化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#滚屏"><span class="toc-number">9.</span> <span class="toc-text">滚屏</span></a></li></ol>
   </div>
 
 <div id="asidepart">
