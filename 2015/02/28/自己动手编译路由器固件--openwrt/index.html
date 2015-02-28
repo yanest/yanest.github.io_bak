@@ -4,14 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>zhangyan&#39;s blog</title>
+    <title>自己动手编译路由器固件 -- openwrt | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="title:自己动手编译路由器固件 — openwrt
-安装编译环境
-apt-get install gcc g++ binutils patch bzip2 flex bison make autoconf gettext texinfo unzip sharutils subversion li">
+    <meta name="description" content="安装编译环境
+apt-get install gcc g++ binutils patch bzip2 flex bison make autoconf gettext texinfo unzip sharutils subversion libncurses5-dev ncurses-term z">
     
     
     
@@ -70,15 +69,15 @@ apt-get install gcc g++ binutils patch bzip2 flex bison make autoconf gettext te
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/02/28/自己动手编译路由器固件--openwrt/" title="" itemprop="url"></a>
+      <a href="/2015/02/28/自己动手编译路由器固件--openwrt/" title="自己动手编译路由器固件 -- openwrt" itemprop="url">自己动手编译路由器固件 -- openwrt</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-02-28T01:27:10.000Z" itemprop="datePublished">2月 28 2015</time>
-    更新日期:<time datetime="2015-02-28T01:27:10.000Z" itemprop="dateModified">2月 28 2015</time>
+    <time datetime="2015-02-28T01:28:42.000Z" itemprop="datePublished">2月 28 2015</time>
+    更新日期:<time datetime="2015-02-28T01:28:42.000Z" itemprop="dateModified">2月 28 2015</time>
     
   </p>
 </header>
@@ -87,11 +86,10 @@ apt-get install gcc g++ binutils patch bzip2 flex bison make autoconf gettext te
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#title:自己动手编译路由器固件_—_openwrt"><span class="toc-number">1.</span> <span class="toc-text">title:自己动手编译路由器固件 — openwrt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装编译环境"><span class="toc-number">2.</span> <span class="toc-text">安装编译环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#my_openwrt_mod"><span class="toc-number">3.</span> <span class="toc-text">my_openwrt_mod</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make_clean含义"><span class="toc-number">4.</span> <span class="toc-text">make clean含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件含义"><span class="toc-number">5.</span> <span class="toc-text">文件含义</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装编译环境"><span class="toc-number">1.</span> <span class="toc-text">安装编译环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#my_openwrt_mod"><span class="toc-number">2.</span> <span class="toc-text">my_openwrt_mod</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make_clean含义"><span class="toc-number">3.</span> <span class="toc-text">make clean含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件含义"><span class="toc-number">4.</span> <span class="toc-text">文件含义</span></a></li></ol>
 		</div>
 		
-		<h2 id="title:自己动手编译路由器固件_—_openwrt">title:自己动手编译路由器固件 — openwrt</h2>
-<h2 id="安装编译环境">安装编译环境</h2>
+		<h2 id="安装编译环境">安装编译环境</h2>
 <p><code>apt-get install gcc g++ binutils patch bzip2 flex bison make autoconf gettext texinfo unzip sharutils subversion libncurses5-dev ncurses-term zlib1g-dev</code></p>
 <p><code>git clone git://git.openwrt.org/14.07/openwrt.git</code></p>
 <h2 id="my_openwrt_mod">my_openwrt_mod</h2>
@@ -113,7 +111,7 @@ apt-get install gcc g++ binutils patch bzip2 flex bison make autoconf gettext te
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2015/02/28/自己动手编译路由器固件--openwrt/" data-title="zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/02/28/自己动手编译路由器固件--openwrt/" data-title="自己动手编译路由器固件 -- openwrt | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -143,7 +141,7 @@ apt-get install gcc g++ binutils patch bzip2 flex bison make autoconf gettext te
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#title:自己动手编译路由器固件_—_openwrt"><span class="toc-number">1.</span> <span class="toc-text">title:自己动手编译路由器固件 — openwrt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装编译环境"><span class="toc-number">2.</span> <span class="toc-text">安装编译环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#my_openwrt_mod"><span class="toc-number">3.</span> <span class="toc-text">my_openwrt_mod</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make_clean含义"><span class="toc-number">4.</span> <span class="toc-text">make clean含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件含义"><span class="toc-number">5.</span> <span class="toc-text">文件含义</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装编译环境"><span class="toc-number">1.</span> <span class="toc-text">安装编译环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#my_openwrt_mod"><span class="toc-number">2.</span> <span class="toc-text">my_openwrt_mod</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make_clean含义"><span class="toc-number">3.</span> <span class="toc-text">make clean含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件含义"><span class="toc-number">4.</span> <span class="toc-text">文件含义</span></a></li></ol>
   </div>
 
 <div id="asidepart">
