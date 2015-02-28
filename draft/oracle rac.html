@@ -1,0 +1,457 @@
+
+  
+    <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>zhangyan&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="张岩">
+    
+    <meta name="description" content="oracle 11gR2 RAC on qingcloud-hrb1
+by 张岩 2015.1.25
+1. 说明
+本文档只在hrb1节点验证成功，未在其他节点验证。
+2. 安装前准备
+操作系统：centos 6.5Oracle介质：11.2.0.4Oracle安装介质是需要订阅账户在MetaLink">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+      <body>
+        <header>
+          <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="zhangyan&#39;s blog" title="zhangyan&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="zhangyan&#39;s blog">zhangyan&#39;s blog</a></h1>
+				<h2 class="blog-motto">张岩个人站点</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/aboutme">关于我</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yan.lingyun.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+        </header>
+        <div id="container">
+          <div id="main" class="page" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/draft/oracle rac.html" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yan.lingyun.io" title="张岩">张岩</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-01-27T08:37:21.000Z" itemprop="datePublished">1月 27 2015</time>
+    更新日期:<time datetime="2015-01-27T08:37:21.000Z" itemprop="dateModified">1月 27 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<h1 id="oracle_11gR2_RAC_on_qingcloud-hrb1">oracle 11gR2 RAC on qingcloud-hrb1</h1>
+<p>by 张岩 2015.1.25</p>
+<h2 id="1-_说明">1. 说明</h2>
+<p>本文档只在hrb1节点验证成功，未在其他节点验证。</p>
+<h2 id="2-_安装前准备">2. 安装前准备</h2>
+<p>操作系统：centos 6.5<br>Oracle介质：11.2.0.4<br>Oracle安装介质是需要订阅账户在MetaLink官网获取。</p>
+<h3 id="2-1_IP地址规划">2.1 IP地址规划</h3>
+<p>每台机器至少需要两个网络，一块网卡作为public，另一块作为private，建议ip地址全部使用静态，而不是DCHP。安装是否成功跟前期规划有很大原因，规划要慎重，一经指定，轻易不要改变。下面是我的规划经验。</p>
+<table>
+<thead>
+<tr>
+<th>Hostname</th>
+<th>short hostname</th>
+<th>type</th>
+<th>ip address</th>
+<th>interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>node1.localdomain</td>
+<td>node1</td>
+<td>Public IP</td>
+<td>192.168.1.101</td>
+<td>eth1</td>
+</tr>
+<tr>
+<td>node1-vip.localdomain</td>
+<td>node1-vip</td>
+<td>virtual IP</td>
+<td>192.168.1.111</td>
+<td>eth1:1</td>
+</tr>
+<tr>
+<td>node1-priv.localdomain</td>
+<td>node1-priv</td>
+<td>private ip</td>
+<td>172.16.1.101</td>
+<td>eth0</td>
+</tr>
+<tr>
+<td>node2.localdomain</td>
+<td>node2</td>
+<td>public ip</td>
+<td>192.168.1.102</td>
+<td>eth1</td>
+</tr>
+<tr>
+<td>node2-vip.localdomain</td>
+<td>node2-vip</td>
+<td>virtual ip</td>
+<td>192.168.1.112</td>
+<td>eth1:1</td>
+</tr>
+<tr>
+<td>node2-priv.localdomain</td>
+<td>node2-priv</td>
+<td>private ip</td>
+<td>172.16.1.102</td>
+<td>eth0</td>
+</tr>
+<tr>
+<td>scan-cluster.localdomain</td>
+<td>scan-cluster</td>
+<td>scan ip</td>
+<td>192.168.1.203</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>每台机器只需要配置public和private网络的IP地址即可，VIP是在安装grid的过程中配置。public、vip、SCAN IP的IP地址必须在同一网段，切记。SCAN IP是通过一台DNS服务器来实现的。</p>
+<h3 id="2-2_配置hosts文件">2.2 配置hosts文件</h3>
+<p>node1的hosts文件如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor"># Do not remove the following line, or various programs</span></div><div class="line"><span class="preprocessor"># that require network functionality will fail.</span></div><div class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>		localhost</div><div class="line"><span class="preprocessor">#::1		localhost6.localdomain6 localhost6</span></div><div class="line"></div><div class="line"><span class="preprocessor"># hostname loopback address</span></div><div class="line"><span class="preprocessor">#127.0.1.1	node1</span></div><div class="line"><span class="preprocessor">#node1</span></div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span>         node1.localdomain               node1</div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.111</span>         node1-vip.localdomain           node1-vip</div><div class="line"><span class="number">172.16</span><span class="number">.1</span><span class="number">.101</span>            node1-priv.localdomain          node1-priv</div><div class="line"><span class="preprocessor">#node2</span></div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.102</span>         node2.localdomain               node2</div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.112</span>         node2-vip.localdomain           node2-vip</div><div class="line"><span class="number">172.16</span><span class="number">.1</span><span class="number">.102</span>            node2-priv.localdomain          node2-priv</div><div class="line"><span class="preprocessor">#scan-ip</span></div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.203</span>         scan-cluster.localdomain        scan-cluster</div></pre></td></tr></table></figure>
+
+<p>node2的hosts文件:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">node2-&gt; cat /etc/hosts</div><div class="line"><span class="preprocessor"># Do not remove the following line, or various programs</span></div><div class="line"><span class="preprocessor"># that require network functionality will fail.</span></div><div class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>		localhost</div><div class="line"><span class="preprocessor">#::1		localhost6.localdomain6 localhost6</span></div><div class="line"></div><div class="line"><span class="preprocessor"># hostname loopback address</span></div><div class="line"><span class="preprocessor">#127.0.1.1	node2</span></div><div class="line"></div><div class="line"><span class="preprocessor">#node1</span></div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.101</span>         node1.localdomain               node1</div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.111</span>         node1-vip.localdomain           node1-vip</div><div class="line"><span class="number">172.16</span><span class="number">.1</span><span class="number">.101</span>            node1-priv.localdomain          node1-priv</div><div class="line"><span class="preprocessor">#node2</span></div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.102</span>         node2.localdomain               node2</div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.112</span>         node2-vip.localdomain           node2-vip</div><div class="line"><span class="number">172.16</span><span class="number">.1</span><span class="number">.102</span>            node2-priv.localdomain          node2-priv</div><div class="line"><span class="preprocessor">#scan-ip</span></div><div class="line"><span class="number">192.168</span><span class="number">.1</span><span class="number">.203</span>         scan-cluster.localdomain        scan-cluster</div></pre></td></tr></table></figure>
+
+<h3 id="2-3_配置DNS服务，使SCAN_IP可以被正确解析">2.3 配置DNS服务，使SCAN IP可以被正确解析</h3>
+<p>SCAN IP 就是在客户端和数据库之间增加一层虚拟的网络服务层。在客户端上只需要配置SCAN IP来访问数据库即可，好处是当RAC数据库增加删除节点时，客户端配置信息无需更改。</p>
+<h4 id="2-3-1">2.3.1</h4>
+<p>新建一台centos58x64a的主机，选择这个镜像的原因是我对bind并不熟悉，之前使用centos6的时候不知因为什么原因没有成功。<br>配置IP地址为静态，ip配置为192.168.1.201</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yum upgrade -<span class="keyword">y</span></div><div class="line">yum install <span class="keyword">bind</span> <span class="keyword">bind</span>-<span class="keyword">chroot</span> caching-nameserver -<span class="keyword">y</span></div><div class="line">reboot</div></pre></td></tr></table></figure>
+
+<ul>
+<li>named.conf文件配置如下：</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">[root<span class="variable">@scan</span>-<span class="keyword">cluster</span> ~]# cd /var/named/chroot/etc/</div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// named.caching-nameserver.conf</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// Provided by Red Hat caching-nameserver package to configure the</span></div><div class="line"><span class="comment">// ISC BIND named(8) DNS server as a caching only nameserver</span></div><div class="line"><span class="comment">// (as a localhost DNS resolver only).</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// See /usr/share/doc/bind*/sample/ for example named configuration files.</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// DO NOT EDIT THIS FILE - use system-config-bind or an editor</span></div><div class="line"><span class="comment">// to create named.conf - edits to this file will be lost on</span></div><div class="line"><span class="comment">// caching-nameserver package upgrade.</span></div><div class="line"><span class="comment">//</span></div><div class="line">options {</div><div class="line">        listen-on port <span class="number">53</span> { any; };</div><div class="line">        listen-on-v6 port <span class="number">53</span> { ::<span class="number">1</span>; };</div><div class="line">        directory       <span class="string">"/var/named"</span>;</div><div class="line">        dump-<span class="keyword">file</span>       <span class="string">"/var/named/data/cache_dump.db"</span>;</div><div class="line">        statistics-<span class="keyword">file</span> <span class="string">"/var/named/data/named_stats.txt"</span>;</div><div class="line">        memstatistics-<span class="keyword">file</span> <span class="string">"/var/named/data/named_mem_stats.txt"</span>;</div><div class="line">        #forwarders { <span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span>; };</div><div class="line">        #forward only;</div><div class="line">        <span class="comment">// Those options should be used carefully because they disable port</span></div><div class="line">        <span class="comment">// randomization</span></div><div class="line"><span class="string">"named.conf"</span> <span class="number">42</span>L, <span class="number">1250</span>C</div><div class="line">        <span class="comment">// Those options should be used carefully because they disable port</span></div><div class="line">        <span class="comment">// randomization</span></div><div class="line">        <span class="comment">// query-source    port 53;</span></div><div class="line">        <span class="comment">// query-source-v6 port 53;</span></div><div class="line"></div><div class="line">        allow-query     { any; };</div><div class="line">        allow-query-cache { any; };</div><div class="line">};</div><div class="line">logging {</div><div class="line">        channel default_debug {</div><div class="line">                <span class="keyword">file</span> <span class="string">"data/named.run"</span>;</div><div class="line">                severity dynamic;</div><div class="line">        };</div><div class="line">};</div><div class="line">view localhost_resolver {</div><div class="line">        <span class="keyword">match</span>-clients      { any; };</div><div class="line">        <span class="keyword">match</span>-destinations { any; };</div><div class="line">        recursion yes;</div><div class="line">        include <span class="string">"/etc/named.rfc1912.zones"</span>;</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<ul>
+<li>配置zone文件，<code>/var/named/chroot/etc/named.rfc1912.zones</code> 目的为了解析SCAN IP</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">root@scan-cluster etc]# cat named.rfc1912.zones</div><div class="line"><span class="comment">// named.rfc1912.zones:</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// Provided by Red Hat caching-nameserver package</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// ISC BIND named zone configuration for zones recommended by</span></div><div class="line"><span class="comment">// RFC 1912 section 4.1 : localhost TLDs and address zones</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// See /usr/share/doc/bind*/sample/ for example named configuration files.</span></div><div class="line"><span class="comment">//</span></div><div class="line">zone <span class="string">"."</span> IN {</div><div class="line">	<span class="class"><span class="keyword">type</span> <span class="title">hint</span>;</span></div><div class="line">	file <span class="string">"named.ca"</span>;</div><div class="line">};</div><div class="line"></div><div class="line">zone <span class="string">"localdomain"</span> IN {</div><div class="line">	<span class="class"><span class="keyword">type</span> <span class="title">master</span>;</span></div><div class="line">	file <span class="string">"localdomain.zone"</span>;</div><div class="line">	allow-update { none; };</div><div class="line">};</div><div class="line"></div><div class="line">zone <span class="string">"localhost"</span> IN {</div><div class="line">	<span class="class"><span class="keyword">type</span> <span class="title">master</span>;</span></div><div class="line">	file <span class="string">"localhost.zone"</span>;</div><div class="line">	allow-update { none; };</div><div class="line">};</div><div class="line"></div><div class="line">zone <span class="string">"0.0.127.in-addr.arpa"</span> IN {</div><div class="line">	<span class="class"><span class="keyword">type</span> <span class="title">master</span>;</span></div><div class="line">	file <span class="string">"named.local"</span>;</div><div class="line">	allow-update { none; };</div><div class="line">};</div><div class="line"></div><div class="line">zone <span class="string">"0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa"</span> IN {</div><div class="line">        <span class="class"><span class="keyword">type</span> <span class="title">master</span>;</span></div><div class="line">	file <span class="string">"named.ip6.local"</span>;</div><div class="line">	allow-update { none; };</div><div class="line">};</div><div class="line"></div><div class="line">zone <span class="string">"255.in-addr.arpa"</span> IN {</div><div class="line">	<span class="class"><span class="keyword">type</span> <span class="title">master</span>;</span></div><div class="line">	file <span class="string">"named.broadcast"</span>;</div><div class="line">	allow-update { none; };</div><div class="line">};</div><div class="line"></div><div class="line">zone <span class="string">"0.in-addr.arpa"</span> IN {</div><div class="line">	<span class="class"><span class="keyword">type</span> <span class="title">master</span>;</span></div><div class="line">	file <span class="string">"named.zero"</span>;</div><div class="line">	allow-update { none; };</div><div class="line">};</div><div class="line"></div><div class="line">zone <span class="string">"1.168.192.in-addr.arpa."</span> IN {</div><div class="line">        <span class="class"><span class="keyword">type</span> <span class="title">master</span>;</span></div><div class="line">        file <span class="string">"1.168.192.in-addr.arpa"</span>;</div><div class="line">        allow-update { none; };</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<ul>
+<li>正常情况下还应该配置正向zone文件。由于我们的node1、node2节点的domain都配置成了localdomain，而默认情况下，named.rfc1912.zones已经自带了改正向zone文件配置信息。</li>
+<li>配置正、反向解析数据库文件。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /<span class="built_in">var</span>/named/chroot/<span class="built_in">var</span>/named<span class="subst">/</span></div><div class="line">cp <span class="attribute">-p</span> named<span class="built_in">.</span><span class="built_in">local</span> <span class="number">1.168</span><span class="number">.192</span><span class="built_in">.</span><span class="keyword">in</span><span class="attribute">-addr</span><span class="built_in">.</span>arpa</div></pre></td></tr></table></figure>
+
+<p>由于上面我们没有配置正向zone文件，所以只需要反向解析数据库文件，正向利用默认的localdomian.zone文件<br>然后在localdomain.zone文件的末尾添加解析。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@scan-cluster named]<span class="comment"># cat localdomain.zone</span></div><div class="line">$TTL	86400</div><div class="line">@		IN SOA	localhost root (</div><div class="line">					42		; serial (d. adams)</div><div class="line">					3H		; refresh</div><div class="line">					15M		; retry</div><div class="line">					1W		; expiry</div><div class="line">					1D )		; minimum</div><div class="line">	        IN NS		localhost</div><div class="line">localhost	IN A		127.0.0.1</div><div class="line">scan-cluster	IN A		192.168.1.203</div></pre></td></tr></table></figure>
+
+<p>在1.168.192.in-addr.arpa文件末尾正向解析内容。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@scan-cluster named]# cat <span class="number">1.168</span><span class="string">.192</span>.in-addr.arpa</div><div class="line">$TTL	<span class="number">86400</span></div><div class="line">@       <span class="keyword">IN</span>      SOA     localhost. root.localhost.  (</div><div class="line">                                      <span class="number">1997022700</span> <span class="comment">; Serial</span></div><div class="line">                                      <span class="number">28800</span>      <span class="comment">; Refresh</span></div><div class="line">                                      <span class="number">14400</span>      <span class="comment">; Retry</span></div><div class="line">                                      <span class="number">3600000</span>    <span class="comment">; Expire</span></div><div class="line">                                      <span class="number">86400</span> )    <span class="comment">; Minimum</span></div><div class="line">        <span class="keyword">IN</span>      NS      localhost.</div><div class="line"><span class="number">1</span>       <span class="keyword">IN</span>      <span class="preprocessor">PTR</span>     localhost.</div><div class="line"><span class="number">203</span>	<span class="keyword">IN</span>	<span class="preprocessor">PTR</span>	scan-cluster.localdomain.</div></pre></td></tr></table></figure>
+
+<h4 id="2-3-2测试解析">2.3.2测试解析</h4>
+<p>在node1，node2的/etc/resolv.conf配置文件中添加：<br><code>search localdomain
+nameserver 192.168.1.201</code><br>在node1、node2测试解析是否成功<br><code>nslookup 192.168.1.201</code></p>
+<h3 id="2-4_创建用户、修改用户配置文件">2.4 创建用户、修改用户配置文件</h3>
+<p>配置RAC的时候需要安装oracle grid、oracle数据库软件、其中grid是一个集群件，需要共享存储。oracle建议以不同的用户分别安装grid和数据库软件，我这里以grid用户安装grid软件、oracle用户安装oracle数据库软件。并且grid、oracle用户需要属于不同的用户组。在配置rac时，还要求这两个用户在不同的节点上uid、gid要一致。由于配置起来比较繁琐，我使用shell脚本来完成。脚本为<code>1preusers.sh</code>来完成用户和用户组的创建。<br>注意:脚本中的用户密码根据需要更改。我是为了省事。两个节点的脚本中环境变量部分不同，不要搞错。<br>执行完脚本分别在两个节点验证一下。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">id grid</div><div class="line"><span class="variable">uid=</span><span class="number">1100</span>(grid) <span class="variable">gid=</span><span class="number">1000</span>(oinstall) <span class="variable">groups=</span><span class="number">1000</span>(oinstall),<span class="number">1200</span>(asmadmin),<span class="number">1201</span>(asmdba),<span class="number">1202</span>(asmoper)</div><div class="line">id oracle</div><div class="line"><span class="variable">uid=</span><span class="number">1101</span>(oracle) <span class="variable">gid=</span><span class="number">1000</span>(oinstall) <span class="variable">groups=</span><span class="number">1000</span>(oinstall),<span class="number">1201</span>(asmdba),<span class="number">1300</span>(dba),<span class="number">1301</span>(oper)</div></pre></td></tr></table></figure>
+
+<h3 id="2-5_创建文件夹、改权限">2.5 创建文件夹、改权限</h3>
+<p>也是挺麻烦，使用脚本<code>2predir.sh</code>来完成相关路径、权限的配置。</p>
+<h3 id="2-6_修改/etc/security/limits-conf">2.6 修改/etc/security/limits.conf</h3>
+<p>执行<code>3prelimits.sh</code>这个脚本</p>
+<h3 id="2-7_修改/etc/pam-d/login_配置文件">2.7 修改/etc/pam.d/login 配置文件</h3>
+<p>执行<code>4prelogin.sh</code>。</p>
+<h3 id="2-8_修改/etc/profile文件">2.8 修改/etc/profile文件</h3>
+<p>执行<code>5preprofile.sh</code></p>
+<h3 id="2-9_修改内核配置文件">2.9 修改内核配置文件</h3>
+<p>执行<code>6presysctl.sh</code></p>
+<h3 id="2-10_停止NTP服务，否则安装的时候检查环境会通不过。">2.10 停止NTP服务，否则安装的时候检查环境会通不过。</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">service ntpd <span class="keyword">stop</span></div><div class="line">chkconfig ntpd off</div><div class="line">rm -rf /etc/ntp.<span class="keyword">conf</span></div></pre></td></tr></table></figure>
+
+<h3 id="2-11_配置oracle_grid用户ssh的对等性">2.11 配置oracle grid用户ssh的对等性</h3>
+<p>就是在grid和oracle用户下创建密钥，上传公钥，两个用户的节点间互访都不需要密码，具体操作自行处理。<br>注意：创建完需要挨个主机名登录一次，为的是去掉首次登录的主机指纹提示。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ssh node1 <span class="built_in">date</span></div><div class="line">ssh node2 <span class="built_in">date</span></div><div class="line">ssh node1.localdomain <span class="built_in">date</span></div><div class="line">ssh node2.localdomain <span class="built_in">date</span></div><div class="line">ssh node1-priv <span class="built_in">date</span></div><div class="line">ssh node2-priv <span class="built_in">date</span></div><div class="line">ssh node1-priv.localdomain <span class="built_in">date</span></div><div class="line">ssh node2-priv.localdomain <span class="built_in">date</span></div></pre></td></tr></table></figure>
+
+<p>这一步比较在hrb1节点比较坑，hrb1的模板的sshd_config 里面有个<code>userknowhostsfile /dev/null</code> 这样的配置，造成每次ssh都会有 <code>permanently add ... to the list of know hosts</code>这样的提示，这样在oracle验证的时候也是通不过的，查找这个问题浪费了不少时间。</p>
+<h3 id="2-12配置共享磁盘">2.12配置共享磁盘</h3>
+<p>注意：共享磁盘目前只在hrb1节点的容量型磁盘上验证通过。原因是hrb1的容量型磁盘关闭了cache，和添加了scsi_id功能。如果不关闭cache会造成分区不同步的问题。这个问题也是浪费了好多时间。<br>oracle的共享磁盘有两种挂载方式，一种是udev的方式，一种是使用asmlib的方式。asmlib是在内核上打补丁，相当繁琐，而Oracle Linux内核中已经包含，其他发行版大家都推荐使用udev的方式。</p>
+<p>共需要5块硬盘，1块本地硬盘用于存储数据库安装文件，4块共享存储。<br>由于在云上都是udev设备，有时候设备路径会变化，有两种解决办法，udev scsi_id rules和asmlib的label都可以解决。这里我使用ude的方式。</p>
+<p>使用如下命令查询4个共享设备ID</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">[</span><span class="comment">root@node1</span> <span class="comment">~</span><span class="title">]</span><span class="comment">#</span> <span class="comment">scsi_id</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">whitelisted</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">replace</span><span class="literal">-</span><span class="comment">whitespace</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">device=/dev/sdc</span></div><div class="line"><span class="comment">0QEMU_QEMU_HARDDISK_vom</span><span class="literal">-</span><span class="comment">ookw3f29</span></div></pre></td></tr></table></figure>
+
+<p>在<code>/etc/udev/rules.d/</code>下新建<code>99-oracle-asmdevices.rules</code>文件。文件内容如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="variable">KERNEL=</span>=<span class="string">"sd*"</span>, <span class="variable">SUBSYSTEM=</span>=<span class="string">"block"</span>, <span class="variable">PROGRAM=</span>=<span class="string">"/sbin/scsi_id --whitelisted --replace-whitespace --device=/dev/$name"</span>, <span class="variable">RESULT=</span>=<span class="string">"0QEMU_QEMU_HARDDISK_vom-j7k9qorh"</span>, <span class="variable">NAME=</span><span class="string">"asm-disk1"</span>,  <span class="variable">OWNER=</span><span class="string">"grid"</span>,  <span class="variable">GROUP=</span><span class="string">"dba"</span>, <span class="variable">MODE=</span><span class="string">"0660"</span></div><div class="line"><span class="variable">KERNEL=</span>=<span class="string">"sd*"</span>, <span class="variable">SUBSYSTEM=</span>=<span class="string">"block"</span>, <span class="variable">PROGRAM=</span>=<span class="string">"/sbin/scsi_id --whitelisted --replace-whitespace --device=/dev/$name"</span>, <span class="variable">RESULT=</span>=<span class="string">"0QEMU_QEMU_HARDDISK_vom-sxlw9v86"</span>, <span class="variable">NAME=</span><span class="string">"asm-disk2"</span>,  <span class="variable">OWNER=</span><span class="string">"grid"</span>,  <span class="variable">GROUP=</span><span class="string">"dba"</span>, <span class="variable">MODE=</span><span class="string">"0660"</span></div><div class="line"><span class="variable">KERNEL=</span>=<span class="string">"sd*"</span>, <span class="variable">SUBSYSTEM=</span>=<span class="string">"block"</span>, <span class="variable">PROGRAM=</span>=<span class="string">"/sbin/scsi_id --whitelisted --replace-whitespace --device=/dev/$name"</span>, <span class="variable">RESULT=</span>=<span class="string">"0QEMU_QEMU_HARDDISK_vom-vf11twfj"</span>, <span class="variable">NAME=</span><span class="string">"asm-disk3"</span>,  <span class="variable">OWNER=</span><span class="string">"grid"</span>,  <span class="variable">GROUP=</span><span class="string">"dba"</span>, <span class="variable">MODE=</span><span class="string">"0660"</span></div><div class="line"><span class="variable">KERNEL=</span>=<span class="string">"sd*"</span>, <span class="variable">SUBSYSTEM=</span>=<span class="string">"block"</span>, <span class="variable">PROGRAM=</span>=<span class="string">"/sbin/scsi_id --whitelisted --replace-whitespace --device=/dev/$name"</span>, <span class="variable">RESULT=</span>=<span class="string">"0QEMU_QEMU_HARDDISK_vom-ookw3f29"</span>, <span class="variable">NAME=</span><span class="string">"asm-disk4"</span>,  <span class="variable">OWNER=</span><span class="string">"grid"</span>,  <span class="variable">GROUP=</span><span class="string">"dba"</span>, <span class="variable">MODE=</span><span class="string">"0660"</span></div></pre></td></tr></table></figure>
+
+<p>要保证node1和node2的配置要一致。然后启动udev</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/sbin/</span>start_udev</div></pre></td></tr></table></figure>
+
+<p>检查udev</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">root<span class="keyword">@node1</span> ~]# ll /dev/<span class="keyword">asm</span>*</div><div class="line">brw-rw---- <span class="number">1</span> grid dba <span class="number">8</span>, <span class="number">80</span> Jan <span class="number">26</span> <span class="number">15</span>:<span class="number">34</span> /dev/<span class="keyword">asm</span>-disk1</div><div class="line">brw-rw---- <span class="number">1</span> grid dba <span class="number">8</span>, <span class="number">64</span> Dec <span class="number">21</span> <span class="number">14</span>:<span class="number">0</span>2 /dev/<span class="keyword">asm</span>-disk2</div><div class="line">brw-rw---- <span class="number">1</span> grid dba <span class="number">8</span>, <span class="number">48</span> Jan <span class="number">26</span> <span class="number">15</span>:<span class="number">34</span> /dev/<span class="keyword">asm</span>-disk3</div><div class="line">brw-rw---- <span class="number">1</span> grid dba <span class="number">8</span>, <span class="number">32</span> Jan <span class="number">26</span> <span class="number">15</span>:<span class="number">34</span> /dev/<span class="keyword">asm</span>-disk4</div></pre></td></tr></table></figure>
+
+<h3 id="2-13_解压安装介质">2.13 解压安装介质</h3>
+<p>把安装介质解压到挂载的本地磁盘上，不要放到系统盘，空间不够。</p>
+<p>其中:</p>
+<p><code>p13390677_112040_Linux-x86-64_1of7.zip</code><br><code>p13390677_112040_Linux-x86-64_2of7.zip</code><br>是oracle数据库软件</p>
+<p><code>p13390677_112040_Linux-x86-64_3of7.zip</code><br>是grid集群软件</p>
+<p>这里的3个软件包均是来源于MetaLink网站.</p>
+<h3 id="2-14_安装依赖软件包">2.14 安装依赖软件包</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">yum</span> <span class="comment">install</span> <span class="literal">-</span><span class="comment">y</span> <span class="comment">pdksh</span> <span class="comment">sysstat</span> <span class="comment">libstdc</span><span class="literal">+</span><span class="literal">+</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">libaio</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">gcc</span><span class="literal">-</span><span class="comment">c</span><span class="literal">+</span><span class="literal">+</span> <span class="comment">compat</span><span class="literal">-</span><span class="comment">libstdc</span><span class="literal">+</span><span class="literal">+</span><span class="literal">-</span><span class="comment">33</span> <span class="comment">elfutils</span><span class="literal">-</span><span class="comment">libelf</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">smartmontools</span> <span class="comment">compat</span><span class="literal">-</span><span class="comment">libcap1</span></div></pre></td></tr></table></figure>
+
+<p>其中pdksh在centos6的源中已经取消，oracle又需要，可以在epel5的源中下载安装。</p>
+<h3 id="2-15_安装前预检查配置信息">2.15 安装前预检查配置信息</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">su - grid</div><div class="line">进入grid的安装文件目录</div><div class="line">./runcluvfy.<span class="keyword">sh</span> stage -<span class="keyword">pre</span> crsinst -<span class="keyword">n</span> node1,node2 -fixup -<span class="keyword">verbose</span></div></pre></td></tr></table></figure>
+
+<p>通常会检查出一些问题，oracle自动会给我们提供修复脚本，例如修复用户组，内核参数什么的。根据提示以root用户在两个节点上执行/tmp/CVU_11.2.0.4.0_grid/runfixup.sh脚本。</p>
+<p>修复完后再次检查，应该不会再有问题。</p>
+<h2 id="3_安装Grid_Infrastructure">3 安装Grid Infrastructure</h2>
+<p>从此步骤开始正式安装Grid软件，</p>
+<ol>
+<li>以grid用户登录图形界面，执行<code>grid/runInstaller</code>进入OUI图形安装界面。</li>
+<li>skip software updates —&gt; next</li>
+<li>选择cluster —&gt; next</li>
+<li>Advanced Installation —&gt;next</li>
+<li>English —&gt;Next</li>
+<li>去掉config GNS选项，安装规划的表格中的内容输入:Cluster Name:scan-cluster,SCAN Name:scan-cluster.localdomain SCAN Port:1521 —&gt;next</li>
+<li>add ,添加第2个节点，public hostname:node2.localdomain Virtual hostname:node2-vip.localdomain  —&gt;next</li>
+<li>确认网络接口 —&gt;next</li>
+<li>Oracle ASM —&gt;next</li>
+<li>输入ASM磁盘组名，我命名为GRIDDG，冗余策略选择External，AU大小默认1M，磁盘选择asm-disk1和asm-disk2（这两块共享磁盘只需要500M就够了，但是云上容量型磁盘最小100G）</li>
+<li>选择相同的用户名口令，—&gt;next</li>
+<li>不使用IPMI —&gt;next</li>
+<li>给asm指定不同的租，不要搞错。—&gt;next</li>
+<li>选择grid软件的安装路径，ORACLE_BASE,ORACLE_HOME均选择之前已经配置好的。GRID软件的ORACLE_HOME不能是ORACLE_BASE的子目录.—&gt;next</li>
+<li>Inventory选择默认 —&gt;next</li>
+<li>这一步会再次检查环境，如果提示缺失cvuqdisk软件包可以从grid安装文件的rpm目录下获取安装 —&gt;next</li>
+<li>根据提示以root身份在两个节点执行脚本 —&gt;next</li>
+<li><code>su - grid</code> <code>crs_stat -t</code>确认集群已启动</li>
+<li>确认没问题后点击ok —&gt;next</li>
+<li>grid集群安装成功</li>
+</ol>
+<h2 id="4_安装oracle软件">4 安装oracle软件</h2>
+<p>以oracle用户登录，执行database/runInstaller 进入图形安装界面。</p>
+<ol>
+<li>skip ，next</li>
+<li>install database software only , next</li>
+<li>oracle real application clusters … ，select all , next</li>
+<li>english , next</li>
+<li>enterprise ， next</li>
+<li>之前配置好的oracle_base, oracle_home , next</li>
+<li>选择对应用户组，next</li>
+<li>安装检查，next</li>
+<li>概要信息，install</li>
+<li>用root用户身份在两个节点执行脚本</li>
+<li>close</li>
+<li>安装完成</li>
+</ol>
+<h2 id="5_创建asm磁盘组">5 创建asm磁盘组</h2>
+<p>以grid用户创建asm磁盘组，创建的磁盘组为Oracle数据库提供存储。</p>
+<ol>
+<li>以grid用户登录图形界面，执行asmca</li>
+<li>Disk Groups ,Create 创建新的磁盘组</li>
+<li>输入名称，冗余选external，磁盘选择asm-disk3，ok（磁盘容量要实现在创建的时候规划好）</li>
+<li>继续创建磁盘组，名称FLASH，冗余选external，磁盘选asm-disk4，ok （这个创建的是闪回恢复区-Flash Recovery Area，大小问DBA如何规划）</li>
+<li>至此，3个磁盘组全部被RAC mount</li>
+</ol>
+<h2 id="6_创建rac数据库">6 创建rac数据库</h2>
+<p>以oracle用户登录图形界面，执行dbca，进入DBCA图形界面</p>
+<ol>
+<li>oracle real application cluster database ,next</li>
+<li>create a database , next</li>
+<li>general purpose … ,next</li>
+<li>admin-managed ,name:devdb ,SID:devdb,select all, next</li>
+<li>configure enterprise manager ,并启用数据库自动维护任务,next</li>
+<li>use the same … ,next</li>
+<li>storage type: ASM ,use oracle-managed files选择之前创建的数据库磁盘组，next</li>
+<li>指定闪回区，选择前面创建的磁盘组，next</li>
+<li>创建sample schema，next</li>
+<li>选择字符集,next</li>
+<li>next</li>
+<li>finsh<br>完成数据库创建</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yan.lingyun.io/draft/oracle rac.html" data-title="zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+        </div>
+        <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://yan.lingyun.io" target="_blank" title="张岩">张岩</a>
+		
+		</p>
+</div>
+</footer>
+        <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yanest"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+      </body>
+     </html>
+     

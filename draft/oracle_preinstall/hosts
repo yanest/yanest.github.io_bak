@@ -1,0 +1,18 @@
+# Do not remove the following line, or various programs
+# that require network functionality will fail.
+127.0.0.1 localhost
+#::1		localhost6.localdomain6 localhost6
+
+# hostname loopback address
+# 127.0.1.1	node2
+
+#node1
+192.168.1.101         node1.localdomain               node1
+192.168.1.111         node1-vip.localdomain           node1-vip
+172.16.1.101            node1-priv.localdomain          node1-priv
+#node2
+192.168.1.102         node2.localdomain               node2
+192.168.1.112         node2-vip.localdomain           node2-vip
+172.16.1.102            node2-priv.localdomain          node2-priv
+#scan-ip
+192.168.1.203         scan-cluster.localdomain        scan-cluster

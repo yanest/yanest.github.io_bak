@@ -4,13 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>树莓派折腾记 | zhangyan&#39;s blog</title>
+    <title>skype的注册 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="树莓派（英语：Raspberry Pi），是一款基于Linux系统的只有一张信用卡大小的单板机电脑。它由英国的树莓派基金会所开发，目的是以低价硬件及自由软件刺激在学校的基本的电脑科学教育
-1234rasp-config #配置系统，可以打开ssh，可以调整频率，扩展rootfs等deb http:/">
+    <meta name="description" content="skype的语音效果要比qq好上许多，非常适合工作及家庭用来通讯。背后的技术就不说了，单单是qq的各种弹窗、网游广告、qq秀就会让你在工作会议中各种尴尬。
+另外自从skype被微软收购以后，skype的新用户注册就会被转到屎一样microsoft账户。而skype原来的skype id被隐藏了。
+使">
     
     
     
@@ -69,15 +70,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/23/树莓派折腾记/" title="树莓派折腾记" itemprop="url">树莓派折腾记</a>
+      <a href="/2015/02/28/skype注册/" title="skype的注册" itemprop="url">skype的注册</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-23T11:44:13.000Z" itemprop="datePublished">1月 23 2015</time>
-    更新日期:<time datetime="2015-01-23T11:44:13.000Z" itemprop="dateModified">1月 23 2015</time>
+    <time datetime="2015-02-28T01:21:27.000Z" itemprop="datePublished">2月 28 2015</time>
+    更新日期:<time datetime="2015-02-28T01:21:27.000Z" itemprop="dateModified">2月 28 2015</time>
     
   </p>
 </header>
@@ -86,32 +87,28 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#wireshark的安装配置"><span class="toc-number">1.</span> <span class="toc-text">wireshark的安装配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#aircrack_&_reaver安装"><span class="toc-number">2.</span> <span class="toc-text">aircrack & reaver安装</span></a></li></ol>
+		
 		</div>
 		
-		<p>树莓派（英语：Raspberry Pi），是一款基于Linux系统的只有一张信用卡大小的单板机电脑。它由英国的树莓派基金会所开发，目的是以低价硬件及自由软件刺激在学校的基本的电脑科学教育</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">rasp-config <span class="comment">#配置系统，可以打开ssh，可以调整频率，扩展rootfs等</span></div><div class="line">deb <span class="keyword">http</span>://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ wheezy main contrib non-free rpi  <span class="comment">#中国源，速度较快</span></div><div class="line">apt-<span class="built_in">get</span> update && apt-<span class="built_in">get</span> dist-upgrade -y</div><div class="line">apt-<span class="built_in">get</span> install xrdp <span class="comment">#安装rdp作为远程登录</span></div></pre></td></tr></table></figure>
-
-<h3 id="wireshark的安装配置">wireshark的安装配置</h3>
-<p>wireshark是非常出门的嗅探工具，这也是我打算搞树莓派的主要原因，可以方便携带，随时嗅探 ：）</p>
-<p><code>apt-get install wireshark -y</code></p>
-<figure class="highlight groupadd"><figcaption><span>wireshark #创建用户组</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">chgrp wireshark /usr/bin/dumpcap <span class="comment">#把dumpcap用户组更改为wireshark</span></div><div class="line">chmod <span class="number">4755</span> /usr/bin/dumpcap</div><div class="line">gpasswd -<span class="operator">a</span> <span class="constant">pi</span> wireshark <span class="comment">#把自己的用户加入wireshark用户组</span></div></pre></td></tr></table></figure>
-
-<h3 id="aircrack_&amp;_reaver安装">aircrack &amp; reaver安装</h3>
-<p>aircrack 和 reaver是大名鼎鼎的无线攻击工具，在树莓派上需要编译安装</p>
-<figure class="highlight apt-get"><figcaption><span>install -y libpcap-dev libsqlite3-dev sqlite3 libpcap0.8-dev libssl-dev build-essential iw tshark subversion  #安装依赖</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">svn co http:<span class="comment">//trac.aircrack-ng.org/svn/trunk aircrack-ng</span></div><div class="line"><span class="built_in">cd</span> aircrack-ng/</div><div class="line">make</div><div class="line">make install </div><div class="line"><span class="built_in">cd</span> ../</div><div class="line"></div><div class="line">wget http:<span class="comment">//reaver-wps.googlecode.com/files/reaver-1.4.tar.gz</span></div><div class="line">tar zxvf reaver-<span class="number">1.4</span>.<span class="transposed_variable">tar.</span>gz</div><div class="line"><span class="built_in">cd</span> reaver-<span class="number">1.4</span>/src</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div><div class="line"><span class="built_in">cd</span> ../</div></pre></td></tr></table></figure>
-
-<p>googlecode被墙了，可以从<a href="http://lok.me/wp-content/uploads/reaver-1.4.tar.gz" target="_blank" rel="external">这里</a>下载</p>
+		<p>skype的语音效果要比qq好上许多，非常适合工作及家庭用来通讯。背后的技术就不说了，单单是qq的各种弹窗、网游广告、qq秀就会让你在工作会议中各种尴尬。</p>
+<p>另外自从skype被微软收购以后，skype的新用户注册就会被转到屎一样microsoft账户。而skype原来的skype id被隐藏了。</p>
+<p>使用下面的地址就可以直接注册skype id了，方便不少。</p>
+<p><a href="https://login.skype.com/intl/zh-Hans/account/signup-form" target="_blank" rel="external">https://login.skype.com/intl/zh-Hans/account/signup-form</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/skype/">skype</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2015/01/23/树莓派折腾记/" data-title="树莓派折腾记 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/02/28/skype注册/" data-title="skype的注册 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -120,19 +117,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/25/tmux/" title="tmux">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  tmux</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/12/git使用总结/"  title="git 使用总结">
+<a href="/2015/02/09/树莓派折腾记/"  title="树莓派折腾记">
  <strong>NEXT:</strong><br/> 
- <span>git 使用总结
+ <span>树莓派折腾记
 </span>
 </a>
 </div>
@@ -149,7 +138,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#wireshark的安装配置"><span class="toc-number">1.</span> <span class="toc-text">wireshark的安装配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#aircrack_&_reaver安装"><span class="toc-number">2.</span> <span class="toc-text">aircrack & reaver安装</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
@@ -172,6 +161,8 @@
 			<li><a href="/tags/linux-debian-ubuntu/" title="linux,debian&amp;ubuntu">linux,debian&amp;ubuntu<sup>0</sup></a></li>
 		
 			<li><a href="/tags/mac/" title="mac">mac<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skype/" title="skype">skype<sup>1</sup></a></li>
 		
 			<li><a href="/tags/心情随笔/" title="心情随笔">心情随笔<sup>2</sup></a></li>
 		
