@@ -4,12 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | zhangyan&#39;s blog</title>
+    <title>linux使用tmpfs | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+    <meta name="description" content="使用内存在linux系统中创建出一块虚拟磁盘。注意：内存数据在重启后会丢失，一般用来存储临时文件。
+1mkdir /mnt/ramdisk
+
+
+
+1mount -t tmpfs -o size=512m tmpfs /mnt/ramdisk
+
+系统启动时自动挂载
+1vim /etc/fstab
+
+
+">
     
     
     
@@ -68,15 +79,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/09/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2015/03/07/ramfs/" title="linux使用tmpfs" itemprop="url">linux使用tmpfs</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-09T05:27:11.000Z" itemprop="datePublished">11月 9 2014</time>
-    更新日期:<time datetime="2014-11-09T05:27:11.000Z" itemprop="dateModified">11月 9 2014</time>
+    <time datetime="2015-03-07T09:43:28.000Z" itemprop="datePublished">3月 7 2015</time>
+    更新日期:<time datetime="2015-03-07T09:51:35.000Z" itemprop="dateModified">3月 7 2015</time>
     
   </p>
 </header>
@@ -85,37 +96,38 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+		
 		</div>
 		
-		<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2>
-<h3 id="Create_a_new_post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+		<p>使用内存在linux系统中创建出一块虚拟磁盘。<br>注意：内存数据在重启后会丢失，一般用来存储临时文件。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> /mnt/ramdisk</div></pre></td></tr></table></figure>
 
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
 
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
 
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount -t tmpfs -o <span class="keyword">size</span>=<span class="number">512</span>m tmpfs <span class="regexp">/mnt/</span>ramdisk</div></pre></td></tr></table></figure>
 
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<p>系统启动时自动挂载</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">vim</span> /etc/fstab</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,seze</span>=<span class="string">1024M 0 0</span></div></pre></td></tr></table></figure>
+
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/09/hello-world/" data-title="Hello World | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/03/07/ramfs/" data-title="linux使用tmpfs | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -124,14 +136,14 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/11/10/hexo/" title="这就是hexo">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  这就是hexo</span>
+
+<div class="next">
+<a href="/2015/02/28/树莓派折腾记/"  title="树莓派折腾记">
+ <strong>NEXT:</strong><br/> 
+ <span>树莓派折腾记
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -145,7 +157,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+  
   </div>
 
 <div id="asidepart">

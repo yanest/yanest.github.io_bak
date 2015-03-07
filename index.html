@@ -65,6 +65,28 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
+    <a href="/2015/03/07/ramfs/" title="linux使用tmpfs" itemprop="url">
+  
+    <h1 itemprop="name">linux使用tmpfs</h1>
+    
+     
+           <p itemprop="description" >使用内存在linux系统中创建出一块虚拟磁盘。注意：内存数据在重启后会丢失，一般用来存储临时文件。
+1mkdir /mnt/ramdisk
+
+
+
+1mount -t tmpfs -o size=512m tmpfs /mnt/ramdisk
+
+系统启动时自动挂载
+1vim /et</p>
+        
+    
+    <time datetime="2015-03-07T09:43:28.000Z" itemprop="datePublished">3月 7 2015</time>
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
     <a href="/2015/02/28/树莓派折腾记/" title="树莓派折腾记" itemprop="url">
   
     <h1 itemprop="name">树莓派折腾记</h1>
@@ -204,21 +226,6 @@ tmux是一个优秀的终端复用软件，即使非正常掉线，也能保证�
   </a>
 </section>
 
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2014/12/27/dropbox被墙的解决办法/" title="dropbox被墙的解决办法" itemprop="url">
-  
-    <h1 itemprop="name">dropbox被墙的解决办法</h1>
-    
-     
-           <p itemprop="description" >Dropbox的域名被DNS污染，并且Dropbox域名也进了黑名单关键字，导致Dropbox客户端无法使用，不过我发现通过修改Hosts文件的方法可以让Dropbox继续正常使用，Hosts文件内容如下。
-　　注释：我的Dropbox版本2.8.2，修改Hosts后可以通过ht</p>
-        
-    
-    <time datetime="2014-12-27T09:41:32.000Z" itemprop="datePublished">12月 27 2014</time>
-  </a>
-</section>
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -240,7 +247,7 @@ tmux是一个优秀的终端复用软件，即使非正常掉线，也能保证�
 		
 			<li><a href="/tags/debian-ubuntu/" title="debian&amp;ubuntu">debian&amp;ubuntu<sup>1</sup></a></li>
 		
-			<li><a href="/tags/linux/" title="linux">linux<sup>4</sup></a></li>
+			<li><a href="/tags/linux/" title="linux">linux<sup>5</sup></a></li>
 		
 			<li><a href="/tags/mac/" title="mac">mac<sup>1</sup></a></li>
 		
