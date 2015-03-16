@@ -4,23 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>linux使用tmpfs | zhangyan&#39;s blog</title>
+    <title>WD My Cloud 评测报告 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="使用内存在linux系统中创建出一块虚拟磁盘。注意：内存数据在重启后会丢失，一般用来存储临时文件。
-1mkdir /mnt/ramdisk
-
-
-
-1mount -t tmpfs -o size=512m tmpfs /mnt/ramdisk
-
-系统启动时自动挂载
-1vim /etc/fstab
-
-
-">
+    <meta name="description" content="前言
+随着云计算在国内的逐渐普及，百度、360、腾讯等这些互联网公司相继推出了免费的云存储类产品。不用花钱，也方便，只需要一个客户端就可以。但是实际使用起来总有一些这样或者那样的问题，例如百度云我在同步大于4G文件的时候常常出错，当需要下载文件的时候速度也被限制住。还有就是安全问题也让人担心，不敢存">
     
     
     
@@ -79,15 +69,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/07/ramfs/" title="linux使用tmpfs" itemprop="url">linux使用tmpfs</a>
+      <a href="/2015/03/16/wdmycloud/" title="WD My Cloud 评测报告" itemprop="url">WD My Cloud 评测报告</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-03-07T09:43:28.000Z" itemprop="datePublished">3月 7 2015</time>
-    更新日期:<time datetime="2015-03-07T09:51:35.000Z" itemprop="dateModified">3月 7 2015</time>
+    <time datetime="2015-03-16T05:24:10.000Z" itemprop="datePublished">3月 16 2015</time>
+    更新日期:<time datetime="2015-03-16T07:37:48.000Z" itemprop="dateModified">3月 16 2015</time>
     
   </p>
 </header>
@@ -96,38 +86,27 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外观"><span class="toc-number">2.</span> <span class="toc-text">外观</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a></li></ol>
 		</div>
 		
-		<p>使用内存在linux系统中创建出一块虚拟磁盘。<br>注意：内存数据在重启后会丢失，一般用来存储临时文件。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> /mnt/ramdisk</div></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount -t tmpfs -o <span class="keyword">size</span>=<span class="number">512</span>m tmpfs <span class="regexp">/mnt/</span>ramdisk</div></pre></td></tr></table></figure>
-
-<p>系统启动时自动挂载</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">vim</span> /etc/fstab</div></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">tmpfs /mnt/ramdisk tmpfs nodev,nosuid,noexec,nodiratime,seze</span>=<span class="string">1024M 0 0</span></div></pre></td></tr></table></figure>
-
+		<h2 id="前言">前言</h2>
+<p>随着云计算在国内的逐渐普及，百度、360、腾讯等这些互联网公司相继推出了免费的云存储类产品。不用花钱，也方便，只需要一个客户端就可以。但是实际使用起来总有一些这样或者那样的问题，例如百度云我在同步大于4G文件的时候常常出错，当需要下载文件的时候速度也被限制住。还有就是安全问题也让人担心，不敢存过于私密性的文件。</p>
+<p>Tim前些日从国外拿回来一个WD My Cloud 2TB版本的个人云存储产品，这是一个私有化网络存储设备— NAS （NAS的中文的意思就是挂载到网络中的存储）。在京东的售价大概在一千元左右，还是非常有性价比的。在功能上，它可以用来备份手机中的照片、视频、电脑中的各种文件、电影等。下面就来详细的了解一下。</p>
+<h2 id="外观">外观</h2>
+<p>这是单硬盘版本的外观大约是一本英汉词典的大小，前面板有电源指示灯。<br><img src="/images/wd01.jpg" alt="image"></p>
+<p>背面有1000M的网络接口，电源插口，还有一个USB3.0接口，需要注意的是此usb接口并不是用来连接电脑使用的，是用来外接移动硬盘等设备作为扩展存储的。<br><img src="/images/wd02.jpg" alt="image"></p>
+<h2 id="使用">使用</h2>
+<p>连接很简单，机身没有任何开关按钮，按图示连接即可使用，这点做得很人性。<br><img src="/images/wd03.png" alt="image"></p>
   
 	</div>
 		<footer class="article-footer clearfix">
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a>
-  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2015/03/07/ramfs/" data-title="linux使用tmpfs | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/03/16/wdmycloud/" data-title="WD My Cloud 评测报告 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -136,19 +115,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/16/wdmycloud/" title="WD My Cloud 评测报告">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  WD My Cloud 评测报告</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/02/28/树莓派折腾记/"  title="树莓派折腾记">
+<a href="/2015/03/07/ramfs/"  title="linux使用tmpfs">
  <strong>NEXT:</strong><br/> 
- <span>树莓派折腾记
+ <span>linux使用tmpfs
 </span>
 </a>
 </div>
@@ -165,7 +136,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外观"><span class="toc-number">2.</span> <span class="toc-text">外观</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a></li></ol>
   </div>
 
 <div id="asidepart">
