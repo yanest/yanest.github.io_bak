@@ -9,8 +9,10 @@
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="简介
-系统管理员（SA）通常需要管理和维护数以百计的服务器，如果没有自动化的配置管理和命令执行工具，那么SA的工作将会变得很繁重。例如，要给集群中的每个服务器添加一个系统用户，那么他必须登陆到每台服务器上去逐一的执行命令。好在有编程能力的SA能通过bash + ssh的方式来自动化自己的工作，于是出">
+    <meta name="description" content="前言
+SaltStack是个很有意思的东西，saltstack可以管理和维护数以百计的服务器，salt-cloud则包含了可管理各大公有云的api和模块，如果运维团队足够强大，还可以通过salt-api写出一个带有前端界面的全自动化运维平台。
+简介
+系统管理员（SA）通常需要管理和维护数以百计的服务">
     
     
     
@@ -77,7 +79,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-06-16T09:11:35.000Z" itemprop="datePublished">6月 16 2015</time>
-    更新日期:<time datetime="2015-06-16T09:16:56.000Z" itemprop="dateModified">6月 16 2015</time>
+    更新日期:<time datetime="2015-06-16T14:02:01.000Z" itemprop="dateModified">6月 16 2015</time>
     
   </p>
 </header>
@@ -86,14 +88,30 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统架构图"><span class="toc-number">2.</span> <span class="toc-text">系统架构图</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统架构图"><span class="toc-number">3.</span> <span class="toc-text">系统架构图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">4.</span> <span class="toc-text">安装</span></a></li></ol>
 		</div>
 		
-		<h2 id="简介">简介</h2>
+		<h2 id="前言">前言</h2>
+<p>SaltStack是个很有意思的东西，saltstack可以管理和维护数以百计的服务器，salt-cloud则包含了可管理各大公有云的api和模块，如果运维团队足够强大，还可以通过salt-api写出一个带有前端界面的全自动化运维平台。</p>
+<h2 id="简介">简介</h2>
 <p>系统管理员（SA）通常需要管理和维护数以百计的服务器，如果没有自动化的配置管理和命令执行工具，那么SA的工作将会变得很繁重。例如，要给集群中的每个服务器添加一个系统用户，那么他必须登陆到每台服务器上去逐一的执行命令。好在有编程能力的SA能通过bash + ssh的方式来自动化自己的工作，于是出现了ClusterShell这一类的工具。但这类工具只是解决了远程命令调用的问题，并没有对一些运维的过程进行抽象，在面对不同的操作系统等环境时，使用会变得复杂和繁琐，对常见的运维操作，如包管理、配置文件分发也没有很好的支持。于是出现了CFEngine，Puppet，Chef，Salt等工具，他们在远程命令执行的基础上对一些常见的运维操作进行了抽象，如节点分组、命令编排、状态管理等。</p>
 <p>Salt正是其中年轻一员，它是一个使用Python和ZeroMQ开发的开源项目，使用Apache 2.0 License。Salt的主要功能有两个：1）配置管理，使节点处于所定义的状态，如指定web类节点apache包的状态为安装并运行；2）分布式的命令执行系统，一方面分发命令到节点执行，另一方面从节点收集所需的数据。</p>
 <h2 id="系统架构图">系统架构图</h2>
 <p><img src="/images/salt.png" alt="image"></p>
+<h2 id="安装">安装</h2>
+<p>ubuntu的安装最为简洁：<br>首先添加ppa源</p>
+<figure class="highlight add-apt-repository"><figcaption><span>-y ppa:saltstack/salt```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">安装主控端</div></pre></td></tr></table></figure>
+
+<p>apt-get install salt-master -y</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">安装被控端</div></pre></td></tr></table></figure>
+
+<p>apt-get install salt-minion -y</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">centos的安装：</div><div class="line">首先添加epel源，步骤省略</div><div class="line">安装主控端</div></pre></td></tr></table></figure>
+
+<p>yum install salt-master -y </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">安装被控端</div></pre></td></tr></table></figure>
+
+<p>yum install salt-minion -y ```</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -133,7 +151,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统架构图"><span class="toc-number">2.</span> <span class="toc-text">系统架构图</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统架构图"><span class="toc-number">3.</span> <span class="toc-text">系统架构图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">4.</span> <span class="toc-text">安装</span></a></li></ol>
   </div>
 
 <div id="asidepart">
