@@ -79,7 +79,7 @@ SaltStack是个很有意思的东西，saltstack可以管理和维护数以百�
     </p>
   <p class="article-time">
     <time datetime="2015-06-16T09:11:35.000Z" itemprop="datePublished">6月 16 2015</time>
-    更新日期:<time datetime="2015-06-16T14:02:01.000Z" itemprop="dateModified">6月 16 2015</time>
+    更新日期:<time datetime="2015-06-16T14:06:01.000Z" itemprop="dateModified">6月 16 2015</time>
     
   </p>
 </header>
@@ -99,19 +99,12 @@ SaltStack是个很有意思的东西，saltstack可以管理和维护数以百�
 <h2 id="系统架构图">系统架构图</h2>
 <p><img src="/images/salt.png" alt="image"></p>
 <h2 id="安装">安装</h2>
-<p>ubuntu的安装最为简洁：<br>首先添加ppa源</p>
-<figure class="highlight add-apt-repository"><figcaption><span>-y ppa:saltstack/salt```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">安装主控端</div></pre></td></tr></table></figure>
+<p>ubuntu的安装最为简洁：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor">#首先添加ppa源</span></div><div class="line">add-apt-repository -y ppa:saltstack/salt</div><div class="line"><span class="preprocessor">#安装主控端</span></div><div class="line">apt-<span class="keyword">get</span> install salt-master -y</div><div class="line"><span class="preprocessor">#安装被控端</span></div><div class="line">apt-<span class="keyword">get</span> install salt-minion -y</div></pre></td></tr></table></figure>
 
-<p>apt-get install salt-master -y</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">安装被控端</div></pre></td></tr></table></figure>
+<p>centos的安装：<br>首先添加epel源，步骤省略</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor">#安装主控端</span></div><div class="line">yum install salt-master -y</div><div class="line"><span class="preprocessor">#安装被控端</span></div><div class="line">yum install salt-minion -y</div></pre></td></tr></table></figure>
 
-<p>apt-get install salt-minion -y</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">centos的安装：</div><div class="line">首先添加epel源，步骤省略</div><div class="line">安装主控端</div></pre></td></tr></table></figure>
-
-<p>yum install salt-master -y </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">安装被控端</div></pre></td></tr></table></figure>
-
-<p>yum install salt-minion -y ```</p>
   
 	</div>
 		<footer class="article-footer clearfix">
