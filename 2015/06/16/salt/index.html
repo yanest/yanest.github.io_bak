@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>WD My Cloud 评测报告 | zhangyan&#39;s blog</title>
+    <title>集群管理工具-Salt | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
     
-    <meta name="description" content="前言
-随着云计算在国内的逐渐普及，百度、360、腾讯等这些互联网公司相继推出了免费的云存储类产品。不用花钱，也方便，只需要一个客户端就可以。但是实际使用起来总有一些这样或者那样的问题，例如百度云我在同步大于4G文件的时候常常出错，当需要下载文件的时候速度也被限制住。还有就是安全问题也让人担心，不敢存">
+    <meta name="description" content="简介
+系统管理员（SA）通常需要管理和维护数以百计的服务器，如果没有自动化的配置管理和命令执行工具，那么SA的工作将会变得很繁重。例如，要给集群中的每个服务器添加一个系统用户，那么他必须登陆到每台服务器上去逐一的执行命令。好在有编程能力的SA能通过bash + ssh的方式来自动化自己的工作，于是出">
     
     
     
@@ -69,15 +69,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/16/wdmycloud/" title="WD My Cloud 评测报告" itemprop="url">WD My Cloud 评测报告</a>
+      <a href="/2015/06/16/salt/" title="集群管理工具-Salt" itemprop="url">集群管理工具-Salt</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-03-16T05:24:10.000Z" itemprop="datePublished">3月 16 2015</time>
-    更新日期:<time datetime="2015-03-17T02:55:22.000Z" itemprop="dateModified">3月 17 2015</time>
+    <time datetime="2015-06-16T09:11:35.000Z" itemprop="datePublished">6月 16 2015</time>
+    更新日期:<time datetime="2015-06-16T09:16:56.000Z" itemprop="dateModified">6月 16 2015</time>
     
   </p>
 </header>
@@ -86,32 +86,14 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外观"><span class="toc-number">2.</span> <span class="toc-text">外观</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统架构图"><span class="toc-number">2.</span> <span class="toc-text">系统架构图</span></a></li></ol>
 		</div>
 		
-		<h2 id="前言">前言</h2>
-<p>随着云计算在国内的逐渐普及，百度、360、腾讯等这些互联网公司相继推出了免费的云存储类产品。不用花钱，也方便，只需要一个客户端就可以。但是实际使用起来总有一些这样或者那样的问题，例如百度云我在同步大于4G文件的时候常常出错，当需要下载文件的时候速度也被限制住。还有就是安全问题也让人担心，不敢存过于私密性的文件。</p>
-<p>Tim前些日从国外拿回来一个WD My Cloud 2TB版本的个人云存储产品，这是一个私有化网络存储设备— NAS （NAS的中文的意思就是挂载到网络中的存储）。在京东的售价大概在一千元左右，还是非常有性价比的。在功能上，它可以用来备份手机中的照片、视频、电脑中的各种文件、电影等。下面就来详细的了解一下。</p>
-<h2 id="外观">外观</h2>
-<p>这是单硬盘版本的外观大约是一本英汉词典的大小，前面板有电源指示灯。<br><img src="/images/wd01.jpg" alt="image"></p>
-<p>背面有1000M的网络接口，电源插口，还有一个USB3.0接口，需要注意的是此usb接口并不是用来连接电脑使用的，是用来外接移动硬盘等设备作为扩展存储的。<br><img src="/images/wd02.jpg" alt="image"></p>
-<h2 id="使用">使用</h2>
-<p>连接很简单，机身没有任何开关按钮，按图示连接即可使用，这点做得很人性。<br><img src="/images/wd03.png" alt="image"></p>
-<p>等面板的指示灯不再闪烁，表示启动完成，就可以使用了。<br>只需要打开浏览器输入：<code>http://wdmycloud.local</code> 便进入nas的初始化界面。<br><img src="/images/wd04.png" alt="image"></p>
-<p>选择语言<br><img src="/images/wd05.png" alt="image"></p>
-<p>进入界面后的样子，可以看到非常的简单明了。可以显示可用容量的大小，硬盘健康状态、固件版本、用户、云客户端、共享文件夹数量等信息。<br><img src="/images/wd06.png" alt="image"></p>
-<p>如果提示固件更新，建议不点更新，可能因为服务器在国外的原因，在线更新真的可以慢到哭。<br><img src="/images/wd07.png" alt="image"></p>
-<p>点击用户选项卡，可以在这里设置用户名和密码，来供多人来使用。<br><img src="/images/wd08.png" alt="image"></p>
-<p>点击共享选项，可以看到默认已经创建了3个共享。其中public是用来公众访问的，smartware是wd备份软件的工作目录，timemachinebackup则是提供给Mac用户用来timemachine备份的。当然也可以创建新的共享文件夹，并且根据用户来设置权限，用来存储私密一些的文件。<br><img src="/images/wd09.png" alt="image"></p>
-<p>创建好的共享文件要如何访问呢？只要通过网上邻居就能找到，或者在资源管理器中输入<code>\\wdmycloud.local\</code> ，便会看到有4个文件夹，其中<code>yan</code>文件夹是我刚刚创建的，其他人是没有访问权限的，只有我可以看到。<br><img src="/images/wd10.png" alt="image"></p>
-<p>进入文件夹后就可以往文件夹里复制文件了。速度还是不错，由于我所在的网络是100M的，可以跑满。<br><img src="/images/wd11.png" alt="image"></p>
-<p>比较有意思的是WD还提供了一个叫safepoints的功能，可以把文件备份到另外一台mycloud上。我这里只有一台，所以没有办法试。<br><img src="/images/wd12.png" alt="image"></p>
-<p>还有一个比较重要的功能就是云端访问，wd提供了一个手机的客户端，可以在app store中搜索my cloud安装上。<br>第一次打开有个快速连接，只需要输入你在wd上设置的用户名密码就可以连上。<br><img src="/images/wd13.jpg" alt="image"></p>
-<p>打开后就看见里面的共享文件夹了。开机后WD会在互联网建立一条隧道，这样你的手机在外面也可以访问家中的文件，至于速度嘛，由于wd的服务器在国外，你懂的。<br><img src="/images/wd14.jpg" alt="image"></p>
-<p>可以往文件里上传手机里的照片，由于我们手机大多数都是16G 或者32G的内存，安装各种软件，视频。平时拍各种照片，很快就会满掉。如果我们定期把照片传到nas上，这样手机就会空出很多的空间，而且照片有个备份，即使手机坏掉或者丢掉也不用过于担心照片没了。<br><img src="/images/wd15.jpg" alt="image"></p>
-<p>我上传了两张照片 ：）<br><img src="/images/wd16.jpg" alt="image"></p>
-<h2 id="总结">总结</h2>
-<p>WD My Cloud将存储变得更为自由和简单，通过简单的设置操作即可轻松的实现个人云存储，提供安全的连接和多平台的接入，内置双核高性能CPU可作为多媒体服务器搭配iTunes等多媒体软件进行流媒体播放操作，为随时随地的存储需求提供顺畅安全的存储平台。对于一般的消费者也可以快速的上手使用。不过不足的地方是mycloud不能安装新的应用，只有使用自带的最基本的功能。<br>这点群晖这样的NAS厂家就做得非常好，下面给出一张群晖的套件中心的截图就可以看出有多丰富了。不过WD作为一个硬盘厂商，主要的精力不在这里，是可以理解的。<br><img src="/images/wd17.jpg" alt="image"></p>
+		<h2 id="简介">简介</h2>
+<p>系统管理员（SA）通常需要管理和维护数以百计的服务器，如果没有自动化的配置管理和命令执行工具，那么SA的工作将会变得很繁重。例如，要给集群中的每个服务器添加一个系统用户，那么他必须登陆到每台服务器上去逐一的执行命令。好在有编程能力的SA能通过bash + ssh的方式来自动化自己的工作，于是出现了ClusterShell这一类的工具。但这类工具只是解决了远程命令调用的问题，并没有对一些运维的过程进行抽象，在面对不同的操作系统等环境时，使用会变得复杂和繁琐，对常见的运维操作，如包管理、配置文件分发也没有很好的支持。于是出现了CFEngine，Puppet，Chef，Salt等工具，他们在远程命令执行的基础上对一些常见的运维操作进行了抽象，如节点分组、命令编排、状态管理等。</p>
+<p>Salt正是其中年轻一员，它是一个使用Python和ZeroMQ开发的开源项目，使用Apache 2.0 License。Salt的主要功能有两个：1）配置管理，使节点处于所定义的状态，如指定web类节点apache包的状态为安装并运行；2）分布式的命令执行系统，一方面分发命令到节点执行，另一方面从节点收集所需的数据。</p>
+<h2 id="系统架构图">系统架构图</h2>
+<p><img src="/images/salt.png" alt="image"></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -121,7 +103,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2015/03/16/wdmycloud/" data-title="WD My Cloud 评测报告 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/06/16/salt/" data-title="集群管理工具-Salt | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -130,19 +112,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/06/16/salt/" title="集群管理工具-Salt">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  集群管理工具-Salt</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/03/07/ramfs/"  title="linux使用tmpfs">
+<a href="/2015/03/16/wdmycloud/"  title="WD My Cloud 评测报告">
  <strong>NEXT:</strong><br/> 
- <span>linux使用tmpfs
+ <span>WD My Cloud 评测报告
 </span>
 </a>
 </div>
@@ -159,7 +133,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外观"><span class="toc-number">2.</span> <span class="toc-text">外观</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统架构图"><span class="toc-number">2.</span> <span class="toc-text">系统架构图</span></a></li></ol>
   </div>
 
 <div id="asidepart">
