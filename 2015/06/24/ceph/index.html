@@ -1,0 +1,387 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>ceph分布式存储系统 | zhangyan&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="张岩">
+    
+    <meta name="description" content="Ceph是统一存储系统，支持三种接口。
+
+Object：有原生的API，而且也兼容Swift和S3的API
+Block：支持精简配置、快照、克隆
+File：Posix接口，支持快照
+
+Ceph也是分布式存储系统，它的特点是：
+
+高扩展性：使用普通x86服务器，支持10~1000台服务器，支持TB到P">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="zhangyan&#39;s blog" title="zhangyan&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="zhangyan&#39;s blog">zhangyan&#39;s blog</a></h1>
+				<h2 class="blog-motto">张岩个人站点</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/aboutme">关于我</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yan.lingyun.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/24/ceph/" title="ceph分布式存储系统" itemprop="url">ceph分布式存储系统</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yan.lingyun.io" title="张岩">张岩</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-06-24T02:01:58.000Z" itemprop="datePublished">6月 24 2015</time>
+    更新日期:<time datetime="2015-06-25T03:04:24.000Z" itemprop="dateModified">6月 25 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ceph是统一存储系统，支持三种接口。"><span class="toc-number">1.</span> <span class="toc-text">Ceph是统一存储系统，支持三种接口。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ceph也是分布式存储系统，它的特点是："><span class="toc-number">2.</span> <span class="toc-text">Ceph也是分布式存储系统，它的特点是：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ceph组件"><span class="toc-number"></span> <span class="toc-text">ceph组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ceph的底层是RADOS，它的意思是“A_reliable,_autonomous,_distributed_object_storage”。_RADOS由两个组件组成："><span class="toc-number">1.</span> <span class="toc-text">Ceph的底层是RADOS，它的意思是“A reliable, autonomous, distributed object storage”。 RADOS由两个组件组成：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RADOS具有很强的扩展性和可编程性，Ceph基于RADOS开发了Object_Storage、Block_Storage、FileSystem。Ceph另外两个组件是："><span class="toc-number">2.</span> <span class="toc-text">RADOS具有很强的扩展性和可编程性，Ceph基于RADOS开发了Object Storage、Block Storage、FileSystem。Ceph另外两个组件是：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容错性"><span class="toc-number"></span> <span class="toc-text">容错性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#故障检测："><span class="toc-number">1.</span> <span class="toc-text">故障检测：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#故障恢复："><span class="toc-number">2.</span> <span class="toc-text">故障恢复：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number"></span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统：Ubuntu14-04"><span class="toc-number"></span> <span class="toc-text">系统：Ubuntu14.04</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#centos7安装"><span class="toc-number"></span> <span class="toc-text">centos7安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ceph操作"><span class="toc-number"></span> <span class="toc-text">ceph操作</span></a>
+		</div>
+		
+		<h4 id="Ceph是统一存储系统，支持三种接口。">Ceph是统一存储系统，支持三种接口。</h4>
+<ul>
+<li>Object：有原生的API，而且也兼容Swift和S3的API</li>
+<li>Block：支持精简配置、快照、克隆</li>
+<li>File：Posix接口，支持快照</li>
+</ul>
+<h4 id="Ceph也是分布式存储系统，它的特点是：">Ceph也是分布式存储系统，它的特点是：</h4>
+<ul>
+<li>高扩展性：使用普通x86服务器，支持10~1000台服务器，支持TB到PB级的扩展。</li>
+<li>高可靠性：没有单点故障，多数据副本，自动管理，自动修复。</li>
+<li>高性能：数据分布均衡，并行化度高。对于objects storage和block storage,不需要元数据服务器。</li>
+</ul>
+<p><img src="http://s1.momo.moda/2015/06/24/577bcc914f9e55d5e4e4f82f9f00e7d4.png" alt=""></p>
+<h2 id="ceph组件">ceph组件</h2>
+<p><img src="http://s1.momo.moda/2015/06/24/92977ae4d2ba21425a59afb269c2a14e.jpg" alt=""></p>
+<h4 id="Ceph的底层是RADOS，它的意思是“A_reliable,_autonomous,_distributed_object_storage”。_RADOS由两个组件组成：">Ceph的底层是RADOS，它的意思是“A reliable, autonomous, distributed object storage”。 RADOS由两个组件组成：</h4>
+<ul>
+<li>OSD： Object Storage Device，提供存储资源。</li>
+<li>Monitor：维护整个Ceph集群的全局状态。</li>
+</ul>
+<h4 id="RADOS具有很强的扩展性和可编程性，Ceph基于RADOS开发了Object_Storage、Block_Storage、FileSystem。Ceph另外两个组件是：">RADOS具有很强的扩展性和可编程性，Ceph基于RADOS开发了Object Storage、Block Storage、FileSystem。Ceph另外两个组件是：</h4>
+<ul>
+<li>MDS：用于保存CephFS的元数据。</li>
+<li>RADOS Gateway：对外提供REST接口，兼容S3和Swift的API。</li>
+</ul>
+<h2 id="容错性">容错性</h2>
+<p>在分布式系统中，常见的故障有网络中断、掉电、服务器宕机、硬盘故障等，Ceph能够容忍这些故障，并进行自动修复，保证数据的可靠性和系统可用性。</p>
+<ul>
+<li>Monitors是Ceph管家，维护着Ceph的全局状态。Monitors的功能和zookeeper类似，它们使用Quorum和Paxos算法去建立全局状态的共识。</li>
+<li>OSDs可以进行自动修复，而且是并行修复。</li>
+</ul>
+<h4 id="故障检测：">故障检测：</h4>
+<p>OSD之间有心跳检测，当OSD A检测到OSD B没有回应时，会报告给Monitors说OSD B无法连接，则Monitors给OSD B标记为down状态，并更新OSD Map。当过了M秒之后还是无法连接到OSD B，则Monitors给OSD B标记为out状态(表明OSD B不能工作），并更新OSD Map。</p>
+<p>备注：可以在Ceph中配置M的值。</p>
+<h4 id="故障恢复：">故障恢复：</h4>
+<ul>
+<li>当某个PG对应的OSD set中有一个OSD被标记为down时(假如是Primary被标记为down，则某个Replica会成为新的Primary，并处理所有读写 object请求)，则该PG处于active+degraded状态，也就是当前PG有效的副本数是N-1。</li>
+<li>过了M秒之后，假如还是无法连接该OSD，则它被标记为out，Ceph会重新计算PG到OSD set的映射(当有新的OSD加入到集群时，也会重新计算所有PG到OSD set的映射)，以此保证PG的有效副本数是N。</li>
+<li>新OSD set的Primary先从旧的OSD set中收集PG log，得到一份Authoritative History(完整的、全序的操作序列)，并让其他Replicas同意这份Authoritative History(也就是其他Replicas对PG的所有objects的状态达成一致)，这个过程叫做Peering。</li>
+<li>当Peering过程完成之后，PG进 入active+recoverying状态，Primary会迁移和同步那些降级的objects到所有的replicas上，保证这些objects 的副本数为N。</li>
+</ul>
+<h2 id="安装">安装</h2>
+<h3 id="系统：Ubuntu14-04">系统：Ubuntu14.04</h3>
+<p>IP规划如下：<br>192.168.2.11    ceph-node1<br>192.168.2.12    ceph-node2<br>192.168.2.13    ceph-node3</p>
+<p>apt-get install ceph-deploy<br>mkdir ceph<br>cd ceph<br>ceph-deploy new ceph-node1 ceph-node2 ceph-node3<br>ceph-deploy install ceph-node1 ceph-node2 ceph-node3<br>ceph-deploy mon create ceph-node1 ceph-node2 ceph-node3<br>ceph-deploy gatherkeys ceph-node2<br>mkdir /opt/osd0<br>ceph-deploy osd prepare ceph-node1:/opt/osd0<br>ceph-deploy osd activate ceph-node1:/opt/osd0<br>ceph-deploy mds create ceph-node1</p>
+<p>cephfs<br>mkdir /mnt/ceph<br>ceph-fuse -m 192.168.2.11:6789 /mnt/ceph</p>
+<h3 id="centos7安装">centos7安装</h3>
+<p>vim /etc/yum.repos.d/ceph.repo</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[ceph-noarch]</div><div class="line"><span class="variable">name=</span>Ceph noarch packages</div><div class="line"><span class="variable">baseurl=</span>http://ceph.com/rpm-firefly/el7/noarch</div><div class="line"><span class="variable">enabled=</span><span class="number">1</span></div><div class="line"><span class="variable">gpgcheck=</span><span class="number">1</span></div><div class="line"><span class="variable">type=</span>rpm-md</div><div class="line"><span class="variable">gpgkey=</span>https://ceph.com/git/?<span class="variable">p=</span>ceph.git;<span class="variable">a=</span>blob_plain;<span class="variable">f=</span>keys/release.asc</div></pre></td></tr></table></figure>
+
+<p>yum update</p>
+<h2 id="ceph操作">ceph操作</h2>
+<p>ceph -s 查看集群状态<br>ceph -w 监视集群<br>ceph osd stat osd状态<br>ceph osd tree 根据crush map 查看<br>ceph mon stat 监控器状态<br>ceph mds stat mds状态<br>ceph mon dump 查看mon</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yan.lingyun.io/2015/06/24/ceph/" data-title="ceph分布式存储系统 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/08/03/routeros/" title="routeros小包优先">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  routeros小包优先</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/06/16/salt/"  title="集群管理工具-Salt">
+ <strong>NEXT:</strong><br/> 
+ <span>集群管理工具-Salt
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ceph是统一存储系统，支持三种接口。"><span class="toc-number">1.</span> <span class="toc-text">Ceph是统一存储系统，支持三种接口。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ceph也是分布式存储系统，它的特点是："><span class="toc-number">2.</span> <span class="toc-text">Ceph也是分布式存储系统，它的特点是：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ceph组件"><span class="toc-number"></span> <span class="toc-text">ceph组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ceph的底层是RADOS，它的意思是“A_reliable,_autonomous,_distributed_object_storage”。_RADOS由两个组件组成："><span class="toc-number">1.</span> <span class="toc-text">Ceph的底层是RADOS，它的意思是“A reliable, autonomous, distributed object storage”。 RADOS由两个组件组成：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RADOS具有很强的扩展性和可编程性，Ceph基于RADOS开发了Object_Storage、Block_Storage、FileSystem。Ceph另外两个组件是："><span class="toc-number">2.</span> <span class="toc-text">RADOS具有很强的扩展性和可编程性，Ceph基于RADOS开发了Object Storage、Block Storage、FileSystem。Ceph另外两个组件是：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容错性"><span class="toc-number"></span> <span class="toc-text">容错性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#故障检测："><span class="toc-number">1.</span> <span class="toc-text">故障检测：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#故障恢复："><span class="toc-number">2.</span> <span class="toc-text">故障恢复：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number"></span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统：Ubuntu14-04"><span class="toc-number"></span> <span class="toc-text">系统：Ubuntu14.04</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#centos7安装"><span class="toc-number"></span> <span class="toc-text">centos7安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ceph操作"><span class="toc-number"></span> <span class="toc-text">ceph操作</span></a>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/debian-ubuntu/" title="debian&amp;ubuntu">debian&amp;ubuntu<sup>1</sup></a></li>
+		
+			<li><a href="/tags/devops/" title="devops">devops<sup>1</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>5</sup></a></li>
+		
+			<li><a href="/tags/mac/" title="mac">mac<sup>1</sup></a></li>
+		
+			<li><a href="/tags/routeros/" title="routeros">routeros<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skype/" title="skype">skype<sup>1</sup></a></li>
+		
+			<li><a href="/tags/心情随笔/" title="心情随笔">心情随笔<sup>2</sup></a></li>
+		
+			<li><a href="/tags/树莓派/" title="树莓派">树莓派<sup>1</sup></a></li>
+		
+			<li><a href="/tags/路由器/" title="路由器">路由器<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://yan.lingyun.io" target="_blank" title="张岩">张岩</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"yanest"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>
