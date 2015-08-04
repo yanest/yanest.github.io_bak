@@ -85,7 +85,7 @@ sn">
     </p>
   <p class="article-time">
     <time datetime="2015-08-03T08:51:42.000Z" itemprop="datePublished">8月 3 2015</time>
-    更新日期:<time datetime="2015-08-04T01:11:50.000Z" itemprop="dateModified">8月 4 2015</time>
+    更新日期:<time datetime="2015-08-04T01:19:39.000Z" itemprop="dateModified">8月 4 2015</time>
     
   </p>
 </header>
@@ -112,23 +112,35 @@ sn">
 <li>resize 调整镜像大小</li>
 </ul>
 <h4 id="创建镜像">创建镜像</h4>
-<p><code>qemu-img create -f raw test.raw 20G</code><br>常用的格式主要有raw和qcow2，qcow2格式在创建时不会预先分配所有空间</p>
+<pre><code>qemu-img create <span class="operator">-f</span> raw test.raw <span class="number">20</span>G
+</code></pre><p>常用的格式主要有raw和qcow2，qcow2格式在创建时不会预先分配所有空间</p>
 <h4 id="转化格式">转化格式</h4>
-<p><code>qemu-img convert -c -O qcow2 test.raw test.qcow2</code></p>
-<ul>
+<pre><code>qemu-img convert -c -O qcow2 <span class="keyword">test</span>.raw <span class="keyword">test</span>.qcow2
+</code></pre><ul>
 <li>-c采用压缩，只有qcow2才支持压缩</li>
 <li>-O 目标镜像格式</li>
 </ul>
 <h4 id="调整大小">调整大小</h4>
-<p><code>qemu-img resize vm2.raw +2GB</code><br>只有raw格式的镜像可以调整大小</p>
+<pre><code>qemu-img <span class="keyword">resize</span> vm2.raw +<span class="number">2</span>GB
+</code></pre><p>只有raw格式的镜像可以调整大小</p>
 <h4 id="快照">快照</h4>
-<p>查看快照，只有qcow2才支持快照<br><code>qemu-img snapshot -l vm2.qcow2</code><br>创建快照，booting是tag<br><code>qemu-img snapshot -c booting vm2.qcow2</code><br>从快照恢复<br><code>qemu-img snapshot -a 1 vm2.qcow2</code><br>删除快照<br><code>qemu-img snapshot -d 2 vm2.qcow2</code></p>
-<h4 id="使用派生镜像（qcow2）">使用派生镜像（qcow2）</h4>
+<p>查看快照，只有qcow2才支持快照</p>
+<pre><code>qemu-img snapshot <span class="operator">-l</span> vm2.qcow2
+</code></pre><p>创建快照，booting是tag</p>
+<pre><code>qemu-img snapshot -<span class="built_in">c</span> booting vm2.qcow2
+</code></pre><p>从快照恢复</p>
+<pre><code>qemu-img snapshot <span class="operator">-a</span> <span class="number">1</span> vm2.qcow2
+</code></pre><p>删除快照</p>
+<pre><code>qemu-img snapshot <span class="operator">-d</span> <span class="number">2</span> vm2.qcow2
+</code></pre><h4 id="使用派生镜像（qcow2）">使用派生镜像（qcow2）</h4>
 <blockquote>
 <p>当创建的虚拟机越来越多，并且你发现好多虚拟机都是同一个操作系统，它们的区别就是安装的软件不大一样，那么你肯定会希望把他们公共的部分提取出来，只保存那些与公共部分不同的东西，这样镜像大小下去了，空间变多了，管理也方便了。派生镜像就是用来干这事的！</p>
 </blockquote>
-<p>派生一个镜像<br><code>qemu-img create -f qcow2 vm3_5.qcow2 -o backing_file=vm.raw 20G</code><br>如果想把派生的镜像和母镜像合并成新的镜像<br><code>qemu-img convert -O raw vm3_5.qcow2 vm_new.raw</code></p>
-  
+<p>派生一个镜像</p>
+<pre><code>qemu-img create <span class="operator">-f</span> qcow2 vm3_5.qcow2 -o backing_file=vm.raw <span class="number">20</span>G
+</code></pre><p>如果想把派生的镜像和母镜像合并成新的镜像</p>
+<pre><code>qemu-img convert -<span class="keyword">O</span> raw vm3_5.qcow2 vm_new.raw
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 
