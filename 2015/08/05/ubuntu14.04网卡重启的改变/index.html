@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>ubuntu14.04网卡重启的改变 | zhangyan&#39;s blog</title>
+    <title>ubuntu14.04网卡重启的改变及桥接配置 | zhangyan&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="张岩">
@@ -69,15 +69,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/13/ubuntu14.04网卡重启的改变/" title="ubuntu14.04网卡重启的改变" itemprop="url">ubuntu14.04网卡重启的改变</a>
+      <a href="/2015/08/05/ubuntu14.04网卡重启的改变/" title="ubuntu14.04网卡重启的改变及桥接配置" itemprop="url">ubuntu14.04网卡重启的改变及桥接配置</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yan.lingyun.io" title="张岩">张岩</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-11-13T11:57:24.000Z" itemprop="datePublished">11月 13 2014</time>
-    更新日期:<time datetime="2014-11-13T11:57:24.000Z" itemprop="dateModified">11月 13 2014</time>
+    <time datetime="2015-08-05T05:05:49.000Z" itemprop="datePublished">8月 5 2015</time>
+    更新日期:<time datetime="2015-08-05T05:05:49.000Z" itemprop="dateModified">8月 5 2015</time>
     
   </p>
 </header>
@@ -102,16 +102,23 @@
 <p>配置桥接</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-get install bridge-utils</span></div><div class="line"><span class="comment"># cat /etc/network/interfaces</span></div><div class="line"><span class="title">auto</span> lo</div><div class="line">iface lo inet loopback</div><div class="line"></div><div class="line">auto eth0</div><div class="line">iface eth0 inet manual</div><div class="line"></div><div class="line">auto br0</div><div class="line">iface br0 inet static</div><div class="line">address <span class="number">192.168.0.10</span></div><div class="line">netmask <span class="number">255.255.255.0</span></div><div class="line">gateway <span class="number">192.168.0.1</span></div><div class="line">bridge_ports eth0</div><div class="line">bridge_stp <span class="built_in">off</span></div><div class="line">bridge_fd <span class="number">0</span></div><div class="line">bridge_maxwait <span class="number">0</span></div><div class="line">dns-nameservers <span class="number">192.168.0.1</span></div><div class="line"><span class="comment"># ifup br0</span></div><div class="line"><span class="comment"># brctl  show</span></div><div class="line">bridge name   bridge id       STP enabled interfaces</div><div class="line">br0       <span class="number">8000</span>.02000a0080e1   <span class="built_in">no</span>      eth0</div></pre></td></tr></table></figure>
 
-  
+<p>DNS更新</p>
+<pre><code><span class="title">resolvconf</span> -u
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/debian-ubuntu/">debian&ubuntu</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yan.lingyun.io/2014/11/13/ubuntu14.04网卡重启的改变/" data-title="ubuntu14.04网卡重启的改变 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://yan.lingyun.io/2015/08/05/ubuntu14.04网卡重启的改变/" data-title="ubuntu14.04网卡重启的改变及桥接配置 | zhangyan&#39;s blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -120,19 +127,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/11/14/lvm管理分区/" title="LVM管理分区">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  LVM管理分区</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/11/10/wifi密码破解实战/"  title="wifi密码破解实战">
+<a href="/2015/08/03/qemu-img/"  title="qemu-img">
  <strong>NEXT:</strong><br/> 
- <span>wifi密码破解实战
+ <span>qemu-img
 </span>
 </a>
 </div>
@@ -163,7 +162,7 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/debian-ubuntu/" title="debian&amp;ubuntu">debian&amp;ubuntu<sup>1</sup></a></li>
+			<li><a href="/tags/debian-ubuntu/" title="debian&amp;ubuntu">debian&amp;ubuntu<sup>2</sup></a></li>
 		
 			<li><a href="/tags/devops/" title="devops">devops<sup>1</sup></a></li>
 		
